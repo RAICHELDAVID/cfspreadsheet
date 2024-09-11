@@ -1,79 +1,195 @@
 <cfscript>
     // imageStyle.width
-    itemAgreementStyle=StructNew();
-        itemAgreementStyle.font="Arial";
-        itemAgreementStyle.fontsize="20";
-        itemAgreementStyle.alignment="center";
-        itemAgreementStyle.bold="true";
-        itemAgreementStyle.italic="true";
-        itemAgreementStyle.textwrap="true";
-    jewelryQuoteFormStyle=StructNew();
-        jewelryQuoteFormStyle.font="Arial";
-        jewelryQuoteFormStyle.bold="true";
-        jewelryQuoteFormStyle.italic="true";
-        jewelryQuoteFormStyle.alignment="center";
-        jewelryQuoteFormStyle.fontsize="15";
-    contentStyle=StructNew();
-        contentStyle.font="Arial Narrow";
-        contentStyle.bold="true";
-        contentStyle.fontSize="12";
-        contentStyle.alignment="right";
-    subHeadingStyle=StructNew();
-        subHeadingStyle.font="Arial Narrow";
-        subHeadingStyle.bold="true";
-        subHeadingStyle.alignment="center";
-        subHeadingStyle.fgcolor="light_yellow";
-        subHeadingStyle.topborder="thin";
-        subHeadingStyle.bottomborder="thin";
-    normalText=structNew();
-        normalText.font="Arial Narrow";
-        normalText.fontSize="12";
-        normalText.alignment="right";
-    leftBottomNormalText=structNew();
-        leftBottomNormalText.font="Arial Narrow";
-        leftBottomNormalText.fontSize="12";
-        leftBottomNormalText.alignment="right";
-        leftBottomNormalText.leftBorder="thin";
-        leftBottomNormalText.bottomBorder="thin";
-    subHeadingBorder=StructNew();
-        subHeadingBorder.bottomborder="thin";
-        subHeadingBorder.topborder="thin";
-        subHeadingBorder.rightborder="thin";
-    bottomBorder=StructNew();
-        bottomBorder.bottomborder='thin';
-    mediumBottomBorder=StructNew();
-        mediumBottomBorder.bottomborder='medium';
-    centerContent=StructNew();
-        centerContent.fontsize="13";
-        centerContent.alignment='center';
-        centerContent.dataformat="##0.00";
-        centerContent.font="Arial";
-    imageText=structNew();
-        imageText.font="Calibri";
-        imageText.fontSize="10";
-        imageText.bold="true";
-    goldbreakdownStyle=structNew();
-        goldbreakdownStyle.fgcolor="yellow";
-        goldbreakdownStyle.font="Arial Narrow";
-        goldbreakdownStyle.alignment="center";
-        goldbreakdownStyle.fontSize="12";
-        goldbreakdownStyle.bold="true";
-    //goldbreakdownBoxContentStyle=structNew();
+    itemAgreementStyle = {
+        font = "Arial",
+        fontsize = "20",
+        alignment = "center",
+        bold = "true",
+        italic = "true",
+        textwrap = "true"
+    };
+    jewelryQuoteFormStyle={
+        font="Arial",
+        bold="true",
+        italic="true",
+        alignment="center",
+        fontsize="15"
+    };
+    contentStyle={
+        font="Arial Narrow",
+        bold="true",
+        fontSize="12",
+        alignment="right"  
+    };
+    subHeadingStyle={
+        font="Arial Narrow",
+        bold="true",
+        alignment="center",
+        fgcolor="light_yellow",
+        topborder="thin",
+        bottomborder="thin"
+    };
+    normalText={        
+        font="Arial Narrow",
+        fontSize="12",
+        alignment="right"
+    };
+    leftBottomNormalText={
+        font="Arial Narrow",
+        fontSize="12",
+        alignment="right",
+        leftBorder="thin",
+        bottomBorder="thin"
+    };
+    subHeadingBorder={
+        bottomborder="thin",
+        topborder="thin",
+        rightborder="thin"
+    };
+    centerContent={
+        fontsize="13",
+        alignment='center',
+        dataformat="##0.00",
+        font="Arial"
+    };
+    imageText={
+        font="Calibri",
+        fontSize="10",
+        bold="true"
+    };
+    goldbreakdownStyle={
+        fgcolor="yellow",
+        font="Arial Narrow",
+        alignment="center",
+        fontSize="12",
+        bold="true",
+        leftBorder="medium",
+        topBorder="medium",
+        rightBorder="medium",
+        bottomBorder="thin"
+    };
+    goldbreakdownContentStyle={
+        font="Arial",
+        fontSize="12",
+        fgcolor="yellow",
+        leftBorder="medium",
+        bottomBorder="thin"
+    };
+    goldbreakdownLastCellContentStyle={
+        font="Arial",
+        fontSize="12",
+        fgcolor="yellow",
+        leftBorder="medium",
+        bottomBorder="medium"
+    };
+    goldbreakdownLastCellValueStyle={
+        font="Calibri",
+        fontSize="12",
+        alignment="center",
+        dataformat="$##0.00",
+        leftBorder="thin",
+        bottomBorder="medium",
+        rightBorder="medium"
+    };
+    centerBoldContent={
+        fontsize="11",
+        alignment='center',
+        font="Arial",
+        dataformat="$##0.00",
+        bold="true",
+        rightBorder="medium"
+    };
+    itemCostStyle=structNew();
+        itemCostStyle.topBorder="medium";
+        itemCostStyle.rightBorder="medium";
+        itemCostStyle.font="Arial Narrow";
+        itemCostStyle.bold="true";
+        itemCostStyle.alignment="center";
+        itemCostStyle.fgcolor="light_yellow";
+        itemCostStyle.bottomborder="thin";
+    leftSectionMainHeading=structNew();
+        leftSectionMainHeading.alignment="left";
+        leftSectionMainHeading.rightBorder="medium";
+        leftSectionMainHeading.topBorder="medium";
+        leftSectionMainHeading.fontSize="12";
+        leftSectionMainHeading.bold="true";
+        leftSectionMainHeading.font="Arial Narrow";
+    greyBackgroundValue=structNew();
+        greyBackgroundValue.fgcolor="grey_25_percent";
+        greyBackgroundValue.topBorder="thin";
+        greyBackgroundValue.rightBorder="medium";
+        greyBackgroundValue.bottomBorder="medium";
+        greyBackgroundValue.fontsize="11";
+        greyBackgroundValue.alignment='center';
+        greyBackgroundValue.font="Arial";
+        greyBackgroundValue.dataformat="$##0.00";
+        greyBackgroundValue.bold="true";
+    labourCostStyle=structNew();
+        labourCostStyle.fgcolor="gold";
+        labourCostStyle.topBorder="medium";
+        labourCostStyle.leftBorder="medium";
+        labourCostStyle.bottomBorder="medium";
+        labourCostStyle.rightBorder="medium";
+        labourCostStyle.font="Arial Narrow";
+        labourCostStyle.fontsize="12";
+        labourCostStyle.alignment="center";
+        labourCostStyle.bold="true";
+    centerBoldText={
+        bold="true",
+        alignment="center",
+        fontsize="12",
+        font="Arial Narrow"
+    };
+
+    leftSectionRightAlignedHeading=structNew();
+        leftSectionRightAlignedHeading.alignment="right";
+        leftSectionRightAlignedHeading.font="Arial Narrow";
+        leftSectionRightAlignedHeading.bold="true";
+        leftSectionRightAlignedHeading.fgcolor="light_yellow";
+        leftSectionRightAlignedHeading.fontsize="12";
+        leftSectionRightAlignedHeading.leftBorder="medium";
+        leftSectionRightAlignedHeading.topBorder="medium";
+        leftSectionRightAlignedHeading.bottomBorder="medium";
     boxBorder=StructNew();
         boxBorder.bottomborder="thin";
         boxBorder.rightborder="thin";
         boxBorder.leftborder="thin";
-    centerBoldContent=StructNew();
-        centerBoldContent.fontsize="11";
-        centerBoldContent.alignment='center';
-        centerBoldContent.font="Arial";
-        centerBoldContent.dataformat="$##0.00";
-        centerBoldContent.bold="true";
-    leftBorder=StructNew();
-        leftBorder.leftborder="thin";
-    rightBorder=structNew();
-        rightBorder.rightborder="thin";
-    leftBottomBorder=structNew();
+    bottomBorder=StructNew();
+        bottomBorder.bottomborder='thin';
+    mediumBottomBorder=StructNew();
+        mediumBottomBorder.bottomborder='medium';
+    rightLeftBoldBottomBorder=structNew();
+        rightLeftBoldBottomBorder.rightBorder="medium";
+        rightLeftBoldBottomBorder.leftBorder="medium";
+        rightLeftBoldBottomBorder.bottomBorder="thin";
+    rightLeftBottomBoldBorder=structNew();
+        rightLeftBottomBoldBorder.leftBorder="medium";
+        rightLeftBottomBoldBorder.bottomBorder="medium";
+        rightLeftBottomBoldBorder.rightBorder="medium";
+        bottomRightBoldBorder=structNew();
+        bottomRightBoldBorder.bottomBorder="thin";
+        bottomRightBoldBorder.rightBorder="medium";
+    bottomBoldBolder=structNew();
+        bottomBoldBolder.bottomBorder="medium";
+        bottomBoldBolder.font="Arial Narrow";
+        bottomBoldBolder.bold="true";
+        bottomBoldBolder.fontSize="12";
+        bottomBoldBolder.alignment="right";
+        rightBoldBorder=structNew();
+        rightBoldBorder.rightBorder="medium";
+        rightBoldBorder.bottomBorder="thin";
+        rightBoldBorder.leftBorder="thin";
+    rightLeftBorder=structNew();
+        rightLeftBorder.rightBorder="medium";
+        rightLeftBorder.leftBorder="thin";
+    rightOnlyBorder=structNew();
+        rightOnlyBorder.rightBorder="medium";
+    fullBoxBorder=StructNew();
+        fullBoxBorder.bottomborder="thin";
+        fullBoxBorder.rightborder="thin";
+        fullBoxBorder.leftborder="thin";
+        fullBoxBorder.topborder="thin";
+        leftBottomBorder=structNew();
         leftBottomBorder.leftBorder="thin";
         leftBottomBorder.bottomBorder="thin";
         leftBottomBorder.font="Arial Narrow";
@@ -87,41 +203,21 @@
         rightBottomBorder.bold="true";
         rightBottomBorder.fontSize="12";
         rightBottomBorder.alignment="right";
-    bottomBorder=structNew();
-        bottomBorder.bottomBorder="thin";
-        bottomBorder.font="Arial Narrow";
-        bottomBorder.bold="true";
-        bottomBorder.fontSize="12";
-    itemCostStyle=structNew();
-        itemCostStyle.topBorder="medium";
-        itemCostStyle.rightBorder="medium";
-        itemCostStyle.font="Arial Narrow";
-        itemCostStyle.bold="true";
-        itemCostStyle.alignment="center";
-        itemCostStyle.fgcolor="light_yellow";
-        itemCostStyle.bottomborder="thin";
-    rightBoldBorder=structNew();
-        rightBoldBorder.rightBorder="medium";
-        rightBoldBorder.bottomBorder="thin";
-        rightBoldBorder.leftBorder="thin";
-    rightLeftBorder=structNew();
-        rightLeftBorder.rightBorder="medium";
-        rightLeftBorder.leftBorder="thin";
-    fullBoxBorder=StructNew();
-        fullBoxBorder.bottomborder="thin";
-        fullBoxBorder.rightborder="thin";
-        fullBoxBorder.leftborder="thin";
-        fullBoxBorder.topborder="thin";
-    mountingStyle=structNew();
-        mountingStyle.alignment="left";
-        mountingStyle.rightBorder="medium";
-        mountingStyle.topBorder="medium";
-        mountingStyle.fontSize="12";
-        mountingStyle.bold="true";
-        mountingStyle.font="Arial Narrow";
-    bottomRightBoldBorder=structNew();
-        bottomRightBoldBorder.bottomBorder="thin";
-        bottomRightBoldBorder.rightBorder="medium";
+    bottomBorder={
+        bottomBorder="thin",
+        font="Arial Narrow",
+        bold="true",
+        fontSize="12"
+    };
+    leftBorder=StructNew();
+        leftBorder.leftborder="thin";
+    rightBorder=structNew();
+        rightBorder.rightborder="thin";
+    topRightBottomBoldBorder=structNew();
+        topRightBottomBoldBorder.topBorder="medium";
+        topRightBottomBoldBorder.rightBorder="medium";
+        topRightBottomBoldBorder.bottomBorder="medium";
+        topRightBottomBoldBorder.fgcolor="light_yellow"
     theFile="Costco Wholesale D35 Jewelry Item Agreement _ Rev #Dateformat(now(), 'mm-dd-YYYY')#.xlsx";//#DateFormat(rs_product.date_entered,'MMDDYY')#
     // Create a new spreadsheet
     spreadsheet = spreadsheetNew("Gemstones_ Pearl Quote Sheet", true);
@@ -132,7 +228,7 @@
     //setting cell width
     row=1;
     column=1;
-    spreadSheetSetColumnWidth(spreadsheet, column, 35);
+   
     spreadsheetMergeCells(spreadsheet, row, row, column+5, column+9);//startRow, endRow, startColumn, endColumn
     spreadSheetSetRowHeight(spreadsheet,row,28)
     spreadsheetSetCellValue(spreadsheet, "ITEM AGREEMENT", row, column+5);
@@ -145,7 +241,6 @@
     spreadsheetSetCellValue(spreadsheet, "SUPPLIER INFORMATION", row+2, column);
     spreadsheetFormatCell(spreadsheet, subHeadingStyle, row+2, column);
     spreadsheetFormatCellRange( spreadsheet,subHeadingBorder, row+2,column+1,row+2,column+5);
-
     //left side row=3
     row=5;
     column=1;
@@ -155,17 +250,14 @@
     spreadsheetSetCellValue(spreadsheet, "CITY,STATE ZIP:", row+3, column);
     spreadsheetSetCellValue(spreadsheet, "TELEPHONE ##", row+4, column);
 
-     for (row = 5; row <= 9; row++) {
+    for (row = 5; row <= 9; row++) {
         spreadsheetMergeCells(spreadsheet, row, row, column+1, column+5);    
         spreadsheetFormatCellRange( spreadsheet,bottomBorder,row, column+1, row, column+5);
         spreadsheetFormatCell(spreadsheet, contentStyle, row, column);
     }
-
     //right side
     row=5;
     column=8;
-    spreadSheetSetColumnWidth(spreadsheet, column+2, 16);
-    spreadSheetSetColumnWidth(spreadsheet, column+4, 20);//L
     spreadsheetMergeCells(spreadsheet, row, row, column+2, column+4);
     spreadsheetSetCellValue(spreadsheet, "QUOTE PROVIDED BY (NAME):", row, column+2);
     spreadsheetFormatCell(spreadsheet, contentStyle, row, column+2);
@@ -180,7 +272,6 @@
         spreadsheetMergeCells(spreadsheet, row, row, column+5, column+9);    
         spreadsheetFormatCellRange( spreadsheet,bottomBorder,row, column+5, row, column+8);
     }
-
     //left side headline 'item information' row=11
     row=11;
     column=1;
@@ -188,35 +279,24 @@
     spreadsheetSetCellValue(spreadsheet, "ITEM INFORMATION", row, column);
     spreadsheetFormatCell(spreadsheet, subHeadingStyle, row, column);
     spreadsheetFormatCellRange( spreadsheet,subHeadingBorder, row,column,row,column+5);
-
     //dimensions
-    width=14;
-    sWidth=2;
     spreadsheetSetCellValue(spreadsheet, "Dimensions:", row+1, column);
     spreadsheetFormatCell(spreadsheet, contentStyle, row+1, column);
-    spreadSheetSetColumnWidth(spreadsheet, column+7, width-2);
     spreadsheetSetCellValue(spreadsheet, "Weight:", row+1, column+7);
     spreadsheetFormatCell(spreadsheet, contentStyle, row+1, column+7);
     spreadsheetSetCellValue(spreadsheet, "Cube:", row+2, column+7);
     spreadsheetFormatCell(spreadsheet, contentStyle, row+2, column+7);
     spreadsheetSetCellValue(spreadsheet, "L:", row+2, column);
     spreadsheetFormatCell(spreadsheet, contentStyle, row+2, column);
-    spreadSheetSetColumnWidth(spreadsheet, column+2, sWidth+1);
     spreadsheetSetCellValue(spreadsheet, "W:", row+2, column+2);
     spreadsheetFormatCell(spreadsheet, contentStyle, row+2, column+2);
-    spreadSheetSetColumnWidth(spreadsheet, column+4, sWidth+1);
     spreadsheetSetCellValue(spreadsheet, "H:", row+2, column+4);
     spreadsheetFormatCell(spreadsheet, contentStyle, row+2, column+4);
     spreadsheetSetCellValue(spreadsheet, 0.00, row+2, column+9);
     spreadsheetFormatCell(spreadsheet, centerContent, row+2, column+9);
     for (column = 1; column<6; column=column+2) {
-        spreadSheetSetColumnWidth(spreadsheet, column+1, width);
         spreadsheetFormatCell(spreadsheet, bottomBorder, row+2, column+1);      
     }
-    for (column = 7; column<12; column=column+2) {
-        spreadSheetSetColumnWidth(spreadsheet, column, sWidth);        
-    }
-
     //left side contents
     row=15;
     column=1;
@@ -250,7 +330,6 @@
         spreadsheetMergeCells(spreadsheet, currentRow, currentRow, columns2[1], columns2[2]);
         spreadsheetFormatCellRange(spreadsheet, mediumBottomBorder, currentRow, columns2[1], currentRow, columns2[2]);
     }
-
     //right side content
     row=11;
     column=12;
@@ -291,7 +370,6 @@
         spreadsheetMergeCells(spreadsheet, row, row, column + 3, column + 4);
         spreadsheetFormatCellRange(spreadsheet, boxBorder, row, column + 3, row, column + 4);
     }
-
     spreadsheetMergeCells(spreadsheet, row, row, column, column+4);
     spreadsheetSetCellValue(spreadsheet, "COSTCO ITEM NUMBER(S)", row, column);
     spreadsheetFormatCell(spreadsheet, subHeadingStyle, row, column);
@@ -312,10 +390,6 @@
         spreadsheetFormatCell(spreadsheet, bottomBorder, row+i, column+3);
         spreadsheetFormatCellRange(spreadsheet, rightBottomBorder, row+i, column+4, row+i, column+4);
     }
-    //cell O and P width adjustment
-    spreadSheetSetColumnWidth(spreadsheet, column+3, sWidth+1);
-    spreadSheetSetColumnWidth(spreadsheet, column+4, width+8);
-
     //ITEM COST DETAILS row=27
     row=27;
     column=1;
@@ -359,13 +433,12 @@
     spreadsheetFormatCell(spreadsheet, imageText, row, column);
     spreadsheetMergeCells(spreadsheet, row+1, row+9, column, column+4);
     spreadsheetFormatCellRange( spreadsheet,fullBoxBorder, row+1,column,row+9,column+4);
-
     //mounting
     row=35;
     column=1;
     spreadsheetMergeCells(spreadsheet, row, row, column, column+5);
     spreadsheetSetCellValue(spreadsheet, "MOUNTING:", row, column);
-    spreadsheetFormatCellRange( spreadsheet,mountingStyle, row,column,row,column+5);
+    spreadsheetFormatCellRange( spreadsheet,leftSectionMainHeading, row,column,row,column+5);
     spreadsheetSetCellValue(spreadsheet, "Finished DWT", row+1, column);
     spreadsheetSetCellValue(spreadsheet, "Casting Charge", row+2, column);
     spreadsheetSetCellValue(spreadsheet, "Finding / Chain", row+3, column);
@@ -377,7 +450,7 @@
         spreadsheetFormatCellRange( spreadsheet,normalText, row,column,row,column+1);
     }
     spreadsheetMergeCells(spreadsheet, row, row, column, column+1);
-    spreadsheetSetCellValue(spreadsheet, "Total Mounting ", row, column);
+    spreadsheetSetCellValue(spreadsheet, "Total Mounting", row, column);
     spreadsheetFormatCellRange( spreadsheet,contentStyle, row,column,row,column+1);
     for(row=36;row<=41;row++){
         spreadsheetMergeCells(spreadsheet, row, row, column+3, column+5);
@@ -389,12 +462,135 @@
             spreadsheetFormatCellRange(spreadsheet,centerBoldContent, row,column+3,row,column+5);
         }
     }
-    //goldbreakdown row=37 column=10
+    spreadsheetFormatCell(spreadsheet, rightOnlyBorder, row, column+5)
+    //LABOR COSTS: row=43 column=1
+    spreadsheetMergeCells(spreadsheet, row+1, row+1, column, column+5);
+    spreadsheetSetCellValue(spreadsheet, "LABOR COSTS:", row+1, column);
+    spreadsheetFormatCellRange( spreadsheet,leftSectionMainHeading, row+1,column,row+1,column+5);
+    spreadsheetSetCellValue(spreadsheet, "Cost to Assemble", row+2, column);
+    spreadsheetSetCellValue(spreadsheet, "What Needs to Be Assembled", row+3, column);
+    spreadsheetSetCellValue(spreadsheet, "Polish & Finish", row+4, column);
+    spreadsheetSetCellValue(spreadsheet, "Rhodium (If required)", row+5, column);
+    spreadsheetSetCellValue(spreadsheet, "Misc (Texturing, Etc)", row+6, column);
+    spreadsheetSetCellValue(spreadsheet, "Set Center", row+7, column);
+    spreadsheetSetCellValue(spreadsheet, "Set Melee", row+8, column);
+    spreadsheetSetCellValue(spreadsheet, "IGI / GIA", row+9, column);
+    spreadsheetSetCellValue(spreadsheet, "Total Labour", row+10, column);
+    spreadsheetSetCellValue(spreadsheet, 0, row+10, column+3);
+    spreadsheetFormatCellRange(spreadsheet,centerBoldContent, row+10,column+3,row+10,column+5);
+    spreadsheetMergeCells(spreadsheet, row+12, row+12, column, column+1);
+    spreadsheetSetCellValue(spreadsheet, "TOTAL SECTION 1:", row+12, column);
+    spreadsheetMergeCells(spreadsheet, row+12, row+12, column+3, column+5);
+    spreadsheetSetCellValue(spreadsheet, 0, row+12, column+3);
+    spreadsheetFormatCellRange( spreadsheet,bottomBoldBolder, row+12,column,row+12,column+1);
+    spreadsheetFormatCell(spreadsheet, mediumBottomBorder, row+12, column+2);
+    spreadsheetFormatCellRange( spreadsheet,greyBackgroundValue, row+12,column+3,row+12,column+5);
+    for(row=44;row<54;row++){
+       spreadsheetMergeCells(spreadsheet, row, row, column, column+1);
+       spreadsheetFormatCellRange( spreadsheet,normalText, row,column,row,column+1);
+       spreadsheetMergeCells(spreadsheet, row, row, column+3, column+5);
+       if(row<51){
+            spreadsheetFormatCellRange(spreadsheet,bottomRightBoldBorder, row,column+3,row,column+5);
+       }
+       else if(row==51||row==53){
+            spreadsheetFormatCellRange(spreadsheet,rightOnlyBorder, row,column+3,row,column+5);
+       }
+       else if(row>=52){
+            spreadsheetFormatCellRange( spreadsheet,contentStyle, row,column,row,column+1);
+       }
+    }
+    //diamond breakdown
+    row=56;
+    column=1;
+    spreadsheetSetCellValue(spreadsheet, "DIAMOND BREAKDOWN:", row, column);
+    spreadsheetFormatCell(spreadsheet, leftSectionRightAlignedHeading, row, column);
+    spreadsheetMergeCells(spreadsheet, row, row, column+1, column+15);
+    spreadsheetFormatCellRange(spreadsheet, topRightBottomBoldBorder, row, column+1, row, column+15);
+    spreadsheetSetCellValue(spreadsheet, "QTY", row+1, column+1);
+    spreadsheetSetCellValue(spreadsheet, "WT EA", row+1, column+3);
+    spreadsheetSetCellValue(spreadsheet, "BILLED TWT", row+1, column+5);
+    spreadsheetSetCellValue(spreadsheet, "$ PER CT", row+1, column+7);
+    spreadsheetMergeCells(spreadsheet, row+1, row+1, column+9, column+12)
+    spreadsheetSetCellValue(spreadsheet, "SHAPE & MINIMUM WT EA", row+1, column+9);
+    spreadsheetMergeCells(spreadsheet, row+1, row+1, column+14, column+15)
+    spreadsheetSetCellValue(spreadsheet, "EXT PRICE", row+1, column+14);
+    for(column=2;column<=10;column=column+2){
+        spreadsheetFormatCell(spreadsheet, centerBoldText, row+1, column);
+    }
+    spreadsheetFormatCell(spreadsheet, centerBoldText, row+1, column+3);
+    column=1;
+    spreadsheetSetCellValue(spreadsheet, "Center Diamond", row+2, column);
+    for(row=58;row<=66;row++){
+        if(row!=58&&row!=66){
+            spreadsheetSetCellValue(spreadsheet, "Melee", row, column);
+            spreadsheetFormatCell(spreadsheet, bottomBorder, row, column+1)
+            spreadsheetFormatCell(spreadsheet, bottomBorder, row, column+3) 
+        }
+        else if(row==58){
+            spreadsheetFormatCell(spreadsheet, bottomBorder, row, column+1)
+            spreadsheetFormatCell(spreadsheet, bottomBorder, row, column+3)   
+        }
+        else if(row==66){
+            spreadsheetSetCellValue(spreadsheet, "QTY", row, column);
+            spreadsheetSetCellValue(spreadsheet, 0, row, column+1);
+        }
+        spreadsheetFormatCell(spreadsheet, normalText, row, column)
+    }
+    // writeDump(row)
+    // writeDump(column)
+    // abort;
     row=37;
     column=10;
     spreadsheetMergeCells(spreadsheet, row, row, column, column+2);
     spreadsheetSetCellValue(spreadsheet, "Gold Breakdown", row, column);
     spreadsheetFormatCellRange( spreadsheet,goldbreakdownStyle, row,column,row,column+2);
+    spreadsheetSetCellValue(spreadsheet, "Gram:", row+1, column);
+    spreadsheetSetCellValue(spreadsheet, "Labour:", row+2, column);
+    spreadsheetSetCellValue(spreadsheet, "$ Per Gram", row+3, column);
+    spreadsheetSetCellValue(spreadsheet,0, row+3, column+1);
+    for(row=38;row<=40;row++){
+        spreadsheetMergeCells(spreadsheet, row, row, column+1, column+2);
+        if(row!=40){
+            spreadsheetFormatCell(spreadsheet, goldbreakdownContentStyle, row, column);
+            spreadsheetFormatCellRange(spreadsheet, rightBoldBorder, row, column+1, row, column+2);
+        }
+        else{
+            spreadsheetFormatCell(spreadsheet, goldbreakdownLastCellContentStyle, row, column);
+            spreadsheetFormatCellRange(spreadsheet, goldbreakdownLastCellValueStyle, row, column+1, row, column+2);
+        }
+    }
+    row=43;
+    column=10;
+    //LABOR COST DETAILS
+    for(row=43;row<=50;row++){
+        spreadsheetMergeCells(spreadsheet, row, row, column, column+6);
+        if(row==43){
+            spreadsheetSetCellValue(spreadsheet, "LABOR COST DETAILS", row, column);
+            spreadsheetFormatCellRange(spreadsheet, labourCostStyle, row, column,row,column+6);
+        }
+        else if(row>43&&row<50){
+            spreadsheetFormatCellRange(spreadsheet, rightLeftBoldBottomBorder, row, column,row,column+6);
+        }
+        else{
+            spreadsheetFormatCellRange(spreadsheet, rightLeftBottomBoldBorder, row, column,row,column+6);
+        }
+    } 
+    spreadSheetSetColumnWidth(spreadsheet, 1, 31.29);
+    spreadSheetSetColumnWidth(spreadsheet, 2, 13.29);
+    spreadSheetSetColumnWidth(spreadsheet, 3, 3);
+    spreadSheetSetColumnWidth(spreadsheet, 4, 14.14);
+    spreadSheetSetColumnWidth(spreadsheet, 5, 3);
+    spreadSheetSetColumnWidth(spreadsheet, 6, 16.29);
+    spreadSheetSetColumnWidth(spreadsheet, 7, 2);
+    spreadSheetSetColumnWidth(spreadsheet, 8, 13.86);
+    spreadSheetSetColumnWidth(spreadsheet, 9, 2);
+    spreadSheetSetColumnWidth(spreadsheet, 10, 19.29);
+    spreadSheetSetColumnWidth(spreadsheet, 11, 2.26);
+    spreadSheetSetColumnWidth(spreadsheet, 12, 20.71);
+    spreadSheetSetColumnWidth(spreadsheet, 13, 11.29);
+    spreadSheetSetColumnWidth(spreadsheet, 14, 10.14);
+    spreadSheetSetColumnWidth(spreadsheet, 15, 3.71);
+    spreadSheetSetColumnWidth(spreadsheet, 16, 24);
 </cfscript>
 <cfheader name="Content-Disposition" value="inline; filename=#theFile#">
 <cfcontent type="application/vnd.ms-excel" variable="#SpreadSheetReadBinary(spreadsheet)#">

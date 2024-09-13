@@ -57,6 +57,39 @@
         fontSize="10",
         bold="true"
     };
+    rightText={
+        alignment="right",
+        bold="true",
+        font="Arial Narrow",
+        fontsize="11",
+        bottomBorder="medium"
+    }
+    rightTextBottomBoldBorder={
+        bottomBorder="medium",
+        alignment="right",
+        font="Arial Narrow",
+        fontSize="12"
+    };
+    centerIntegerBottomBoldBorder={
+        bottomBorder="medium",
+        fontsize="12",
+        alignment="center",
+        font="Arial Narrow"  
+    }
+    centerDecimalBottomBoldBorder={
+        fontsize="13",
+        alignment='center',
+        dataformat="##0.00",
+        font="Arial",
+        bottomBorder="medium"
+    }
+    dollarSymbolNormalIntegerBottomBorder={
+        fontsize="12",
+        dataformat="$##0.00",
+        alignment="center",
+        bottomborder="thin",
+        font="Arial Narrow"
+    };
     goldbreakdownStyle={
         fgcolor="yellow",
         font="Arial Narrow",
@@ -99,125 +132,163 @@
         bold="true",
         rightBorder="medium"
     };
-    itemCostStyle=structNew();
-        itemCostStyle.topBorder="medium";
-        itemCostStyle.rightBorder="medium";
-        itemCostStyle.font="Arial Narrow";
-        itemCostStyle.bold="true";
-        itemCostStyle.alignment="center";
-        itemCostStyle.fgcolor="light_yellow";
-        itemCostStyle.bottomborder="thin";
-    leftSectionMainHeading=structNew();
-        leftSectionMainHeading.alignment="left";
-        leftSectionMainHeading.rightBorder="medium";
-        leftSectionMainHeading.topBorder="medium";
-        leftSectionMainHeading.fontSize="12";
-        leftSectionMainHeading.bold="true";
-        leftSectionMainHeading.font="Arial Narrow";
-    greyBackgroundValue=structNew();
-        greyBackgroundValue.fgcolor="grey_25_percent";
-        greyBackgroundValue.topBorder="thin";
-        greyBackgroundValue.rightBorder="medium";
-        greyBackgroundValue.bottomBorder="medium";
-        greyBackgroundValue.fontsize="11";
-        greyBackgroundValue.alignment='center';
-        greyBackgroundValue.font="Arial";
-        greyBackgroundValue.dataformat="$##0.00";
-        greyBackgroundValue.bold="true";
-    labourCostStyle=structNew();
-        labourCostStyle.fgcolor="gold";
-        labourCostStyle.topBorder="medium";
-        labourCostStyle.leftBorder="medium";
-        labourCostStyle.bottomBorder="medium";
-        labourCostStyle.rightBorder="medium";
-        labourCostStyle.font="Arial Narrow";
-        labourCostStyle.fontsize="12";
-        labourCostStyle.alignment="center";
-        labourCostStyle.bold="true";
+    itemCostStyle={
+        topBorder="medium",
+        rightBorder="medium",
+        font="Arial Narrow",
+        bold="true",
+        alignment="center",
+        fgcolor="light_yellow",
+        bottomborder="thin"
+    };
+    leftSectionMainHeading={
+        alignment="left",
+        rightBorder="medium",
+        topBorder="medium",
+        fontSize="12",
+        bold="true",
+        font="Arial Narrow"
+    };
+    greyBackgroundValue={
+        fgcolor="grey_25_percent",
+        topBorder="thin",
+        rightBorder="medium",
+        bottomBorder="medium",
+        fontsize="11",
+        alignment='center',
+        font="Arial",
+        dataformat="$##0.00",
+        bold="true"
+    };
+    labourCostStyle={
+        fgcolor="gold",
+        topBorder="medium",
+        leftBorder="medium",
+        bottomBorder="medium",
+        rightBorder="medium",
+        font="Arial Narrow",
+        fontsize="12",
+        alignment="center",
+        bold="true"
+    };
     centerBoldText={
         bold="true",
         alignment="center",
         fontsize="12",
         font="Arial Narrow"
     };
-
-    leftSectionRightAlignedHeading=structNew();
-        leftSectionRightAlignedHeading.alignment="right";
-        leftSectionRightAlignedHeading.font="Arial Narrow";
-        leftSectionRightAlignedHeading.bold="true";
-        leftSectionRightAlignedHeading.fgcolor="light_yellow";
-        leftSectionRightAlignedHeading.fontsize="12";
-        leftSectionRightAlignedHeading.leftBorder="medium";
-        leftSectionRightAlignedHeading.topBorder="medium";
-        leftSectionRightAlignedHeading.bottomBorder="medium";
-    boxBorder=StructNew();
-        boxBorder.bottomborder="thin";
-        boxBorder.rightborder="thin";
-        boxBorder.leftborder="thin";
-    bottomBorder=StructNew();
-        bottomBorder.bottomborder='thin';
-    mediumBottomBorder=StructNew();
-        mediumBottomBorder.bottomborder='medium';
-    rightLeftBoldBottomBorder=structNew();
-        rightLeftBoldBottomBorder.rightBorder="medium";
-        rightLeftBoldBottomBorder.leftBorder="medium";
-        rightLeftBoldBottomBorder.bottomBorder="thin";
-    rightLeftBottomBoldBorder=structNew();
-        rightLeftBottomBoldBorder.leftBorder="medium";
-        rightLeftBottomBoldBorder.bottomBorder="medium";
-        rightLeftBottomBoldBorder.rightBorder="medium";
-        bottomRightBoldBorder=structNew();
-        bottomRightBoldBorder.bottomBorder="thin";
-        bottomRightBoldBorder.rightBorder="medium";
-    bottomBoldBolder=structNew();
-        bottomBoldBolder.bottomBorder="medium";
-        bottomBoldBolder.font="Arial Narrow";
-        bottomBoldBolder.bold="true";
-        bottomBoldBolder.fontSize="12";
-        bottomBoldBolder.alignment="right";
-        rightBoldBorder=structNew();
-        rightBoldBorder.rightBorder="medium";
-        rightBoldBorder.bottomBorder="thin";
-        rightBoldBorder.leftBorder="thin";
-    rightLeftBorder=structNew();
-        rightLeftBorder.rightBorder="medium";
-        rightLeftBorder.leftBorder="thin";
-    rightOnlyBorder=structNew();
-        rightOnlyBorder.rightBorder="medium";
-    fullBoxBorder=StructNew();
-        fullBoxBorder.bottomborder="thin";
-        fullBoxBorder.rightborder="thin";
-        fullBoxBorder.leftborder="thin";
-        fullBoxBorder.topborder="thin";
-        leftBottomBorder=structNew();
-        leftBottomBorder.leftBorder="thin";
-        leftBottomBorder.bottomBorder="thin";
-        leftBottomBorder.font="Arial Narrow";
-        leftBottomBorder.bold="true";
-        leftBottomBorder.fontSize="12";
-        leftBottomBorder.alignment="right";
-    rightBottomBorder=structNew();
-        rightBottomBorder.rightBorder="thin";
-        rightBottomBorder.bottomBorder="thin";
-        rightBottomBorder.font="Arial Narrow";
-        rightBottomBorder.bold="true";
-        rightBottomBorder.fontSize="12";
-        rightBottomBorder.alignment="right";
+    centerContentNormalText={
+        fontsize="12",
+        alignment="center",
+        font="Arial Narrow"
+    };
+    leftSectionRightAlignedHeading={
+        alignment="right",
+        font="Arial Narrow",
+        bold="true",
+        fgcolor="light_yellow",
+        fontsize="12",
+        leftBorder="medium",
+        topBorder="medium",
+        bottomBorder="medium"
+    };
+    boxBorder={
+        bottomborder="thin",
+        rightborder="thin",
+        leftborder="thin"
+    };
     bottomBorder={
+        bottomborder='thin' 
+    };
+    mediumBottomBorder={
+        bottomborder='medium' 
+    };
+    rightLeftBoldBottomBorder={
+        rightBorder="medium",
+        leftBorder="medium",
+        bottomBorder="thin"
+    };
+    rightLeftBottomBoldBorder={
+        leftBorder="medium",
+        bottomBorder="medium",
+        rightBorder="medium"
+    };
+    bottomRightBoldBorder={
+        bottomBorder="thin",
+        rightBorder="medium" 
+    };
+    bottomBoldBolder={
+        bottomBorder="medium",
+        font="Arial Narrow",
+        bold="true",
+        fontSize="12",
+        alignment="right"
+    };
+    rightBoldBorder={
+        rightBorder="medium",
+        bottomBorder="thin",
+        leftBorder="thin"
+    };
+    rightLeftBorder={
+        rightBorder="medium",
+        leftBorder="thin"
+    };
+    rightOnlyBorder={
+        rightBorder="medium"
+    };
+    fullBoxBorder={
+        bottomborder="thin",
+        rightborder="thin",
+        leftborder="thin",
+        topborder="thin"
+    };
+    leftBottomBorder={
+        leftBorder="thin",
+        bottomBorder="thin",
+        font="Arial Narrow",
+        bold="true",
+        fontSize="12",
+        alignment="right"
+    };
+    rightBottomBorder={
+        rightBorder="thin",
+        bottomBorder="thin",
+        font="Arial Narrow",
+        bold="true",
+        fontSize="12",
+        alignment="right"
+    };
+    bottomBorderBoldText={
         bottomBorder="thin",
         font="Arial Narrow",
         bold="true",
         fontSize="12"
     };
-    leftBorder=StructNew();
-        leftBorder.leftborder="thin";
-    rightBorder=structNew();
-        rightBorder.rightborder="thin";
-    topRightBottomBoldBorder=structNew();
-        topRightBottomBoldBorder.topBorder="medium";
-        topRightBottomBoldBorder.rightBorder="medium";
-        topRightBottomBoldBorder.bottomBorder="medium";
-        topRightBottomBoldBorder.fgcolor="light_yellow"
+    bottomBorderNormalText={
+        bottomBorder="thin",
+        font="Arial Narrow",
+        fontSize="12",
+        alignment="center"
+    };
+    leftBorder={
+        leftborder="thin"
+    };
+    rightBorder={
+        rightborder="thin"
+    };
+    topRightBottomBoldBorder={
+        topBorder="medium",
+        rightBorder="medium",
+        bottomBorder="medium",
+        fgcolor="light_yellow"
+    };
+    centerBoldContentsf={
+        fontsize="11",
+        alignment='center',
+        font="Arial",
+        bold="true",
+        rightBorder="medium"
+    }
     theFile="Costco Wholesale D35 Jewelry Item Agreement _ Rev #Dateformat(now(), 'mm-dd-YYYY')#.xlsx";//#DateFormat(rs_product.date_entered,'MMDDYY')#
     // Create a new spreadsheet
     spreadsheet = spreadsheetNew("Gemstones_ Pearl Quote Sheet", true);
@@ -228,7 +299,6 @@
     //setting cell width
     row=1;
     column=1;
-   
     spreadsheetMergeCells(spreadsheet, row, row, column+5, column+9);//startRow, endRow, startColumn, endColumn
     spreadSheetSetRowHeight(spreadsheet,row,28)
     spreadsheetSetCellValue(spreadsheet, "ITEM AGREEMENT", row, column+5);
@@ -249,10 +319,9 @@
     spreadsheetSetCellValue(spreadsheet, "ADDRESS:", row+2, column);
     spreadsheetSetCellValue(spreadsheet, "CITY,STATE ZIP:", row+3, column);
     spreadsheetSetCellValue(spreadsheet, "TELEPHONE ##", row+4, column);
-
     for (row = 5; row <= 9; row++) {
         spreadsheetMergeCells(spreadsheet, row, row, column+1, column+5);    
-        spreadsheetFormatCellRange( spreadsheet,bottomBorder,row, column+1, row, column+5);
+        spreadsheetFormatCellRange( spreadsheet,bottomBorderBoldText,row, column+1, row, column+5);
         spreadsheetFormatCell(spreadsheet, contentStyle, row, column);
     }
     //right side
@@ -270,7 +339,7 @@
     spreadsheetFormatCell(spreadsheet, contentStyle, row+3, column);
      for (row = 5; row < 9; row++) {
         spreadsheetMergeCells(spreadsheet, row, row, column+5, column+9);    
-        spreadsheetFormatCellRange( spreadsheet,bottomBorder,row, column+5, row, column+8);
+        spreadsheetFormatCellRange( spreadsheet,bottomBorderBoldText,row, column+5, row, column+8);
     }
     //left side headline 'item information' row=11
     row=11;
@@ -295,9 +364,8 @@
     spreadsheetSetCellValue(spreadsheet, 0.00, row+2, column+9);
     spreadsheetFormatCell(spreadsheet, centerContent, row+2, column+9);
     for (column = 1; column<6; column=column+2) {
-        spreadsheetFormatCell(spreadsheet, bottomBorder, row+2, column+1);      
+        spreadsheetFormatCell(spreadsheet, bottomBorderBoldText, row+2, column+1);      
     }
-    //left side contents
     row=15;
     column=1;
     spreadsheetSetCellValue(spreadsheet, "Costco Depot (889 / 894 / BOTH):", row, column);
@@ -309,14 +377,14 @@
     spreadsheetSetCellValue(spreadsheet, "Minimum Center CWT:", row+6, column);
     spreadsheetFormatCell(spreadsheet, contentStyle, row+6, column);
     spreadsheetMergeCells(spreadsheet, row+6, row+6, column+1, column+3);
-    spreadsheetFormatCellRange( spreadsheet,bottomBorder,row+6, column+1, row+6, column+3);
+    spreadsheetFormatCellRange( spreadsheet,bottomBorderBoldText,row+6, column+1, row+6, column+3);
     spreadsheetMergeCells(spreadsheet, row+6, row+6, column+4, column+7);
-    spreadsheetFormatCellRange( spreadsheet,bottomBorder,row+6, column+5, row+6, column+7);
+    spreadsheetFormatCellRange( spreadsheet,bottomBorderBoldText,row+6, column+5, row+6, column+7);
     spreadsheetSetCellValue(spreadsheet, "Item Features/Specs:", row+7, column);
     spreadsheetFormatCell(spreadsheet, contentStyle, row+7, column);
     for (row = 15; row <=20; row++) {
         spreadsheetMergeCells(spreadsheet, row, row, column+1, column+7);
-        spreadsheetFormatCellRange( spreadsheet,bottomBorder,row, column+1, row, column+7);
+        spreadsheetFormatCellRange( spreadsheet,bottomBorderBoldText,row, column+1, row, column+7);
         spreadsheetFormatCell(spreadsheet, contentStyle, row, column);
     }
     row=15;
@@ -385,9 +453,9 @@
         spreadsheetSetCellValue(spreadsheet, data.col1Value, row+i, column);
         spreadsheetFormatCellRange(spreadsheet, leftBottomBorder, row+i, column, row+i, column);
         spreadsheetMergeCells(spreadsheet, row+i, row+i, column+1, column+2);
-        spreadsheetFormatCellRange(spreadsheet, bottomBorder, row+i, column+1, row+i, column+2);
+        spreadsheetFormatCellRange(spreadsheet, bottomBorderBoldText, row+i, column+1, row+i, column+2);
         spreadsheetSetCellValue(spreadsheet, data.col3Value, row+i, column+3);
-        spreadsheetFormatCell(spreadsheet, bottomBorder, row+i, column+3);
+        spreadsheetFormatCell(spreadsheet, bottomBorderBoldText, row+i, column+3);
         spreadsheetFormatCellRange(spreadsheet, rightBottomBorder, row+i, column+4, row+i, column+4);
     }
     //ITEM COST DETAILS row=27
@@ -517,28 +585,103 @@
     for(column=2;column<=10;column=column+2){
         spreadsheetFormatCell(spreadsheet, centerBoldText, row+1, column);
     }
-    spreadsheetFormatCell(spreadsheet, centerBoldText, row+1, column+3);
+    spreadsheetFormatCellRange(spreadsheet, centerBoldContent, row+1, column+3, row+1, column+4);
     column=1;
-    spreadsheetSetCellValue(spreadsheet, "Center Diamond", row+2, column);
     for(row=58;row<=66;row++){
-        if(row!=58&&row!=66){
-            spreadsheetSetCellValue(spreadsheet, "Melee", row, column);
-            spreadsheetFormatCell(spreadsheet, bottomBorder, row, column+1)
-            spreadsheetFormatCell(spreadsheet, bottomBorder, row, column+3) 
-        }
-        else if(row==58){
-            spreadsheetFormatCell(spreadsheet, bottomBorder, row, column+1)
-            spreadsheetFormatCell(spreadsheet, bottomBorder, row, column+3)   
+        if(row==58){
+            spreadsheetSetCellValue(spreadsheet, "Center Diamond", row, column);
+            spreadsheetFormatCell(spreadsheet, normalText, row, column)
+            spreadsheetFormatCell(spreadsheet, bottomBorderNormalText, row, column+1)
+            spreadsheetFormatCell(spreadsheet, bottomBorderNormalText, row, column+3)
+            spreadsheetSetCellValue(spreadsheet, 0, row, column+5);
+            spreadsheetFormatCell(spreadsheet, bottomBorderNormalText, row, column+5)
+            spreadsheetSetCellValue(spreadsheet, "##DIV/0!", row, column+7);
+            spreadsheetFormatCell(spreadsheet, bottomBorderNormalText, row, column+7)
         }
         else if(row==66){
             spreadsheetSetCellValue(spreadsheet, "QTY", row, column);
+            spreadsheetFormatCell(spreadsheet, rightTextBottomBoldBorder, row, column)
             spreadsheetSetCellValue(spreadsheet, 0, row, column+1);
+            spreadsheetFormatCell(spreadsheet, centerIntegerBottomBoldBorder, row, column+1)
+            spreadsheetSetCellValue(spreadsheet, 0, row, column+5);
+            spreadsheetFormatCell(spreadsheet, centerDecimalBottomBoldBorder, row, column+5);  
+            spreadsheetSetCellValue(spreadsheet, "DIAMOND TOTAL SECTION 2:", row, column+12)
+            spreadsheetFormatCellRange(spreadsheet, rightText, row, column+11, row, column+12)
+            spreadsheetMergeCells(spreadsheet, row, row, column+14, column+15);
+            spreadsheetSetCellValue(spreadsheet, 0.00, row, column+14)
+            spreadsheetFormatCellRange(spreadsheet, greyBackgroundValue, row, column+14, row, column+15)
         }
-        spreadsheetFormatCell(spreadsheet, normalText, row, column)
+        else{
+            spreadsheetSetCellValue(spreadsheet, "Melee", row, column);
+            spreadsheetFormatCell(spreadsheet, normalText, row, column)
+            spreadsheetFormatCell(spreadsheet, bottomBorderNormalText, row, column+1)
+            spreadsheetFormatCell(spreadsheet, bottomBorderNormalText, row, column+3)
+            spreadsheetSetCellValue(spreadsheet, 0, row, column+5);
+            spreadsheetFormatCell(spreadsheet, bottomBorderNormalText, row, column+5)
+            spreadsheetSetCellValue(spreadsheet, "##DIV/0!", row, column+7);
+            spreadsheetFormatCell(spreadsheet, bottomBorderNormalText, row, column+7)
+        }
+        if(row!=66){
+            spreadsheetMergeCells(spreadsheet, row, row, column+9, column+12);
+            spreadsheetFormatCellRange(spreadsheet, bottomBorder, row, column+9, row, column+12)
+            spreadsheetMergeCells(spreadsheet, row, row, column+14, column+15);
+            spreadsheetFormatCellRange(spreadsheet, bottomRightBoldBorder, row, column+14, row, column+15)
+        }
+    }
+    row=66;
+     emptyCellArray = [3,4,5,7,8,9,10,11,14];
+        for (i = 1; i <= arrayLen(emptyCellArray); i++) {
+                spreadsheetFormatCell(spreadsheet, bottomBoldBolder, row, emptyCellArray[i])
     }
     // writeDump(row)
     // writeDump(column)
     // abort;
+   // COLOR BREAKDOWN: row=66 column=1
+   row=68;
+    spreadsheetSetCellValue(spreadsheet, "COLOR BREAKDOWN:", row, column);
+    spreadsheetFormatCell(spreadsheet, leftSectionRightAlignedHeading, row, column);
+    spreadsheetMergeCells(spreadsheet, row, row, column+1, column+15);
+    spreadsheetFormatCellRange(spreadsheet, topRightBottomBoldBorder, row, column+1, row, column+15);
+    spreadsheetSetCellValue(spreadsheet, "QTY", row+1, column+1);
+    spreadsheetSetCellValue(spreadsheet, "WT EA", row+1, column+3);
+    spreadsheetSetCellValue(spreadsheet, "SHAPE", row+1, column+5);
+    spreadsheetSetCellValue(spreadsheet, "MM SIZES", row+1, column+7);
+    spreadsheetSetCellValue(spreadsheet, "$ PER CT", row+1, column+9);
+    spreadsheetSetCellValue(spreadsheet, "EXT PRICE", row+1, column+11);
+    spreadsheetSetCellValue(spreadsheet, "COLOR", row+1, column+15);
+    for(column=2;column<=12;column=column+2){
+        spreadsheetFormatCell(spreadsheet, centerBoldText, row+1, column);
+    }
+    spreadsheetFormatCell(spreadsheet, centerBoldContentsf, row+1, column+2);
+    column=1;
+
+    for(row=70;row<=74;row++){
+        spreadsheetSetCellValue(spreadsheet, "Color", row, column);
+        spreadsheetFormatCell(spreadsheet, normalText, row, column)
+    }
+    for(column=2;column<=16;column=column+2){
+        for(row=70;row<=74;row++){
+            if(column>=2&&column<12){
+                spreadsheetFormatCell(spreadsheet, bottomBorder, row, column)
+            }
+            else if(column==12){
+                spreadsheetSetCellValue(spreadsheet, 0, row, column)
+                spreadsheetFormatCell(spreadsheet, dollarSymbolNormalIntegerBottomBorder, row, column)
+            }
+            else if(column==16){
+                spreadsheetFormatCell(spreadsheet, bottomRightBoldBorder, row, column)
+            }
+        }
+    }
+    for(column=1;column<=16;column++){
+        if(column>=1&&column<=7||column==11||column>=13&&column<=15){
+            spreadsheetFormatCell(spreadsheet, bottomBoldBolder, row, column)
+        }
+        else if(column==16){
+            spreadsheetFormatCell(spreadsheet, goldbreakdownLastCellValueStyle, row, column)
+        }
+
+    }
     row=37;
     column=10;
     spreadsheetMergeCells(spreadsheet, row, row, column, column+2);

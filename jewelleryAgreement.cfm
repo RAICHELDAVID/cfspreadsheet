@@ -132,6 +132,16 @@
         bold="true",
         rightBorder="medium"
     };
+    paleBlueBackgroundCenterBoldInteger={
+        fgcolor="pale_blue",
+        bold="true",
+        dataformat="$##0.00",
+        leftborder="thin",
+        bottomborder="medium",
+        alignment="center",
+        font="Arial Narrow",
+        fontsize="12"
+    }
     itemCostStyle={
         topBorder="medium",
         rightBorder="medium",
@@ -288,6 +298,10 @@
         font="Arial",
         bold="true",
         rightBorder="medium"
+    }
+    rightBottomBoldBorder={
+        rightborder="medium",
+        bottomBorder="medium"
     }
     theFile="Costco Wholesale D35 Jewelry Item Agreement _ Rev #Dateformat(now(), 'mm-dd-YYYY')#.xlsx";//#DateFormat(rs_product.date_entered,'MMDDYY')#
     // Create a new spreadsheet
@@ -678,10 +692,14 @@
             spreadsheetFormatCell(spreadsheet, bottomBoldBolder, row, column)
         }
         else if(column==16){
-            spreadsheetFormatCell(spreadsheet, goldbreakdownLastCellValueStyle, row, column)
+            spreadsheetFormatCell(spreadsheet, rightBottomBoldBorder, row, column)
         }
-
     }
+    column=8;
+    spreadsheetSetCellValue(spreadsheet, "COLOUR TOTAL SECTION 3:", row, column+2)
+    spreadsheetFormatCellRange(spreadsheet, rightText, row, column, row, column+2)
+    spreadsheetSetCellValue(spreadsheet, 0, row, column+4);
+    spreadsheetFormatCell(spreadsheet, paleBlueBackgroundCenterBoldInteger, row, column+4)
     row=37;
     column=10;
     spreadsheetMergeCells(spreadsheet, row, row, column, column+2);

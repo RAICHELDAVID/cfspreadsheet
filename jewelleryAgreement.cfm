@@ -21,6 +21,12 @@
         fontSize="12",
         alignment="right"  
     };
+    hyperLinkStyle={
+        font="Arial Narrow",
+        fontsize="12",
+        leftBorder="thin",
+        rightBorder="thin"
+    }
     subHeadingStyle={
         font="Arial Narrow",
         bold="true",
@@ -34,6 +40,27 @@
         fontSize="12",
         alignment="right"
     };
+    leftNormalText={
+        font="Arial Narrow",
+        fontSize="12",
+        alignment="left"
+    }
+    leftNormalTextBottomBorder={
+        font="Arial Narrow",
+        fontSize="12",
+        alignment="left",
+        bottomBorder="thin" 
+    }
+    rightBorderNormalText={
+        rightBorder="thin",
+        font="Arial Narrow",
+        fontSize="12"
+    }
+    centerNormalText={
+        font="Arial Narrow",
+        fontSize="12",
+        alignment="center"  
+    }
     leftBottomNormalText={
         font="Arial Narrow",
         fontSize="12",
@@ -41,6 +68,17 @@
         leftBorder="thin",
         bottomBorder="thin"
     };
+    leftBottomBorder={
+        leftBorder="thin",
+        bottomBorder="thin"
+    }
+    rightBoldUnderlineText={
+        alignment="right",
+        bold="true",
+        underline="true",
+        font="Arial Narrow",
+        fontsize="12"
+    }
     subHeadingBorder={
         bottomborder="thin",
         topborder="thin",
@@ -63,6 +101,17 @@
         font="Arial Narrow",
         fontsize="11",
         bottomBorder="medium"
+    }
+    rightTextLeftBorder={
+        alignment="right",
+        font="Arial Narrow",
+        fontsize="12"
+    }
+    rightTextBottomBorder={
+        alignment="right",
+        font="Arial Narrow",
+        fontsize="12",
+        bottomBorder="thin"  
     }
     rightTextBottomBoldBorder={
         bottomBorder="medium",
@@ -90,6 +139,20 @@
         bottomborder="thin",
         font="Arial Narrow"
     };
+    percentageSymbolNormalIntegerBottomBorder={
+        dataformat="0%",
+        alignment="center",
+        font="Arial Narrow",
+        bottomborder="thin",
+        fontsize="12"
+    }
+    percentageSymbolNormalDecimalBottomBorders={
+        dataformat="0.00%",
+        alignment="center",
+        font="Arial Narrow",
+        bottomborder="thin",
+        fontsize="12"
+    }
     goldbreakdownStyle={
         fgcolor="yellow",
         font="Arial Narrow",
@@ -132,6 +195,16 @@
         bold="true",
         rightBorder="medium"
     };
+    paleBlueBackgroundCenterBoldInteger={
+        fgcolor="pale_blue",
+        bold="true",
+        dataformat="$##0.00",
+        leftborder="thin",
+        bottomborder="medium",
+        alignment="center",
+        font="Arial Narrow",
+        fontsize="12"
+    }
     itemCostStyle={
         topBorder="medium",
         rightBorder="medium",
@@ -141,6 +214,13 @@
         fgcolor="light_yellow",
         bottomborder="thin"
     };
+    justify={
+        alignment="justify",
+        bold="true",
+        italic="true",
+        font="Arial Narrow",
+        fontsize="12"
+    }
     leftSectionMainHeading={
         alignment="left",
         rightBorder="medium",
@@ -242,6 +322,27 @@
         leftborder="thin",
         topborder="thin"
     };
+    fullBorderCenterBoldLightYellowBackground={
+        bottomborder="thin",
+        rightborder="thin",
+        leftborder="thin",
+        topborder="thin",
+        fgcolor="light_yellow",
+        alignment="center",
+        bold="true",
+        fontsize="12",
+        font="Arial Narrow" 
+    }
+    leftBottomRightCenterBoldLightYellowBackground={
+        bottomborder="thin",
+        rightborder="thin",
+        leftborder="thin",
+        fgcolor="light_yellow",
+        alignment="center",
+        bold="true",
+        fontsize="12",
+        font="Arial Narrow" 
+    }
     leftBottomBorder={
         leftBorder="thin",
         bottomBorder="thin",
@@ -289,6 +390,14 @@
         bold="true",
         rightBorder="medium"
     }
+    rightBottomBoldBorder={
+        rightborder="medium",
+        bottomBorder="medium"
+    }
+    rightNormalBorder={
+        rightBorder="thin"
+    }
+    
     theFile="Costco Wholesale D35 Jewelry Item Agreement _ Rev #Dateformat(now(), 'mm-dd-YYYY')#.xlsx";//#DateFormat(rs_product.date_entered,'MMDDYY')#
     // Create a new spreadsheet
     spreadsheet = spreadsheetNew("Gemstones_ Pearl Quote Sheet", true);
@@ -296,17 +405,16 @@
     spreadSheetSetActiveSheet(spreadsheet, 'Diamond Quote Sheet');
     imagePath = expandPath("images/Costco_Logo.png"); // Adjust the path to your image
     spreadsheetAddImage(spreadsheet, imagePath, "1, 1, 3, 2");//startRow,startColumn,endRow,endColumn
-    //setting cell width
     row=1;
     column=1;
-    spreadsheetMergeCells(spreadsheet, row, row, column+5, column+9);//startRow, endRow, startColumn, endColumn
+    spreadsheetMergeCells(spreadsheet, row, row, column, column+15);//startRow, endRow, startColumn, endColumn
     spreadSheetSetRowHeight(spreadsheet,row,28)
-    spreadsheetSetCellValue(spreadsheet, "ITEM AGREEMENT", row, column+5);
-    spreadsheetFormatCell(spreadsheet, itemAgreementStyle, row, column+5);
+    spreadsheetSetCellValue(spreadsheet, "ITEM AGREEMENT", row, column);
+    spreadsheetFormatCellRange(spreadsheet, itemAgreementStyle, row, column, row, column+15)
     spreadSheetSetRowHeight(spreadsheet,row+1,18)
-    spreadsheetMergeCells(spreadsheet, row+1, row+1, column+4, column+10);
-    spreadsheetSetCellValue(spreadsheet, "JEWELRY QUOTE FORM", row+1, column+4);
-    spreadsheetFormatCell(spreadsheet, jewelryQuoteFormStyle, row+1, column+4);
+    spreadsheetMergeCells(spreadsheet, row+1, row+1, column, column+15);
+    spreadsheetSetCellValue(spreadsheet, "JEWELRY QUOTE FORM", row+1, column);
+    spreadsheetFormatCellRange(spreadsheet, jewelryQuoteFormStyle, row+1, column, row+1, column+15)
     spreadsheetMergeCells(spreadsheet, row+2, row+2, column, column+5);
     spreadsheetSetCellValue(spreadsheet, "SUPPLIER INFORMATION", row+2, column);
     spreadsheetFormatCell(spreadsheet, subHeadingStyle, row+2, column);
@@ -633,11 +741,8 @@
         for (i = 1; i <= arrayLen(emptyCellArray); i++) {
                 spreadsheetFormatCell(spreadsheet, bottomBoldBolder, row, emptyCellArray[i])
     }
-    // writeDump(row)
-    // writeDump(column)
-    // abort;
    // COLOR BREAKDOWN: row=66 column=1
-   row=68;
+    row=68;
     spreadsheetSetCellValue(spreadsheet, "COLOR BREAKDOWN:", row, column);
     spreadsheetFormatCell(spreadsheet, leftSectionRightAlignedHeading, row, column);
     spreadsheetMergeCells(spreadsheet, row, row, column+1, column+15);
@@ -678,10 +783,14 @@
             spreadsheetFormatCell(spreadsheet, bottomBoldBolder, row, column)
         }
         else if(column==16){
-            spreadsheetFormatCell(spreadsheet, goldbreakdownLastCellValueStyle, row, column)
+            spreadsheetFormatCell(spreadsheet, rightBottomBoldBorder, row, column)
         }
-
     }
+    column=8;
+    spreadsheetSetCellValue(spreadsheet, "COLOUR TOTAL SECTION 3:", row, column+2)
+    spreadsheetFormatCellRange(spreadsheet, rightText, row, column, row, column+2)
+    spreadsheetSetCellValue(spreadsheet, 0, row, column+4);
+    spreadsheetFormatCell(spreadsheet, paleBlueBackgroundCenterBoldInteger, row, column+4)
     row=37;
     column=10;
     spreadsheetMergeCells(spreadsheet, row, row, column, column+2);
@@ -717,9 +826,263 @@
         else{
             spreadsheetFormatCellRange(spreadsheet, rightLeftBottomBoldBorder, row, column,row,column+6);
         }
-    } 
+    }
+    row=77;
+    for(column=10;column<=16;column++){
+        spreadsheetFormatCell(spreadsheet, bottomBorder, row, column)
+    }
+    column=1;
+    //TOTAL SECTIONS 1-3:
+    spreadsheetSetCellValue(spreadsheet, "TOTAL SECTIONS 1-3:", row, column+1)
+    spreadsheetSetCellValue(spreadsheet, "Vendor Allowance %:", row+1, column+1) 
+    spreadsheetSetCellValue(spreadsheet, "Vendor Allowance $:", row+2, column+1)
+    spreadsheetSetCellValue(spreadsheet, "Marketing Allowance %:", row+3, column)
+    spreadsheetSetCellValue(spreadsheet, "Marketing Allowance $:", row+4, column)
+    spreadsheetSetCellValue(spreadsheet, "Spoils Allowance %:", row+5, column+1)
+    spreadsheetSetCellValue(spreadsheet, "Sub Total:", row+6, column)
+    spreadsheetSetCellValue(spreadsheet, "Total DFI % (No Spoils):", row+7, column)
+    spreadsheetSetCellValue(spreadsheet, "Total Net Cost:", row+8, column)
+    for(row=77;row<=85;row++){
+        if(row==77){
+            spreadsheetFormatCellRange(spreadsheet, rightBoldUnderlineText, row, column, row, column+1)
+            continue;
+        }
+        else if(row==80||row==81||row==83||row==84||row==85){
+            spreadsheetMergeCells(spreadsheet, row, row, column, column+1)
+        }
+        spreadsheetFormatCellRange(spreadsheet, normalText, row, column, row, column+1)
+    }
+    column=4;
+    for(row=77;row<=85;row++){
+        spreadsheetMergeCells(spreadsheet, row, row, column, column+1);
+        if(row==77||row==79||row==81){
+            spreadsheetSetCellValue(spreadsheet, 0, row, column)
+            spreadsheetFormatCellRange(spreadsheet, dollarSymbolNormalIntegerBottomBorder, row, column, row, column+1)
+        }
+        else if(row==82){
+            spreadsheetFormatCellRange(spreadsheet, bottomBorder, row, column, row, column+1)
+        }
+        else if(row==83||row==85){
+            spreadsheetSetCellValue(spreadsheet, 0, row, column)
+        }
+    }
+    row=78;
+    //code is not completed
+    spreadsheetSetCellValue(spreadsheet, 0.02, row, column);
+    spreadsheetFormatCellRange(spreadsheet, percentageSymbolNormalIntegerBottomBorder, row, column, row, column+1)
+    spreadsheetSetCellValue(spreadsheet, 0.005, row+2, column);
+    spreadsheetFormatCellRange(spreadsheet, percentageSymbolNormalDecimalBottomBorders, row+2, column, row+2, column+1) 
+    //Socialized Costing:
+    column=1
+    row=87;
+    spreadsheetSetCellValue(spreadsheet, "Socialized Costing:", row, column+1)
+    spreadsheetFormatCellRange(spreadsheet, rightBoldUnderlineText, row, column, row, column+1)
+    for(row=88;row<=91;row++){
+        if(row==90||row==91){
+            spreadsheetMergeCells(spreadsheet, row, row, column, column+1)
+            spreadsheetSetCellValue(spreadsheet, "Finished DWT XXX:", row, column)
+        }
+        else{
+            spreadsheetSetCellValue(spreadsheet, "Finished DWT XXX:", row, column+1)
+        }
+        spreadsheetFormatCellRange(spreadsheet, normalText, row, column, row, column+1)
+    }
+
+    spreadsheetMergeCells(spreadsheet, row, row, column, column+1)
+    spreadsheetSetCellValue(spreadsheet, "Socialized Cost All Sizes:", row, column)
+    spreadsheetFormatCellRange(spreadsheet, normalText, row, column, row, column+1)
+    for(row=87;row<=92;row++){
+        spreadsheetMergeCells(spreadsheet, row, row, column+3, column+4);
+        spreadsheetFormatCellRange(spreadsheet, bottomBorder, row, column+3, row, column+4)
+    }
+    row=81;
+    column=10;
+    spreadsheetMergeCells(spreadsheet, row, row, column, column+6)
+    spreadsheetSetCellValue(spreadsheet, "SIZING", row, column)
+    spreadsheetFormatCellRange(spreadsheet, fullBorderCenterBoldLightYellowBackground, row, column, row, column+6)
+    spreadsheetSetCellValue(spreadsheet, "If a Ring, Is It Sizeable?", row+1, column+2)
+    spreadsheetSetCellValue(spreadsheet, "If Yes, How Much Can Ring Be Sized?", row+2, column+2)
+    spreadsheetSetCellValue(spreadsheet, "Finished Cost 5:", row+3, column+2)
+    spreadsheetSetCellValue(spreadsheet, "Finished Cost 6:", row+4, column+2)
+    spreadsheetSetCellValue(spreadsheet, "Finished Cost 7:", row+5, column+2)
+    spreadsheetSetCellValue(spreadsheet, "Finished Cost 8:", row+6, column+2)
+    for(row=82;row<88;row++){
+        spreadsheetFormatCellRange(spreadsheet, rightTextLeftBorder, row, column, row, column+2)
+        spreadsheetFormatCell(spreadsheet, leftBorder, row, column)
+        spreadsheetMergeCells(spreadsheet, row, row, column+3, column+5)
+        spreadsheetFormatCellRange(spreadsheet, bottomBorder, row, column+3, row, column+5)
+        spreadsheetFormatCell(spreadsheet, rightNormalBorder, row, column+6)
+    }
+    spreadsheetSetCellValue(spreadsheet, "Socialized Cost All Sizes:", row, column+2)
+    spreadsheetFormatCellRange(spreadsheet, rightTextBottomBorder, row, column, row, column+2)
+    spreadsheetFormatCell(spreadsheet, leftBottomBorder, row, column)
+    spreadsheetFormatCell(spreadsheet, bottomBorder, row, column+1)
+    spreadsheetMergeCells(spreadsheet, row, row, column+3, column+5)
+    spreadsheetFormatCellRange(spreadsheet, bottomBorder, row, column+3, row, column+5)
+    spreadsheetFormatCell(spreadsheet, rightBottomBorder, row, column+6)
+    row=90;
+    spreadsheetMergeCells(spreadsheet, row, row, column, column+6)
+    spreadsheetSetCellValue(spreadsheet, "SHIPPING", row, column)
+    spreadsheetFormatCellRange(spreadsheet, leftBottomRightCenterBoldLightYellowBackground, row, column, row, column+6)
+    spreadsheetSetCellValue(spreadsheet, "Vendor Shipping Terms COL / PPD:", row+1, column+2)
+    spreadsheetSetCellValue(spreadsheet, "Ship Point (City, State & Zip):", row+2, column)
+    spreadsheetSetCellValue(spreadsheet, "Ship Lead time (In Days):", row+3, column)
+    spreadsheetSetCellValue(spreadsheet, "Drop Ship Y/N:", row+5, column)
+    spreadsheetSetCellValue(spreadsheet, "Costco Account Y/N:", row+6, column)
+    for(row=91;row<98;row++){
+        if(row==92||row==93||row==95||row==96){
+            spreadsheetMergeCells(spreadsheet, row, row, column, column+2)
+            spreadsheetFormatCellRange(spreadsheet, rightTextLeftBorder, row, column, row, column+2)
+            spreadsheetFormatCell(spreadsheet, leftBorder, row, column)         
+        }
+        else if(row==91){
+            spreadsheetFormatCellRange(spreadsheet, rightTextLeftBorder, row, column, row, column+2)
+            spreadsheetFormatCell(spreadsheet, leftBorder, row, column)        
+        }
+        else if(row==94){
+            spreadsheetMergeCells(spreadsheet, row, row, column, column+6)
+            spreadsheetSetCellFormula(spreadsheet, 'HYPERLINK("http://costco.com/", "Costco.com Shipping Information (if applicable)")', row, column)
+            spreadsheetFormatCell(spreadsheet, hyperLinkStyle, row, column)
+        }
+    }
+    for(row=91;row<=97;row++){
+        if(row==91||row==92){
+            spreadsheetMergeCells(spreadsheet, row, row, column+3, column+6)
+            spreadsheetFormatCellRange(spreadsheet, rightBottomBorder, row, column+3, row, column+6)        
+        }
+        else if(row==93||row==94){
+            spreadsheetFormatCell(spreadsheet, rightBorder, row, column+6)
+        }
+        else if(row==95||row==96){
+            spreadsheetMergeCells(spreadsheet, row, row, column+3, column+5)
+            spreadsheetFormatCellRange(spreadsheet, bottomBorder, row, column+3, row, column+5)
+            spreadsheetFormatCell(spreadsheet, rightBorder, row, column+6)
+        }
+        else if(row==97){
+            spreadsheetMergeCells(spreadsheet, row, row, column, column+2)
+            spreadsheetSetCellValue(spreadsheet, "Vendor Carrier Name:", row, column)
+            spreadsheetFormatCellRange(spreadsheet, leftBottomNormalText, row, column, row, column+2)
+            spreadsheetMergeCells(spreadsheet, row, row, column+3, column+5)
+            spreadsheetFormatCellRange(spreadsheet, bottomBorder, row, column+3, row, column+5)
+            spreadsheetFormatCell(spreadsheet, rightBottomBorder, row, column+6)
+        }
+    }
+    spreadsheetMergeCells(spreadsheet, row+1, row+1, column, column+6)
+    spreadsheetSetCellValue(spreadsheet, "DISPOSITION", row+1, column)
+    spreadsheetFormatCellRange(spreadsheet, fullBorderCenterBoldLightYellowBackground, row+1, column, row+1, column+6)
+    spreadsheetSetCellValue(spreadsheet, "Credit Available Y/N:", row+2, column+2);
+    spreadsheetSetCellValue(spreadsheet, "Spoils Allowance Y/N:", row+3, column+2);
+    spreadsheetSetCellValue(spreadsheet, "RTV Y/N:", row+4, column+2);
+    spreadsheetSetCellValue(spreadsheet, "If No, Salvage or Destroy", row+5, column+2);
+    for(row=100;row<104;row++){
+        spreadsheetFormatCellRange(spreadsheet, rightTextLeftBorder, row, column, row, column+2)
+        spreadsheetFormatCell(spreadsheet, leftBorder, row, column)    
+        spreadsheetMergeCells(spreadsheet, row, row, column+3, column+5)
+        spreadsheetFormatCellRange(spreadsheet, bottomBorder, row, column+3, row, column+5)
+        spreadsheetFormatCell(spreadsheet, rightBorder, row, column+6)
+    }
+    for(column=10;column<=16;column++){
+        if(column==10){
+            spreadsheetFormatCell(spreadsheet, leftBottomBorder, row, column)
+        }
+        else if(column==16){
+            spreadsheetFormatCell(spreadsheet, rightBottomBorder, row, column)
+        }
+        else{
+            spreadsheetFormatCell(spreadsheet, bottomBorder, row, column)
+        }
+    }
+    //payment terms
+    column=10;//row=104
+    spreadsheetMergeCells(spreadsheet, row+2, row+2, column, column+6)
+    spreadsheetSetCellValue(spreadsheet, "PAYMENT TERMS", row+2, column)
+    spreadsheetFormatCellRange(spreadsheet, fullBorderCenterBoldLightYellowBackground, row+2, column, row+2, column+6)
+    spreadsheetFormatCell(spreadsheet, leftBottomBorder, row+3, column)
+    spreadsheetSetCellValue(spreadsheet, "% if paid within", row+3, column+2)
+    spreadsheetFormatCell(spreadsheet, leftNormalText, row+3, column+2)
+    spreadsheetFormatCell(spreadsheet, bottomBorder, row+3, column+3)
+    spreadsheetMergeCells(spreadsheet, row+3, row+3, column+4, column+5)
+    spreadsheetSetCellValue(spreadsheet, "days from", row+3, column+4)
+    spreadsheetFormatCell(spreadsheet, centerNormalText, row+3, column+4)
+    spreadsheetSetCellValue(spreadsheet, "reciept of goods (ROG)", row+3, column+6)
+    spreadsheetFormatCell(spreadsheet, rightBorderNormalText, row+3, column+6)
+    spreadsheetFormatCell(spreadsheet, leftBorder, row+4, column)
+    spreadsheetFormatCellRange(spreadsheet, leftNormalTextBottomBorder, row+4, column, row+4, column+1)
+    spreadsheetSetCellValue(spreadsheet, "final payment due in", row+4, column)
+    spreadsheetSetCellValue(spreadsheet, "days.", row+4, column+3)
+    spreadsheetFormatCell(spreadsheet, leftNormalTextBottomBorder, row+4, column+3)
+    for(column=12;column<=15;column++){
+        if(column!=13)
+        spreadsheetFormatCell(spreadsheet, bottomBorder, row+4, column)
+    }
+    spreadsheetFormatCell(spreadsheet, rightBottomBorder, row+4, column)
+    row=94;
+    column=1
+    spreadsheetMergeCells(spreadsheet, row, row, column, column+5);
+    spreadsheetSetCellValue(spreadsheet, "PRODUCT SOURCE  INFORMATION", row, column);
+    spreadsheetFormatCell(spreadsheet, subHeadingStyle, row, column);
+    spreadsheetFormatCellRange( spreadsheet,subHeadingBorder, row,column,row,column+5);
+    spreadsheetSetCellValue(spreadsheet, "Country Where Rough Was Mined:", row+1, column)
+    spreadsheetSetCellValue(spreadsheet, "Mining Company Where Purchased:", row+2, column)
+    spreadsheetSetCellValue(spreadsheet, "Country Where Diamond Was Cut:", row+3, column)
+    spreadsheetSetCellValue(spreadsheet, "Country of Origin:", row+4, column)
+    spreadsheetSetCellValue(spreadsheet, "Country of Manufacture:", row+5, column)
+    spreadsheetSetCellValue(spreadsheet, "Metal Source / Certificate Type:", row+6, column)
+    for(row=95;row<=100;row++){
+        spreadsheetFormatCell(spreadsheet, normalText, row, column)
+        spreadsheetMergeCells(spreadsheet, row, row, column+1, column+5)
+        spreadsheetFormatCellRange(spreadsheet, rightBottomBorder, row, column+1, row, column+5)
+    }
+    spreadsheetFormatCell(spreadsheet, rightBorder, row, column+5)
+    //FACTORY INFORMATION row=101
+    spreadsheetMergeCells(spreadsheet, row+1, row+1, column, column+5);
+    spreadsheetSetCellValue(spreadsheet, "FACTORY INFORMATION", row+1, column);
+    spreadsheetFormatCell(spreadsheet, subHeadingStyle, row+1, column);
+    spreadsheetFormatCellRange( spreadsheet,subHeadingBorder, row+1,column,row+1,column+5);
+    spreadsheetSetCellValue(spreadsheet, "Factory Name:", row+2, column)
+    spreadsheetSetCellValue(spreadsheet, "Factory Address:", row+3, column)
+    spreadsheetSetCellValue(spreadsheet, "Factory Contact Name:", row+5, column)
+    spreadsheetSetCellValue(spreadsheet, "Factory Contact Email:", row+6, column)
+    spreadsheetSetCellValue(spreadsheet, "Factory Contact Phone:", row+7, column)
+    spreadsheetSetCellValue(spreadsheet, "Date of Last GMP Audit:", row+8, column)
+    spreadsheetSetCellValue(spreadsheet, "Date of Last Code of Conduct Audit:", row+9, column)
+    for(row=103;row<=110;row++){
+        if(row!=105){
+            spreadsheetFormatCell(spreadsheet, normalText, row, column)
+        }
+    }
+    for(row=103;row<=111;row++){
+        if(row==109||row==110){
+            for(column=2;column<=5;column++){
+                spreadsheetFormatCell(spreadsheet, bottomBorder, row, column)
+                spreadsheetFormatCell(spreadsheet, rightBorder, row, column+1)
+            }
+        }
+        else if(row==111){
+            for(column=1;column<=5;column++){
+                spreadsheetFormatCell(spreadsheet, bottomBorder, row, column)
+                spreadsheetFormatCell(spreadsheet, rightBottomBorder, row, column+1)
+            }
+        }
+        else{
+            for(column=2;column<=5;column++){
+                spreadsheetFormatCell(spreadsheet, bottomBorder, row, column)
+                spreadsheetFormatCell(spreadsheet, rightBottomBorder, row, column+1)
+            }
+        }
+
+    }
+    row=112;
+    endrow=120;
+    column=1;
+    endcolumn=16;
+    //declaration
+    // spreadsheetMergeCells(spreadsheet, row, endrow, column, endcolumn)
+    spreadsheetMergeCells(spreadsheet, 112, 118, 1, 16)
+    spreadsheetSetCellValue(spreadsheet, "The diamonds referenced herein have been sourced / purchased from legitimate sources not involved in funding conflict, in compliance with all applicable trade sanctions, United Nations Resolutions, and corresponding national laws. The seller guarantees that these diamonds are conflict free and confirms adherence to the World Diamond Council System of Warranties Guidelines. The seller further certifies that the diamond jewelry and non-industrial diamonds referenced herein were not mined, extracted, produced, or manufactured wholly or in part in the Russian Federation, notwithstanding whether such diamonds have been substantially transformed into other products outside of the Russian Federation, and are not of Russian Federation origin or were not exported from the Russian Federation. The seller agrees that Costco may audit the seller's compliance with these statements and certifications, and the seller shall cooperate fully with any such audit request.", 112, 1)
+    spreadsheetFormatCellRange(spreadsheet, justify, 112, 1, 118, 16)
     spreadSheetSetColumnWidth(spreadsheet, 1, 31.29);
-    spreadSheetSetColumnWidth(spreadsheet, 2, 13.29);
+    spreadSheetSetColumnWidth(spreadsheet, 2, 13);
     spreadSheetSetColumnWidth(spreadsheet, 3, 3);
     spreadSheetSetColumnWidth(spreadsheet, 4, 14.14);
     spreadSheetSetColumnWidth(spreadsheet, 5, 3);

@@ -31,10 +31,18 @@
         font="Arial Narrow",
         bold="true",
         alignment="center",
-        fgcolor="light_yellow",
+        //fgcolor="light_yellow",
         topborder="thin",
-        bottomborder="thin"
+        bottomborder="thin",
+        fontsize="12"
     };
+    dateStyle={
+        font="Arial Narrow",
+        fontsize="8",
+        italic="true",
+        bold="true",
+        alignment="left"
+    }
     normalText={        
         font="Arial Narrow",
         fontSize="12",
@@ -95,12 +103,24 @@
         fontSize="10",
         bold="true"
     };
+    centerText={
+        alignment="center",
+        bold="true",
+        font="Arial Narrow",
+        fontsize="12"
+    }
     rightText={
         alignment="right",
         bold="true",
         font="Arial Narrow",
         fontsize="11",
         bottomBorder="medium"
+    }
+    rightTextNoBorder={
+        alignment="right",
+        bold="true",
+        font="Arial Narrow",
+        fontsize="12"
     }
     rightTextLeftBorder={
         alignment="right",
@@ -196,7 +216,7 @@
         rightBorder="medium"
     };
     paleBlueBackgroundCenterBoldInteger={
-        fgcolor="pale_blue",
+        // fgcolor="pale_blue",
         bold="true",
         dataformat="$##0.00",
         leftborder="thin",
@@ -211,8 +231,8 @@
         font="Arial Narrow",
         bold="true",
         alignment="center",
-        fgcolor="light_yellow",
-        bottomborder="thin"
+        bottomborder="thin",
+        fontsize="12"
     };
     justify={
         alignment="justify",
@@ -230,7 +250,6 @@
         font="Arial Narrow"
     };
     greyBackgroundValue={
-        fgcolor="grey_25_percent",
         topBorder="thin",
         rightBorder="medium",
         bottomBorder="medium",
@@ -241,7 +260,6 @@
         bold="true"
     };
     labourCostStyle={
-        fgcolor="gold",
         topBorder="medium",
         leftBorder="medium",
         bottomBorder="medium",
@@ -266,7 +284,6 @@
         alignment="right",
         font="Arial Narrow",
         bold="true",
-        fgcolor="light_yellow",
         fontsize="12",
         leftBorder="medium",
         topBorder="medium",
@@ -327,7 +344,6 @@
         rightborder="thin",
         leftborder="thin",
         topborder="thin",
-        fgcolor="light_yellow",
         alignment="center",
         bold="true",
         fontsize="12",
@@ -337,7 +353,6 @@
         bottomborder="thin",
         rightborder="thin",
         leftborder="thin",
-        fgcolor="light_yellow",
         alignment="center",
         bold="true",
         fontsize="12",
@@ -380,8 +395,7 @@
     topRightBottomBoldBorder={
         topBorder="medium",
         rightBorder="medium",
-        bottomBorder="medium",
-        fgcolor="light_yellow"
+        bottomBorder="medium"
     };
     centerBoldContentsf={
         fontsize="11",
@@ -403,8 +417,8 @@
     spreadsheet = spreadsheetNew("Gemstones_ Pearl Quote Sheet", true);
     spreadsheetCreateSheet(spreadsheet, 'Diamond Quote Sheet');
     spreadSheetSetActiveSheet(spreadsheet, 'Diamond Quote Sheet');
-    imagePath = expandPath("images/Costco_Logo.png"); // Adjust the path to your image
-    spreadsheetAddImage(spreadsheet, imagePath, "1, 1, 3, 2");//startRow,startColumn,endRow,endColumn
+   /* imagePath = expandPath("images/Costco_Logo.png"); // Adjust the path to your image
+    spreadsheetAddImage(spreadsheet, imagePath, "1, 1, 3, 2");//startRow,startColumn,endRow,endColumn*/
     row=1;
     column=1;
     spreadsheetMergeCells(spreadsheet, row, row, column, column+15);//startRow, endRow, startColumn, endColumn
@@ -417,6 +431,13 @@
     spreadsheetFormatCellRange(spreadsheet, jewelryQuoteFormStyle, row+1, column, row+1, column+15)
     spreadsheetMergeCells(spreadsheet, row+2, row+2, column, column+5);
     spreadsheetSetCellValue(spreadsheet, "SUPPLIER INFORMATION", row+2, column);
+    wb = spreadsheet.getWorkbook();
+    color1 = wb.createCellStyle();
+    color1.setFillForegroundColor(createObject("java", "org.apache.poi.xssf.usermodel.XSSFColor").init(createObject("java", "java.awt.Color").init(255,242,204)));
+    color1.setFillPattern(createObject("java", "org.apache.poi.ss.usermodel.FillPatternType").SOLID_FOREGROUND);
+    sheet  = wb.getSheet("Diamond Quote Sheet");
+    cell = sheet.getRow(2).getCell(0);
+	cell.setCellStyle(color1);
     spreadsheetFormatCell(spreadsheet, subHeadingStyle, row+2, column);
     spreadsheetFormatCellRange( spreadsheet,subHeadingBorder, row+2,column+1,row+2,column+5);
     //left side row=3
@@ -571,6 +592,12 @@
     column=1;
     spreadsheetMergeCells(spreadsheet, row, row, column, column+5);
     spreadsheetSetCellValue(spreadsheet, "ITEM COST DETAILS", row, column);
+    //color2
+    color2 = wb.createCellStyle();
+    color2.setFillForegroundColor(createObject("java", "org.apache.poi.xssf.usermodel.XSSFColor").init(createObject("java", "java.awt.Color").init(255,255,204)));
+    color2.setFillPattern(createObject("java", "org.apache.poi.ss.usermodel.FillPatternType").SOLID_FOREGROUND);
+    cell = sheet.getRow(26).getCell(0);
+	cell.setCellStyle(color2);
     spreadsheetFormatCellRange( spreadsheet,itemCostStyle, row,column,row,column+5);
     spreadsheetSetCellValue(spreadsheet, "QUOTE DATE:", row+1, column);
     spreadsheetSetCellValue(spreadsheet, "USMCA Applicable (Y/N):", row+2, column);
@@ -660,6 +687,11 @@
     spreadsheetSetCellValue(spreadsheet, 0, row+12, column+3);
     spreadsheetFormatCellRange( spreadsheet,bottomBoldBolder, row+12,column,row+12,column+1);
     spreadsheetFormatCell(spreadsheet, mediumBottomBorder, row+12, column+2);
+    color5 = wb.createCellStyle();
+    color5.setFillForegroundColor(createObject("java", "org.apache.poi.xssf.usermodel.XSSFColor").init(createObject("java", "java.awt.Color").init(217,217,217)));
+    color5.setFillPattern(createObject("java", "org.apache.poi.ss.usermodel.FillPatternType").SOLID_FOREGROUND);
+    cell = sheet.getRow(53).getCell(3);
+	cell.setCellStyle(color5);
     spreadsheetFormatCellRange( spreadsheet,greyBackgroundValue, row+12,column+3,row+12,column+5);
     for(row=44;row<54;row++){
        spreadsheetMergeCells(spreadsheet, row, row, column, column+1);
@@ -678,9 +710,13 @@
     //diamond breakdown
     row=56;
     column=1;
-    spreadsheetSetCellValue(spreadsheet, "DIAMOND BREAKDOWN:", row, column);
+    spreadsheetSetCellValue(spreadsheet, "DIAMOND BREAKDOWN:", row, column);//DIAMOND BREAKDOWN
+    cell = sheet.getRow(55).getCell(0);
+	cell.setCellStyle(color2);
     spreadsheetFormatCell(spreadsheet, leftSectionRightAlignedHeading, row, column);
     spreadsheetMergeCells(spreadsheet, row, row, column+1, column+15);
+    //cell = sheet.getRow(55).getCell(1);
+	//cell.setCellStyle(color2);
     spreadsheetFormatCellRange(spreadsheet, topRightBottomBoldBorder, row, column+1, row, column+15);
     spreadsheetSetCellValue(spreadsheet, "QTY", row+1, column+1);
     spreadsheetSetCellValue(spreadsheet, "WT EA", row+1, column+3);
@@ -717,6 +753,8 @@
             spreadsheetFormatCellRange(spreadsheet, rightText, row, column+11, row, column+12)
             spreadsheetMergeCells(spreadsheet, row, row, column+14, column+15);
             spreadsheetSetCellValue(spreadsheet, 0.00, row, column+14)
+            cell = sheet.getRow(65).getCell(14);
+	        cell.setCellStyle(color5);
             spreadsheetFormatCellRange(spreadsheet, greyBackgroundValue, row, column+14, row, column+15)
         }
         else{
@@ -790,6 +828,12 @@
     spreadsheetSetCellValue(spreadsheet, "COLOUR TOTAL SECTION 3:", row, column+2)
     spreadsheetFormatCellRange(spreadsheet, rightText, row, column, row, column+2)
     spreadsheetSetCellValue(spreadsheet, 0, row, column+4);
+    //color3
+    color3 = wb.createCellStyle();
+    color3.setFillForegroundColor(createObject("java", "org.apache.poi.xssf.usermodel.XSSFColor").init(createObject("java", "java.awt.Color").init(207,226,243)));
+    color3.setFillPattern(createObject("java", "org.apache.poi.ss.usermodel.FillPatternType").SOLID_FOREGROUND);
+    cell = sheet.getRow(74).getCell(11);
+	cell.setCellStyle(color3);
     spreadsheetFormatCell(spreadsheet, paleBlueBackgroundCenterBoldInteger, row, column+4)
     row=37;
     column=10;
@@ -818,6 +862,13 @@
         spreadsheetMergeCells(spreadsheet, row, row, column, column+6);
         if(row==43){
             spreadsheetSetCellValue(spreadsheet, "LABOR COST DETAILS", row, column);
+            //color4 255,192,0
+            color4 = wb.createCellStyle();
+            color4.setFillForegroundColor(createObject("java", "org.apache.poi.xssf.usermodel.XSSFColor").init(createObject("java", "java.awt.Color").init(255,192,0)));
+            color4.setFillPattern(createObject("java", "org.apache.poi.ss.usermodel.FillPatternType").SOLID_FOREGROUND);
+                sheet  = wb.getSheet("Diamond Quote Sheet");
+            cell = sheet.getRow(42).getCell(9);
+            cell.setCellStyle(color4);
             spreadsheetFormatCellRange(spreadsheet, labourCostStyle, row, column,row,column+6);
         }
         else if(row>43&&row<50){
@@ -899,6 +950,8 @@
     column=10;
     spreadsheetMergeCells(spreadsheet, row, row, column, column+6)
     spreadsheetSetCellValue(spreadsheet, "SIZING", row, column)
+    cell = sheet.getRow(80).getCell(9);
+	cell.setCellStyle(color1);
     spreadsheetFormatCellRange(spreadsheet, fullBorderCenterBoldLightYellowBackground, row, column, row, column+6)
     spreadsheetSetCellValue(spreadsheet, "If a Ring, Is It Sizeable?", row+1, column+2)
     spreadsheetSetCellValue(spreadsheet, "If Yes, How Much Can Ring Be Sized?", row+2, column+2)
@@ -923,6 +976,8 @@
     row=90;
     spreadsheetMergeCells(spreadsheet, row, row, column, column+6)
     spreadsheetSetCellValue(spreadsheet, "SHIPPING", row, column)
+    cell = sheet.getRow(89).getCell(9);
+	cell.setCellStyle(color1);
     spreadsheetFormatCellRange(spreadsheet, leftBottomRightCenterBoldLightYellowBackground, row, column, row, column+6)
     spreadsheetSetCellValue(spreadsheet, "Vendor Shipping Terms COL / PPD:", row+1, column+2)
     spreadsheetSetCellValue(spreadsheet, "Ship Point (City, State & Zip):", row+2, column)
@@ -969,6 +1024,8 @@
     }
     spreadsheetMergeCells(spreadsheet, row+1, row+1, column, column+6)
     spreadsheetSetCellValue(spreadsheet, "DISPOSITION", row+1, column)
+    cell = sheet.getRow(98).getCell(9);
+	cell.setCellStyle(color1);
     spreadsheetFormatCellRange(spreadsheet, fullBorderCenterBoldLightYellowBackground, row+1, column, row+1, column+6)
     spreadsheetSetCellValue(spreadsheet, "Credit Available Y/N:", row+2, column+2);
     spreadsheetSetCellValue(spreadsheet, "Spoils Allowance Y/N:", row+3, column+2);
@@ -996,6 +1053,8 @@
     column=10;//row=104
     spreadsheetMergeCells(spreadsheet, row+2, row+2, column, column+6)
     spreadsheetSetCellValue(spreadsheet, "PAYMENT TERMS", row+2, column)
+    cell = sheet.getRow(105).getCell(9);
+	cell.setCellStyle(color1);
     spreadsheetFormatCellRange(spreadsheet, fullBorderCenterBoldLightYellowBackground, row+2, column, row+2, column+6)
     spreadsheetFormatCell(spreadsheet, leftBottomBorder, row+3, column)
     spreadsheetSetCellValue(spreadsheet, "% if paid within", row+3, column+2)
@@ -1020,6 +1079,8 @@
     column=1
     spreadsheetMergeCells(spreadsheet, row, row, column, column+5);
     spreadsheetSetCellValue(spreadsheet, "PRODUCT SOURCE  INFORMATION", row, column);
+    cell = sheet.getRow(93).getCell(0);
+	cell.setCellStyle(color1);
     spreadsheetFormatCell(spreadsheet, subHeadingStyle, row, column);
     spreadsheetFormatCellRange( spreadsheet,subHeadingBorder, row,column,row,column+5);
     spreadsheetSetCellValue(spreadsheet, "Country Where Rough Was Mined:", row+1, column)
@@ -1037,6 +1098,8 @@
     //FACTORY INFORMATION row=101
     spreadsheetMergeCells(spreadsheet, row+1, row+1, column, column+5);
     spreadsheetSetCellValue(spreadsheet, "FACTORY INFORMATION", row+1, column);
+    cell = sheet.getRow(101).getCell(0);
+	cell.setCellStyle(color1);
     spreadsheetFormatCell(spreadsheet, subHeadingStyle, row+1, column);
     spreadsheetFormatCellRange( spreadsheet,subHeadingBorder, row+1,column,row+1,column+5);
     spreadsheetSetCellValue(spreadsheet, "Factory Name:", row+2, column)
@@ -1070,17 +1133,38 @@
                 spreadsheetFormatCell(spreadsheet, rightBottomBorder, row, column+1)
             }
         }
-
     }
     row=112;
     endrow=120;
     column=1;
     endcolumn=16;
     //declaration
-    // spreadsheetMergeCells(spreadsheet, row, endrow, column, endcolumn)
-    spreadsheetMergeCells(spreadsheet, 112, 118, 1, 16)
-    spreadsheetSetCellValue(spreadsheet, "The diamonds referenced herein have been sourced / purchased from legitimate sources not involved in funding conflict, in compliance with all applicable trade sanctions, United Nations Resolutions, and corresponding national laws. The seller guarantees that these diamonds are conflict free and confirms adherence to the World Diamond Council System of Warranties Guidelines. The seller further certifies that the diamond jewelry and non-industrial diamonds referenced herein were not mined, extracted, produced, or manufactured wholly or in part in the Russian Federation, notwithstanding whether such diamonds have been substantially transformed into other products outside of the Russian Federation, and are not of Russian Federation origin or were not exported from the Russian Federation. The seller agrees that Costco may audit the seller's compliance with these statements and certifications, and the seller shall cooperate fully with any such audit request.", 112, 1)
-    spreadsheetFormatCellRange(spreadsheet, justify, 112, 1, 118, 16)
+    spreadsheetMergeCells(spreadsheet, row, endrow, column, endcolumn)
+    spreadsheetSetCellValue(spreadsheet, "The diamonds referenced herein have been sourced / purchased from legitimate sources not involved in funding conflict, in compliance with all applicable trade sanctions, United Nations Resolutions, and corresponding national laws. The seller guarantees that these diamonds are conflict free and confirms adherence to the World Diamond Council System of Warranties Guidelines. The seller further certifies that the diamond jewelry and non-industrial diamonds referenced herein were not mined, extracted, produced, or manufactured wholly or in part in the Russian Federation, notwithstanding whether such diamonds have been substantially transformed into other products outside of the Russian Federation, and are not of Russian Federation origin or were not exported from the Russian Federation. The seller agrees that Costco may audit the seller's compliance with these statements and certifications, and the seller shall cooperate fully with any such audit request.", row, column)
+    spreadsheetFormatCellRange(spreadsheet, justify, row, column, endrow, endcolumn)
+    for (row=121; row<=122; row++) {
+        if (row == 121) {
+            spreadsheetSetCellValue(spreadsheet, "Print Supplier Name:", row, 1);
+            spreadsheetSetCellValue(spreadsheet, "Supplier Signature:", row, 6);
+        } else {
+            spreadsheetSetCellValue(spreadsheet, "Print Buyer Name:", row, 1);
+            spreadsheetSetCellValue(spreadsheet, "Buyer Signature:", row, 6);
+        }
+        spreadsheetFormatCell(spreadsheet, rightTextNoBorder, row, 1);
+        for (column=2; column<=6; column++) {
+            spreadsheetFormatCell(spreadsheet, bottomBorder, row, column);
+        }
+        spreadsheetFormatCellRange(spreadsheet, centerText, row, 6, row, 9);
+        spreadsheetMergeCells(spreadsheet, row, row, 10, 13);
+        spreadsheetFormatCellRange(spreadsheet, bottomBorder, row, 10, row, 13);
+        spreadsheetSetCellValue(spreadsheet, "Date:", row, 14);
+        spreadsheetFormatCell(spreadsheet, rightTextNoBorder, row, 14);
+        spreadsheetMergeCells(spreadsheet, row, row, 15, 16);
+        spreadsheetFormatCellRange(spreadsheet, bottomBorder, row, 15, row, 16);
+    }
+    column=1;
+    spreadsheetSetCellValue(spreadsheet, "Rev 7/11/24", row, column);
+    spreadsheetFormatCell(spreadsheet, dateStyle, row, column)
     spreadSheetSetColumnWidth(spreadsheet, 1, 31.29);
     spreadSheetSetColumnWidth(spreadsheet, 2, 13);
     spreadSheetSetColumnWidth(spreadsheet, 3, 3);
@@ -1097,6 +1181,9 @@
     spreadSheetSetColumnWidth(spreadsheet, 14, 10.14);
     spreadSheetSetColumnWidth(spreadsheet, 15, 3.71);
     spreadSheetSetColumnWidth(spreadsheet, 16, 24);
+    spreadsheetSetRowHeight(spreadsheet, 118, 9);
+    spreadsheetSetRowHeight(spreadsheet, 120, 3);
+    spreadsheetSetRowHeight(spreadsheet, 121, 38.25);
 </cfscript>
 <cfheader name="Content-Disposition" value="inline; filename=#theFile#">
 <cfcontent type="application/vnd.ms-excel" variable="#SpreadSheetReadBinary(spreadsheet)#">

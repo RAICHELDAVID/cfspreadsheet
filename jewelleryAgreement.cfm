@@ -133,6 +133,13 @@
         fontsize="12",
         bottomBorder="thin"  
     }
+    leftTopRightBorderDecimalDollarValue={
+        dataformat="$##0.00",
+        bold="true",
+        alignment="center",
+        font="Arial Narrow",
+        fontsize="12"
+    }
     rightTextBottomBoldBorder={
         bottomBorder="medium",
         alignment="right",
@@ -339,7 +346,7 @@
         leftborder="thin",
         topborder="thin"
     };
-    fullBorderCenterBoldLightYellowBackground={
+    fullBorderCenterBold={
         bottomborder="thin",
         rightborder="thin",
         leftborder="thin",
@@ -862,7 +869,7 @@
         spreadsheetMergeCells(spreadsheet, row, row, column, column+6);
         if(row==43){
             spreadsheetSetCellValue(spreadsheet, "LABOR COST DETAILS", row, column);
-            //color4 255,192,0
+            //color4 255,192,0  org.apache.poi.ss.usermodel.BorderStyle
             color4 = wb.createCellStyle();
             color4.setFillForegroundColor(createObject("java", "org.apache.poi.xssf.usermodel.XSSFColor").init(createObject("java", "java.awt.Color").init(255,192,0)));
             color4.setFillPattern(createObject("java", "org.apache.poi.ss.usermodel.FillPatternType").SOLID_FOREGROUND);
@@ -904,7 +911,7 @@
         spreadsheetFormatCellRange(spreadsheet, normalText, row, column, row, column+1)
     }
     column=4;
-    for(row=77;row<=85;row++){
+    for(row=77;row<83;row++){
         spreadsheetMergeCells(spreadsheet, row, row, column, column+1);
         if(row==77||row==79||row==81){
             spreadsheetSetCellValue(spreadsheet, 0, row, column)
@@ -913,10 +920,51 @@
         else if(row==82){
             spreadsheetFormatCellRange(spreadsheet, bottomBorder, row, column, row, column+1)
         }
-        else if(row==83||row==85){
+        /*else if(row==83||row==85){
             spreadsheetSetCellValue(spreadsheet, 0, row, column)
-        }
+            spreadsheetFormatCellRange(spreadsheet, leftTopRightBorderDecimalDollarValue, row, column, row, column+1)
+        }*/
     }
+    // writeDump(row)
+    // abort;
+    row=83;
+    column=4;
+    spreadsheetMergeCells(spreadsheet, row, row, column, column+1);
+    spreadsheetSetCellValue(spreadsheet, 0, row, column)
+    leftRightBorderBgColorStyle = wb.createCellStyle();
+    borderStyle = createObject("java", "org.apache.poi.ss.usermodel.BorderStyle");
+    leftRightBorderBgColorStyle.setBorderLeft(borderStyle.THIN);
+    leftRightBorderBgColorStyle.setBorderRight(borderStyle.THIN);
+    leftRightBorderBgColorStyle.setFillForegroundColor(createObject("java", "org.apache.poi.xssf.usermodel.XSSFColor").init(createObject("java", "java.awt.Color").init(219, 219, 219)));
+    leftRightBorderBgColorStyle.setFillPattern(createObject("java", "org.apache.poi.ss.usermodel.FillPatternType").SOLID_FOREGROUND);
+    cell = sheet.getRow(82).getCell(3);
+    cell.setCellStyle(leftRightBorderBgColorStyle);
+    spreadsheetFormatCellRange(spreadsheet, leftTopRightBorderDecimalDollarValue, row, column, row, column+1)
+    spreadsheetMergeCells(spreadsheet, row+1, row+1, column, column+1);
+    spreadsheetSetCellValue(spreadsheet, "N/A", row+1, column)
+    fullBorderBgColorStyle = wb.createCellStyle();
+    borderStyle = createObject("java", "org.apache.poi.ss.usermodel.BorderStyle");
+    fullBorderBgColorStyle.setBorderLeft(borderStyle.THIN);
+    fullBorderBgColorStyle.setBorderRight(borderStyle.THIN);
+    fullBorderBgColorStyle.setBorderLeft(borderStyle.THIN);
+    fullBorderBgColorStyle.setBorderRight(borderStyle.THIN);
+    fullBorderBgColorStyle.setFillForegroundColor(createObject("java", "org.apache.poi.xssf.usermodel.XSSFColor").init(createObject("java", "java.awt.Color").init(252, 229, 205)));
+    fullBorderBgColorStyle.setFillPattern(createObject("java", "org.apache.poi.ss.usermodel.FillPatternType").SOLID_FOREGROUND);
+    cell = sheet.getRow(83).getCell(3);
+    cell.setCellStyle(fullBorderBgColorStyle);
+    spreadsheetFormatCellRange(spreadsheet, fullBorderCenterBold, row+1, column, row+1, column+1)
+    spreadsheetMergeCells(spreadsheet, row+2, row+2, column, column+1);
+    spreadsheetSetCellValue(spreadsheet, 0, row+2, column)
+    doubleBottomBorderBgColorStyle = wb.createCellStyle();
+    borderStyle = createObject("java", "org.apache.poi.ss.usermodel.BorderStyle");
+    doubleBottomBorderBgColorStyle.setBorderBottom(borderStyle.DOUBLE);
+    doubleBottomBorderBgColorStyle.setBorderLeft(borderStyle.THIN);
+    doubleBottomBorderBgColorStyle.setBorderRight(borderStyle.THIN);
+    doubleBottomBorderBgColorStyle.setFillForegroundColor(createObject("java", "org.apache.poi.xssf.usermodel.XSSFColor").init(createObject("java", "java.awt.Color").init(207, 226, 243)));
+    doubleBottomBorderBgColorStyle.setFillPattern(createObject("java", "org.apache.poi.ss.usermodel.FillPatternType").SOLID_FOREGROUND);
+    cell = sheet.getRow(84).getCell(3);
+    cell.setCellStyle(doubleBottomBorderBgColorStyle);
+    spreadsheetFormatCellRange(spreadsheet, leftTopRightBorderDecimalDollarValue, row+2, column, row+2, column+1)
     row=78;
     //code is not completed
     spreadsheetSetCellValue(spreadsheet, 0.02, row, column);
@@ -926,6 +974,7 @@
     //Socialized Costing:
     column=1
     row=87;
+
     spreadsheetSetCellValue(spreadsheet, "Socialized Costing:", row, column+1)
     spreadsheetFormatCellRange(spreadsheet, rightBoldUnderlineText, row, column, row, column+1)
     for(row=88;row<=91;row++){
@@ -952,7 +1001,7 @@
     spreadsheetSetCellValue(spreadsheet, "SIZING", row, column)
     cell = sheet.getRow(80).getCell(9);
 	cell.setCellStyle(color1);
-    spreadsheetFormatCellRange(spreadsheet, fullBorderCenterBoldLightYellowBackground, row, column, row, column+6)
+    spreadsheetFormatCellRange(spreadsheet, fullBorderCenterBold, row, column, row, column+6)
     spreadsheetSetCellValue(spreadsheet, "If a Ring, Is It Sizeable?", row+1, column+2)
     spreadsheetSetCellValue(spreadsheet, "If Yes, How Much Can Ring Be Sized?", row+2, column+2)
     spreadsheetSetCellValue(spreadsheet, "Finished Cost 5:", row+3, column+2)
@@ -1000,6 +1049,7 @@
             spreadsheetFormatCell(spreadsheet, hyperLinkStyle, row, column)
         }
     }
+    
     for(row=91;row<=97;row++){
         if(row==91||row==92){
             spreadsheetMergeCells(spreadsheet, row, row, column+3, column+6)
@@ -1026,7 +1076,7 @@
     spreadsheetSetCellValue(spreadsheet, "DISPOSITION", row+1, column)
     cell = sheet.getRow(98).getCell(9);
 	cell.setCellStyle(color1);
-    spreadsheetFormatCellRange(spreadsheet, fullBorderCenterBoldLightYellowBackground, row+1, column, row+1, column+6)
+    spreadsheetFormatCellRange(spreadsheet, fullBorderCenterBold, row+1, column, row+1, column+6)
     spreadsheetSetCellValue(spreadsheet, "Credit Available Y/N:", row+2, column+2);
     spreadsheetSetCellValue(spreadsheet, "Spoils Allowance Y/N:", row+3, column+2);
     spreadsheetSetCellValue(spreadsheet, "RTV Y/N:", row+4, column+2);
@@ -1055,7 +1105,7 @@
     spreadsheetSetCellValue(spreadsheet, "PAYMENT TERMS", row+2, column)
     cell = sheet.getRow(105).getCell(9);
 	cell.setCellStyle(color1);
-    spreadsheetFormatCellRange(spreadsheet, fullBorderCenterBoldLightYellowBackground, row+2, column, row+2, column+6)
+    spreadsheetFormatCellRange(spreadsheet, fullBorderCenterBold, row+2, column, row+2, column+6)
     spreadsheetFormatCell(spreadsheet, leftBottomBorder, row+3, column)
     spreadsheetSetCellValue(spreadsheet, "% if paid within", row+3, column+2)
     spreadsheetFormatCell(spreadsheet, leftNormalText, row+3, column+2)
@@ -1142,29 +1192,54 @@
     spreadsheetMergeCells(spreadsheet, row, endrow, column, endcolumn)
     spreadsheetSetCellValue(spreadsheet, "The diamonds referenced herein have been sourced / purchased from legitimate sources not involved in funding conflict, in compliance with all applicable trade sanctions, United Nations Resolutions, and corresponding national laws. The seller guarantees that these diamonds are conflict free and confirms adherence to the World Diamond Council System of Warranties Guidelines. The seller further certifies that the diamond jewelry and non-industrial diamonds referenced herein were not mined, extracted, produced, or manufactured wholly or in part in the Russian Federation, notwithstanding whether such diamonds have been substantially transformed into other products outside of the Russian Federation, and are not of Russian Federation origin or were not exported from the Russian Federation. The seller agrees that Costco may audit the seller's compliance with these statements and certifications, and the seller shall cooperate fully with any such audit request.", row, column)
     spreadsheetFormatCellRange(spreadsheet, justify, row, column, endrow, endcolumn)
-    for (row=121; row<=122; row++) {
-        if (row == 121) {
-            spreadsheetSetCellValue(spreadsheet, "Print Supplier Name:", row, 1);
-            spreadsheetSetCellValue(spreadsheet, "Supplier Signature:", row, 6);
-        } else {
-            spreadsheetSetCellValue(spreadsheet, "Print Buyer Name:", row, 1);
-            spreadsheetSetCellValue(spreadsheet, "Buyer Signature:", row, 6);
-        }
-        spreadsheetFormatCell(spreadsheet, rightTextNoBorder, row, 1);
-        for (column=2; column<=6; column++) {
-            spreadsheetFormatCell(spreadsheet, bottomBorder, row, column);
-        }
-        spreadsheetFormatCellRange(spreadsheet, centerText, row, 6, row, 9);
-        spreadsheetMergeCells(spreadsheet, row, row, 10, 13);
-        spreadsheetFormatCellRange(spreadsheet, bottomBorder, row, 10, row, 13);
-        spreadsheetSetCellValue(spreadsheet, "Date:", row, 14);
-        spreadsheetFormatCell(spreadsheet, rightTextNoBorder, row, 14);
-        spreadsheetMergeCells(spreadsheet, row, row, 15, 16);
-        spreadsheetFormatCellRange(spreadsheet, bottomBorder, row, 15, row, 16);
+    rowData = [
+        {name: "Print Supplier Name:", signature: "Supplier Signature:", date: "Date:", row: 121},
+        {name: "Print Buyer Name:", signature: "Buyer Signature:", date: "Date:", row: 122}
+    ];
+    columnSettings = {
+        signatureCol: 8,dateCol: 10,mergedCols: 3};
+    for (data in rowData) {
+        row = data.row;
+        column = 1;
+        spreadsheetSetCellValue(spreadsheet, data.name, row, column);
+        spreadsheetFormatCell(spreadsheet, rightTextNoBorder, row, column);
+            for (col = 2; col <= 6; col++) {
+                spreadsheetFormatCell(spreadsheet, bottomBorder, row, col);
+            }
+            column = columnSettings.signatureCol;
+            spreadsheetSetCellValue(spreadsheet, data.signature, row, column);
+            spreadsheetFormatCellRange(spreadsheet, centerText, row, column, row, column + 2);
+            column = columnSettings.dateCol;
+            spreadsheetMergeCells(spreadsheet, row, row, column, column + columnSettings.mergedCols);
+            spreadsheetFormatCellRange(spreadsheet, bottomBorder, row, column, row, column + columnSettings.mergedCols);
+            spreadsheetSetCellValue(spreadsheet, data.date, row, column + 4);
+            spreadsheetFormatCell(spreadsheet, rightTextNoBorder, row, column + 4);
+            spreadsheetMergeCells(spreadsheet, row, row, column + 5, column + 6);
+            spreadsheetFormatCellRange(spreadsheet, bottomBorder, row, column + 5, row, column + 6);
     }
+   //     writeDump(sheet.getLastRowNum())
+        // abort;
     column=1;
+    row=123
     spreadsheetSetCellValue(spreadsheet, "Rev 7/11/24", row, column);
     spreadsheetFormatCell(spreadsheet, dateStyle, row, column)
+    //set row height
+    spreadsheetSetRowHeight(spreadsheet, 1, 23.25);
+    spreadsheetSetRowHeight(spreadsheet, 2, 24);
+    spreadsheetSetRowHeight(spreadsheet, 9, 15.75);
+    spreadsheetSetRowHeight(spreadsheet, 12, 15.75);
+    spreadsheetSetRowHeight(spreadsheet, 13, 15.75);
+    spreadsheetSetRowHeight(spreadsheet, 39, 17.25);
+    spreadsheetSetRowHeight(spreadsheet, 40, 19.5);
+    spreadsheetSetRowHeight(spreadsheet, 43, 14.25);
+    spreadsheetSetRowHeight(spreadsheet, 51, 14.25);
+    spreadsheetSetRowHeight(spreadsheet, 52, 14.25);
+    spreadsheetSetRowHeight(spreadsheet, 53, 14.25);
+    spreadsheetSetRowHeight(spreadsheet, 115, 15.75);
+    spreadsheetSetRowHeight(spreadsheet, 118, 9);
+    spreadsheetSetRowHeight(spreadsheet, 121, 38.25);
+    spreadsheetSetRowHeight(spreadsheet, 122, 38.25);
+    //set column width
     spreadSheetSetColumnWidth(spreadsheet, 1, 31.29);
     spreadSheetSetColumnWidth(spreadsheet, 2, 13);
     spreadSheetSetColumnWidth(spreadsheet, 3, 3);
@@ -1181,9 +1256,12 @@
     spreadSheetSetColumnWidth(spreadsheet, 14, 10.14);
     spreadSheetSetColumnWidth(spreadsheet, 15, 3.71);
     spreadSheetSetColumnWidth(spreadsheet, 16, 24);
-    spreadsheetSetRowHeight(spreadsheet, 118, 9);
-    spreadsheetSetRowHeight(spreadsheet, 120, 3);
-    spreadsheetSetRowHeight(spreadsheet, 121, 38.25);
+    //hide rows
+    rowsToHide = [11, 12, 118, 119];
+    for (rowIndex in rowsToHide) {
+        row = sheet.getRow(rowIndex);
+        row.setZeroHeight(true);  
+    }
 </cfscript>
 <cfheader name="Content-Disposition" value="inline; filename=#theFile#">
 <cfcontent type="application/vnd.ms-excel" variable="#SpreadSheetReadBinary(spreadsheet)#">

@@ -14,7 +14,7 @@
         italic="true",
         alignment="center",
         fontsize="15"
-    };
+    }; 
     contentStyle={
         font="Arial Narrow",
         bold="true",
@@ -31,7 +31,6 @@
         font="Arial Narrow",
         bold="true",
         alignment="center",
-        //fgcolor="light_yellow",
         topborder="thin",
         bottomborder="thin",
         fontsize="12"
@@ -93,10 +92,10 @@
         rightborder="thin"
     };
     centerContent={
-        fontsize="13",
+        fontsize="12",
         alignment='center',
         dataformat="##0.00",
-        font="Arial"
+        font="Arial Narrow"
     };
     imageText={
         font="Calibri",
@@ -153,11 +152,18 @@
         font="Arial Narrow"  
     }
     centerDecimalBottomBoldBorder={
-        fontsize="13",
+        fontsize="12",
         alignment='center',
         dataformat="##0.00",
-        font="Arial",
+        font="Arial Narrow",
         bottomBorder="medium"
+    }
+    leftBottomLeftNormalText={
+        font="Arial Narrow",
+        fontSize="12",
+        alignment="left",
+        leftBorder="thin",
+        bottomBorder="thin"
     }
     dollarSymbolNormalIntegerBottomBorder={
         fontsize="12",
@@ -223,7 +229,6 @@
         rightBorder="medium"
     };
     paleBlueBackgroundCenterBoldInteger={
-        // fgcolor="pale_blue",
         bold="true",
         dataformat="$##0.00",
         leftborder="thin",
@@ -497,7 +502,10 @@
     spreadsheetFormatCell(spreadsheet, contentStyle, row+2, column+2);
     spreadsheetSetCellValue(spreadsheet, "H:", row+2, column+4);
     spreadsheetFormatCell(spreadsheet, contentStyle, row+2, column+4);
-    spreadsheetSetCellValue(spreadsheet, 0.00, row+2, column+9);
+    spreadsheetSetCellValue(spreadsheet, "", row+2, column+9);
+    cell = sheet.getRow(12).getCell(9);
+    cell.setCellFormula("(B13*D13*F13)/1728")
+    cell.setCellValue(0.00)
     spreadsheetFormatCell(spreadsheet, centerContent, row+2, column+9);
     for (column = 1; column<6; column=column+2) {
         spreadsheetFormatCell(spreadsheet, bottomBorderBoldText, row+2, column+1);      
@@ -530,7 +538,6 @@
     for (currentRow in rows) {
         spreadsheetMergeCells(spreadsheet, currentRow, currentRow, columns1[1], columns1[2]);
         spreadsheetFormatCellRange(spreadsheet, mediumBottomBorder, currentRow, columns1[1], currentRow, columns1[2]);
-
         spreadsheetMergeCells(spreadsheet, currentRow, currentRow, columns2[1], columns2[2]);
         spreadsheetFormatCellRange(spreadsheet, mediumBottomBorder, currentRow, columns2[1], currentRow, columns2[2]);
     }
@@ -668,7 +675,11 @@
             spreadsheetFormatCellRange(spreadsheet,bottomRightBoldBorder, row,column+3,row,column+5);
         }
         else{
-            spreadsheetSetCellValue(spreadsheet, 0, row, column+3);
+            spreadsheetSetCellValue(spreadsheet,"", row, column+3);
+            //setcellformula
+            cell = sheet.getRow(40).getCell(3);
+            cell.setCellFormula("SUM(D36:F40)")
+            cell.setCellValue(0)
             spreadsheetFormatCellRange(spreadsheet,centerBoldContent, row,column+3,row,column+5);
         }
     }
@@ -686,12 +697,18 @@
     spreadsheetSetCellValue(spreadsheet, "Set Melee", row+8, column);
     spreadsheetSetCellValue(spreadsheet, "IGI / GIA", row+9, column);
     spreadsheetSetCellValue(spreadsheet, "Total Labour", row+10, column);
-    spreadsheetSetCellValue(spreadsheet, 0, row+10, column+3);
+    spreadsheetSetCellValue(spreadsheet,"", row+10, column+3);
+    cell = sheet.getRow(51).getCell(3);
+    cell.setCellFormula("SUM(D44:F51)")
+    cell.setCellValue(0)
     spreadsheetFormatCellRange(spreadsheet,centerBoldContent, row+10,column+3,row+10,column+5);
     spreadsheetMergeCells(spreadsheet, row+12, row+12, column, column+1);
     spreadsheetSetCellValue(spreadsheet, "TOTAL SECTION 1:", row+12, column);
     spreadsheetMergeCells(spreadsheet, row+12, row+12, column+3, column+5);
-    spreadsheetSetCellValue(spreadsheet, 0, row+12, column+3);
+    spreadsheetSetCellValue(spreadsheet,"", row+12, column+3);
+    cell = sheet.getRow(53).getCell(3);
+    cell.setCellFormula("SUM(D41,D44:F50)")
+    cell.setCellValue(0)
     spreadsheetFormatCellRange( spreadsheet,bottomBoldBolder, row+12,column,row+12,column+1);
     spreadsheetFormatCell(spreadsheet, mediumBottomBorder, row+12, column+2);
     color5 = wb.createCellStyle();
@@ -720,10 +737,11 @@
     spreadsheetSetCellValue(spreadsheet, "DIAMOND BREAKDOWN:", row, column);//DIAMOND BREAKDOWN
     cell = sheet.getRow(55).getCell(0);
 	cell.setCellStyle(color2);
+    spreadsheetSetCellValue(spreadsheet, "", row, column+1);//DIAMOND BREAKDOWN
+    cell = sheet.getRow(55).getCell(1);
+	cell.setCellStyle(color2);
     spreadsheetFormatCell(spreadsheet, leftSectionRightAlignedHeading, row, column);
     spreadsheetMergeCells(spreadsheet, row, row, column+1, column+15);
-    //cell = sheet.getRow(55).getCell(1);
-	//cell.setCellStyle(color2);
     spreadsheetFormatCellRange(spreadsheet, topRightBottomBoldBorder, row, column+1, row, column+15);
     spreadsheetSetCellValue(spreadsheet, "QTY", row+1, column+1);
     spreadsheetSetCellValue(spreadsheet, "WT EA", row+1, column+3);
@@ -753,13 +771,22 @@
             spreadsheetSetCellValue(spreadsheet, "QTY", row, column);
             spreadsheetFormatCell(spreadsheet, rightTextBottomBoldBorder, row, column)
             spreadsheetSetCellValue(spreadsheet, 0, row, column+1);
+            cell = sheet.getRow(65).getCell(1);
+            cell.setCellFormula("SUM(B58:B65)")
+            cell.setCellValue(0)
             spreadsheetFormatCell(spreadsheet, centerIntegerBottomBoldBorder, row, column+1)
             spreadsheetSetCellValue(spreadsheet, 0, row, column+5);
+            cell = sheet.getRow(65).getCell(5);
+            cell.setCellFormula("SUM(F58:F65)")
+            cell.setCellValue(0.00)
             spreadsheetFormatCell(spreadsheet, centerDecimalBottomBoldBorder, row, column+5);  
             spreadsheetSetCellValue(spreadsheet, "DIAMOND TOTAL SECTION 2:", row, column+12)
             spreadsheetFormatCellRange(spreadsheet, rightText, row, column+11, row, column+12)
             spreadsheetMergeCells(spreadsheet, row, row, column+14, column+15);
-            spreadsheetSetCellValue(spreadsheet, 0.00, row, column+14)
+            spreadsheetSetCellValue(spreadsheet, "", row, column+14)
+            cell = sheet.getRow(65).getCell(14);
+            cell.setCellFormula("SUM(O58:P65)")
+            cell.setCellValue(0.00)
             cell = sheet.getRow(65).getCell(14);
 	        cell.setCellStyle(color5);
             spreadsheetFormatCellRange(spreadsheet, greyBackgroundValue, row, column+14, row, column+15)
@@ -769,9 +796,9 @@
             spreadsheetFormatCell(spreadsheet, normalText, row, column)
             spreadsheetFormatCell(spreadsheet, bottomBorderNormalText, row, column+1)
             spreadsheetFormatCell(spreadsheet, bottomBorderNormalText, row, column+3)
-            spreadsheetSetCellValue(spreadsheet, 0, row, column+5);
+            spreadsheetSetCellValue(spreadsheet, "", row, column+5);
             spreadsheetFormatCell(spreadsheet, bottomBorderNormalText, row, column+5)
-            spreadsheetSetCellValue(spreadsheet, "##DIV/0!", row, column+7);
+            spreadsheetSetCellValue(spreadsheet, "", row, column+7);
             spreadsheetFormatCell(spreadsheet, bottomBorderNormalText, row, column+7)
         }
         if(row!=66){
@@ -781,15 +808,30 @@
             spreadsheetFormatCellRange(spreadsheet, bottomRightBoldBorder, row, column+14, row, column+15)
         }
     }
+    //setcellformulA of ##DIV/0! cells
+    //setcellformula row=58 cell=J
+    for (i = 57; i <= 64; i++) {
+        cell = sheet.getRow(JavaCast("int", i)).getCell(7);
+        cell.setCellFormula("P" & (i + 1) & "/F" & (i + 1));
+        cell.setCellValue("##DIV/0!");
+    }
+    for (i = 57; i <= 64; i++) {
+        cell = sheet.getRow(JavaCast("int", i)).getCell(5);
+        cell.setCellFormula("D" & (i + 1) & "*B" & (i + 1));
+        cell.setCellValue(0);
+    }
     row=66;
-     emptyCellArray = [3,4,5,7,8,9,10,11,14];
-        for (i = 1; i <= arrayLen(emptyCellArray); i++) {
-                spreadsheetFormatCell(spreadsheet, bottomBoldBolder, row, emptyCellArray[i])
+    emptyCellArray = [3,4,5,7,8,9,10,11,14];
+    for (i = 1; i <= arrayLen(emptyCellArray); i++) {
+        spreadsheetFormatCell(spreadsheet, bottomBoldBolder, row, emptyCellArray[i])
     }
    // COLOR BREAKDOWN: row=66 column=1
     row=68;
     spreadsheetSetCellValue(spreadsheet, "COLOR BREAKDOWN:", row, column);
     spreadsheetFormatCell(spreadsheet, leftSectionRightAlignedHeading, row, column);
+    spreadsheetSetCellValue(spreadsheet, "", row, column+1);//DIAMOND BREAKDOWN
+    cell = sheet.getRow(67).getCell(1);
+	cell.setCellStyle(color2);
     spreadsheetMergeCells(spreadsheet, row, row, column+1, column+15);
     spreadsheetFormatCellRange(spreadsheet, topRightBottomBoldBorder, row, column+1, row, column+15);
     spreadsheetSetCellValue(spreadsheet, "QTY", row+1, column+1);
@@ -823,6 +865,11 @@
             }
         }
     }
+    for (i = 69; i <= 73; i++) {
+        cell = sheet.getRow(JavaCast("int", i)).getCell(11);
+        cell.setCellFormula("J" & (i + 1) & "*D" & (i + 1));
+        cell.setCellValue(0);
+    }
     for(column=1;column<=16;column++){
         if(column>=1&&column<=7||column==11||column>=13&&column<=15){
             spreadsheetFormatCell(spreadsheet, bottomBoldBolder, row, column)
@@ -841,6 +888,8 @@
     color3.setFillPattern(createObject("java", "org.apache.poi.ss.usermodel.FillPatternType").SOLID_FOREGROUND);
     cell = sheet.getRow(74).getCell(11);
 	cell.setCellStyle(color3);
+    cell.setCellFormula("SUM(L70:L74)")
+    cell.setCellValue(0)
     spreadsheetFormatCell(spreadsheet, paleBlueBackgroundCenterBoldInteger, row, column+4)
     row=37;
     column=10;
@@ -850,7 +899,10 @@
     spreadsheetSetCellValue(spreadsheet, "Gram:", row+1, column);
     spreadsheetSetCellValue(spreadsheet, "Labour:", row+2, column);
     spreadsheetSetCellValue(spreadsheet, "$ Per Gram", row+3, column);
-    spreadsheetSetCellValue(spreadsheet,0, row+3, column+1);
+    spreadsheetSetCellValue(spreadsheet,"", row+3, column+1);
+    cell = sheet.getRow(39).getCell(10);
+    cell.setCellFormula("(0.01881*D31)+K39")
+    cell.setCellValue(0)
     for(row=38;row<=40;row++){
         spreadsheetMergeCells(spreadsheet, row, row, column+1, column+2);
         if(row!=40){
@@ -869,11 +921,10 @@
         spreadsheetMergeCells(spreadsheet, row, row, column, column+6);
         if(row==43){
             spreadsheetSetCellValue(spreadsheet, "LABOR COST DETAILS", row, column);
-            //color4 255,192,0  org.apache.poi.ss.usermodel.BorderStyle
             color4 = wb.createCellStyle();
             color4.setFillForegroundColor(createObject("java", "org.apache.poi.xssf.usermodel.XSSFColor").init(createObject("java", "java.awt.Color").init(255,192,0)));
             color4.setFillPattern(createObject("java", "org.apache.poi.ss.usermodel.FillPatternType").SOLID_FOREGROUND);
-                sheet  = wb.getSheet("Diamond Quote Sheet");
+            sheet  = wb.getSheet("Diamond Quote Sheet");
             cell = sheet.getRow(42).getCell(9);
             cell.setCellStyle(color4);
             spreadsheetFormatCellRange(spreadsheet, labourCostStyle, row, column,row,column+6);
@@ -920,13 +971,16 @@
         else if(row==82){
             spreadsheetFormatCellRange(spreadsheet, bottomBorder, row, column, row, column+1)
         }
-        /*else if(row==83||row==85){
-            spreadsheetSetCellValue(spreadsheet, 0, row, column)
-            spreadsheetFormatCellRange(spreadsheet, leftTopRightBorderDecimalDollarValue, row, column, row, column+1)
-        }*/
     }
-    // writeDump(row)
-    // abort;
+    cell = sheet.getRow(76).getCell(3);
+    cell.setCellFormula("D54+O66+L75")
+    cell.setCellValue(0)
+    cell = sheet.getRow(78).getCell(3);
+    cell.setCellFormula("D78*D77")
+    cell.setCellValue(0)
+    cell = sheet.getRow(80).getCell(3);
+    cell.setCellFormula("D80*D77")
+    cell.setCellValue(0)
     row=83;
     column=4;
     spreadsheetMergeCells(spreadsheet, row, row, column, column+1);
@@ -939,6 +993,8 @@
     leftRightBorderBgColorStyle.setFillPattern(createObject("java", "org.apache.poi.ss.usermodel.FillPatternType").SOLID_FOREGROUND);
     cell = sheet.getRow(82).getCell(3);
     cell.setCellStyle(leftRightBorderBgColorStyle);
+    cell.setCellFormula("SUM(D77,D79,D81)")
+    cell.setCellValue(0)
     spreadsheetFormatCellRange(spreadsheet, leftTopRightBorderDecimalDollarValue, row, column, row, column+1)
     spreadsheetMergeCells(spreadsheet, row+1, row+1, column, column+1);
     spreadsheetSetCellValue(spreadsheet, "N/A", row+1, column)
@@ -963,10 +1019,11 @@
     doubleBottomBorderBgColorStyle.setFillForegroundColor(createObject("java", "org.apache.poi.xssf.usermodel.XSSFColor").init(createObject("java", "java.awt.Color").init(207, 226, 243)));
     doubleBottomBorderBgColorStyle.setFillPattern(createObject("java", "org.apache.poi.ss.usermodel.FillPatternType").SOLID_FOREGROUND);
     cell = sheet.getRow(84).getCell(3);
+    cell.setCellFormula("SUM(D83:E84)")
+    cell.setCellValue(0)
     cell.setCellStyle(doubleBottomBorderBgColorStyle);
     spreadsheetFormatCellRange(spreadsheet, leftTopRightBorderDecimalDollarValue, row+2, column, row+2, column+1)
     row=78;
-    //code is not completed
     spreadsheetSetCellValue(spreadsheet, 0.02, row, column);
     spreadsheetFormatCellRange(spreadsheet, percentageSymbolNormalIntegerBottomBorder, row, column, row, column+1)
     spreadsheetSetCellValue(spreadsheet, 0.005, row+2, column);
@@ -974,7 +1031,6 @@
     //Socialized Costing:
     column=1
     row=87;
-
     spreadsheetSetCellValue(spreadsheet, "Socialized Costing:", row, column+1)
     spreadsheetFormatCellRange(spreadsheet, rightBoldUnderlineText, row, column, row, column+1)
     for(row=88;row<=91;row++){
@@ -987,7 +1043,6 @@
         }
         spreadsheetFormatCellRange(spreadsheet, normalText, row, column, row, column+1)
     }
-
     spreadsheetMergeCells(spreadsheet, row, row, column, column+1)
     spreadsheetSetCellValue(spreadsheet, "Socialized Cost All Sizes:", row, column)
     spreadsheetFormatCellRange(spreadsheet, normalText, row, column, row, column+1)
@@ -1033,6 +1088,7 @@
     spreadsheetSetCellValue(spreadsheet, "Ship Lead time (In Days):", row+3, column)
     spreadsheetSetCellValue(spreadsheet, "Drop Ship Y/N:", row+5, column)
     spreadsheetSetCellValue(spreadsheet, "Costco Account Y/N:", row+6, column)
+
     for(row=91;row<98;row++){
         if(row==92||row==93||row==95||row==96){
             spreadsheetMergeCells(spreadsheet, row, row, column, column+2)
@@ -1043,13 +1099,32 @@
             spreadsheetFormatCellRange(spreadsheet, rightTextLeftBorder, row, column, row, column+2)
             spreadsheetFormatCell(spreadsheet, leftBorder, row, column)        
         }
-        else if(row==94){
+       else if(row==94){
             spreadsheetMergeCells(spreadsheet, row, row, column, column+6)
-            spreadsheetSetCellFormula(spreadsheet, 'HYPERLINK("http://costco.com/", "Costco.com Shipping Information (if applicable)")', row, column)
-            spreadsheetFormatCell(spreadsheet, hyperLinkStyle, row, column)
-        }
+            spreadsheetSetCellValue(spreadsheet,"",row,column);
+       }
     }
-    
+    row=94;
+    column=10;
+    hyperlinkFont = wb.createFont();
+    hyperlinkFont.setFontName('Arial Narrow');
+    hyperlinkFont.setUnderline('true');
+    hyperlinkFont.setFontHeightInPoints(12);
+    hyperlinkFont.setColor(CreateObject("java", "org.apache.poi.ss.usermodel.IndexedColors").BLUE.getIndex());
+    richText = CreateObject("java", "org.apache.poi.xssf.usermodel.XSSFRichTextString").init();
+    richText.append("Costco.com",hyperlinkFont)
+    remainingFont = wb.createFont();
+    remainingFont.setFontName('Arial Narrow');
+    remainingFont.setFontHeightInPoints(12);
+    richText.append(" Shipping Information (if applicable)",remainingFont)
+    cell = sheet.getRow(93).getCell(9);
+    cell.setCellValue(richText);
+    helper = wb.getCreationHelper();
+    hyperlinkType = CreateObject("java", "org.apache.poi.common.usermodel.HyperlinkType");
+    hyperlink = helper.createHyperlink(hyperlinkType.URL);
+    hyperlink.setAddress("http://www.costco.com");
+    cell.setHyperlink(hyperlink);
+    spreadsheetFormatCell(spreadsheet, hyperLinkStyle, row, column)
     for(row=91;row<=97;row++){
         if(row==91||row==92){
             spreadsheetMergeCells(spreadsheet, row, row, column+3, column+6)
@@ -1115,9 +1190,9 @@
     spreadsheetFormatCell(spreadsheet, centerNormalText, row+3, column+4)
     spreadsheetSetCellValue(spreadsheet, "reciept of goods (ROG)", row+3, column+6)
     spreadsheetFormatCell(spreadsheet, rightBorderNormalText, row+3, column+6)
-    spreadsheetFormatCell(spreadsheet, leftBorder, row+4, column)
     spreadsheetFormatCellRange(spreadsheet, leftNormalTextBottomBorder, row+4, column, row+4, column+1)
     spreadsheetSetCellValue(spreadsheet, "final payment due in", row+4, column)
+    spreadsheetFormatCell(spreadsheet, leftBottomLeftNormalText, row+4, column)
     spreadsheetSetCellValue(spreadsheet, "days.", row+4, column+3)
     spreadsheetFormatCell(spreadsheet, leftNormalTextBottomBorder, row+4, column+3)
     for(column=12;column<=15;column++){
@@ -1217,8 +1292,6 @@
             spreadsheetMergeCells(spreadsheet, row, row, column + 5, column + 6);
             spreadsheetFormatCellRange(spreadsheet, bottomBorder, row, column + 5, row, column + 6);
     }
-   //     writeDump(sheet.getLastRowNum())
-        // abort;
     column=1;
     row=123
     spreadsheetSetCellValue(spreadsheet, "Rev 7/11/24", row, column);

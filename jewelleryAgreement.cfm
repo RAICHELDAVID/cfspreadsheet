@@ -221,9 +221,15 @@
         rightBorder="medium"
     };
     centerBoldContent={
+<<<<<<< HEAD
+        fontsize="12",
+        alignment='center',
+        font="Arial Narrow",
+=======
         fontsize="11",
         alignment='center',
         font="Arial",
+>>>>>>> f3a0766ad0c17b6278ecf1e2a59fc217d0f2e26e
         dataformat="$##0.00",
         bold="true",
         rightBorder="medium"
@@ -468,6 +474,16 @@
     //right side
     row=5;
     column=8;
+<<<<<<< HEAD
+    spreadsheetSetCellValue(spreadsheet, "QUOTE PROVIDED BY (NAME):", row, column+4);
+    spreadsheetFormatCellRange(spreadsheet, contentStyle, row, column+2, row, column+4)
+    spreadsheetSetCellValue(spreadsheet, "TITLE/POSITION:", row+1, column+4);
+    spreadsheetFormatCell(spreadsheet, contentStyle, row+1, column+4);
+    spreadsheetSetCellValue(spreadsheet, "EMAIL:", row+2, column+4);
+    spreadsheetFormatCell(spreadsheet, contentStyle, row+2, column+4);
+    spreadsheetSetCellValue(spreadsheet, "QUOTE IS VALID FOR WHICH COUNTRIES:", row+3, column+4);
+    spreadsheetFormatCellRange(spreadsheet, contentStyle, row+3, column+2, row+3, column+4)
+=======
     spreadsheetMergeCells(spreadsheet, row, row, column+2, column+4);
     spreadsheetSetCellValue(spreadsheet, "QUOTE PROVIDED BY (NAME):", row, column+2);
     spreadsheetFormatCell(spreadsheet, contentStyle, row, column+2);
@@ -478,6 +494,7 @@
     spreadsheetMergeCells(spreadsheet, row+3, row+3, column, column+4);
     spreadsheetSetCellValue(spreadsheet, "QUOTE IS VALID FOR WHICH COUNTRIES:", row+3, column);
     spreadsheetFormatCell(spreadsheet, contentStyle, row+3, column);
+>>>>>>> f3a0766ad0c17b6278ecf1e2a59fc217d0f2e26e
      for (row = 5; row < 9; row++) {
         spreadsheetMergeCells(spreadsheet, row, row, column+5, column+9);    
         spreadsheetFormatCellRange( spreadsheet,bottomBorderBoldText,row, column+5, row, column+8);
@@ -1088,7 +1105,10 @@
     spreadsheetSetCellValue(spreadsheet, "Ship Lead time (In Days):", row+3, column)
     spreadsheetSetCellValue(spreadsheet, "Drop Ship Y/N:", row+5, column)
     spreadsheetSetCellValue(spreadsheet, "Costco Account Y/N:", row+6, column)
+<<<<<<< HEAD
+=======
 
+>>>>>>> f3a0766ad0c17b6278ecf1e2a59fc217d0f2e26e
     for(row=91;row<98;row++){
         if(row==92||row==93||row==95||row==96){
             spreadsheetMergeCells(spreadsheet, row, row, column, column+2)
@@ -1335,6 +1355,31 @@
         row = sheet.getRow(rowIndex);
         row.setZeroHeight(true);  
     }
+<<<<<<< HEAD
+    printSetup = sheet.getPrintSetup();
+    sheet.setMargin(sheet.RightMargin, 0);
+    sheet.setMargin(sheet.LeftMargin, 0);
+    sheet.setMargin(sheet.TopMargin, 0);
+    sheet.setMargin(sheet.BottomMargin, 0);
+    //sheet.setMargin(sheet.FooterMargin, 0);
+   // sheet.setMargin(sheet.HeaderMargin, 0);
+    printSetup.setScale(JavaCast("short", 58));
+    printSetup.setLeftToRight(true);
+    printSetup.setFitWidth(1);
+    printSetup.setFitHeight(2);
+   // pageOrder=sheet.getPageOrder();
+   // printSetup.setPageOrder("DOWN_THEN_OVER",true)
+   // sheet.setAutobreaks(true);
+   //sheet.setZoom(100); 
+    printSetup.setLandscape(false);  //writeDump(sheet);
+   // abort;/*
+   
+       // printSetup.setPageOrder(org.apache.poi.ss.usermodel.PrintSetup.DOWN_THEN_OVER); // Page order
 </cfscript>
 <cfheader name="Content-Disposition" value="inline; filename=#theFile#">
 <cfcontent type="application/vnd.ms-excel" variable="#SpreadSheetReadBinary(spreadsheet)#">
+=======
+</cfscript>
+<cfheader name="Content-Disposition" value="inline; filename=#theFile#">
+<cfcontent type="application/vnd.ms-excel" variable="#SpreadSheetReadBinary(spreadsheet)#">
+>>>>>>> f3a0766ad0c17b6278ecf1e2a59fc217d0f2e26e

@@ -15,11 +15,18 @@
         alignment="center",
         fontsize="15"
     }; 
+    contentStyleLeftMediumBorder={
+        font="Arial Narrow",
+        bold="true",
+        fontSize="12",
+        alignment="right",
+        leftBorder="medium"  
+    };
     contentStyle={
         font="Arial Narrow",
         bold="true",
         fontSize="12",
-        alignment="right"  
+        alignment="right"
     };
     hyperLinkStyle={
         font="Arial Narrow",
@@ -47,6 +54,12 @@
         fontSize="12",
         alignment="right"
     };
+    leftMediumBorderNormalText={
+        font="Arial Narrow",
+        fontSize="12",
+        alignment="right",
+        leftBorder="medium"
+    }
     leftNormalText={
         font="Arial Narrow",
         fontSize="12",
@@ -89,7 +102,8 @@
     subHeadingBorder={
         bottomborder="thin",
         topborder="thin",
-        rightborder="thin"
+        rightborder="thin",
+        leftborder="thin"
     };
     centerContent={
         fontsize="12",
@@ -141,6 +155,7 @@
     }
     rightTextBottomBoldBorder={
         bottomBorder="medium",
+        leftBorder="medium",
         alignment="right",
         font="Arial Narrow",
         fontSize="12"
@@ -221,9 +236,9 @@
         rightBorder="medium"
     };
     centerBoldContent={
-        fontsize="11",
+        fontsize="12",
         alignment='center',
-        font="Arial",
+        font="Arial Narrow",
         dataformat="$##0.00",
         bold="true",
         rightBorder="medium"
@@ -240,6 +255,7 @@
     itemCostStyle={
         topBorder="medium",
         rightBorder="medium",
+        leftBorder="medium",
         font="Arial Narrow",
         bold="true",
         alignment="center",
@@ -257,6 +273,7 @@
         alignment="left",
         rightBorder="medium",
         topBorder="medium",
+        leftBorder="medium",
         fontSize="12",
         bold="true",
         font="Arial Narrow"
@@ -312,6 +329,13 @@
     mediumBottomBorder={
         bottomborder='medium' 
     };
+    mediumLeftBorder={
+        leftBorder="medium"
+    }
+    mediumLeftBottomBorder={
+        leftBorder="medium",
+        bottomborder='medium'
+    }
     rightLeftBoldBottomBorder={
         rightBorder="medium",
         leftBorder="medium",
@@ -333,6 +357,14 @@
         fontSize="12",
         alignment="right"
     };
+    leftMediumBorderRightBoldText={
+        bottomBorder="medium",
+        leftBorder="medium",
+        font="Arial Narrow",
+        bold="true",
+        fontSize="12",
+        alignment="right"
+    }
     rightBoldBorder={
         rightBorder="medium",
         bottomBorder="thin",
@@ -431,6 +463,25 @@
     spreadSheetSetActiveSheet(spreadsheet, 'Diamond Quote Sheet');
    /* imagePath = expandPath("images/Costco_Logo.png"); // Adjust the path to your image
     spreadsheetAddImage(spreadsheet, imagePath, "1, 1, 3, 2");//startRow,startColumn,endRow,endColumn*/
+    wb = spreadsheet.getWorkbook();
+    sheet  = wb.getSheet("Diamond Quote Sheet");
+    printSetup = sheet.getPrintSetup();
+    sheet.setMargin(sheet.RightMargin, 0);
+    sheet.setMargin(sheet.LeftMargin, 0);
+    sheet.setMargin(sheet.TopMargin, 0);
+    sheet.setMargin(sheet.BottomMargin, 0);
+    //sheet.setMargin(sheet.FooterMargin, 0);
+   // sheet.setMargin(sheet.HeaderMargin, 0);
+    printSetup.setScale(JavaCast("short", 55));
+    printSetup.setLeftToRight(true);
+    printSetup.setFitWidth(1);
+    printSetup.setFitHeight(2);
+ 
+   // pageOrder=sheet.getPageOrder();
+   // printSetup.setPageOrder("DOWN_THEN_OVER",true)
+   // sheet.setAutobreaks(true);
+   //sheet.setZoom(100); 
+    printSetup.setLandscape(false);
     row=1;
     column=1;
     spreadsheetMergeCells(spreadsheet, row, row, column, column+15);//startRow, endRow, startColumn, endColumn
@@ -443,15 +494,15 @@
     spreadsheetFormatCellRange(spreadsheet, jewelryQuoteFormStyle, row+1, column, row+1, column+15)
     spreadsheetMergeCells(spreadsheet, row+2, row+2, column, column+5);
     spreadsheetSetCellValue(spreadsheet, "SUPPLIER INFORMATION", row+2, column);
-    wb = spreadsheet.getWorkbook();
+    //wb = spreadsheet.getWorkbook();
     color1 = wb.createCellStyle();
     color1.setFillForegroundColor(createObject("java", "org.apache.poi.xssf.usermodel.XSSFColor").init(createObject("java", "java.awt.Color").init(255,242,204)));
     color1.setFillPattern(createObject("java", "org.apache.poi.ss.usermodel.FillPatternType").SOLID_FOREGROUND);
-    sheet  = wb.getSheet("Diamond Quote Sheet");
+   // sheet  = wb.getSheet("Diamond Quote Sheet");
     cell = sheet.getRow(2).getCell(0);
 	cell.setCellStyle(color1);
     spreadsheetFormatCell(spreadsheet, subHeadingStyle, row+2, column);
-    spreadsheetFormatCellRange( spreadsheet,subHeadingBorder, row+2,column+1,row+2,column+5);
+    spreadsheetFormatCellRange( spreadsheet,subHeadingBorder, row+2,column,row+2,column+5);
     //left side row=3
     row=5;
     column=1;
@@ -468,16 +519,14 @@
     //right side
     row=5;
     column=8;
-    spreadsheetMergeCells(spreadsheet, row, row, column+2, column+4);
-    spreadsheetSetCellValue(spreadsheet, "QUOTE PROVIDED BY (NAME):", row, column+2);
-    spreadsheetFormatCell(spreadsheet, contentStyle, row, column+2);
-    spreadsheetSetCellValue(spreadsheet, "TITLE/", row+1, column+4);
+    spreadsheetSetCellValue(spreadsheet, "QUOTE PROVIDED BY (NAME):", row, column+4);
+    spreadsheetFormatCellRange(spreadsheet, contentStyle, row, column+2, row, column+4)
+    spreadsheetSetCellValue(spreadsheet, "TITLE/POSITION:", row+1, column+4);
     spreadsheetFormatCell(spreadsheet, contentStyle, row+1, column+4);
     spreadsheetSetCellValue(spreadsheet, "EMAIL:", row+2, column+4);
     spreadsheetFormatCell(spreadsheet, contentStyle, row+2, column+4);
-    spreadsheetMergeCells(spreadsheet, row+3, row+3, column, column+4);
-    spreadsheetSetCellValue(spreadsheet, "QUOTE IS VALID FOR WHICH COUNTRIES:", row+3, column);
-    spreadsheetFormatCell(spreadsheet, contentStyle, row+3, column);
+    spreadsheetSetCellValue(spreadsheet, "QUOTE IS VALID FOR WHICH COUNTRIES:", row+3, column+4);
+    spreadsheetFormatCellRange(spreadsheet, contentStyle, row+3, column+2, row+3, column+4)
      for (row = 5; row < 9; row++) {
         spreadsheetMergeCells(spreadsheet, row, row, column+5, column+9);    
         spreadsheetFormatCellRange( spreadsheet,bottomBorderBoldText,row, column+5, row, column+8);
@@ -620,13 +669,13 @@
     spreadsheetFormatCell(spreadsheet, leftBottomNormalText, row+4, column+1);
     spreadsheetMergeCells(spreadsheet, row+5, row+5, column, column+1);
     spreadsheetSetCellValue(spreadsheet, "Platinum:", row+5, column);
-    spreadsheetFormatCell(spreadsheet, normalText, row+5, column);
+    spreadsheetFormatCell(spreadsheet, leftMediumBorderNormalText, row+5, column);
     spreadsheetMergeCells(spreadsheet, row+6, row+6, column, column+1);
     spreadsheetSetCellValue(spreadsheet, "Minimum CWT:", row+6, column);
-    spreadsheetFormatCell(spreadsheet, normalText, row+6, column);
+    spreadsheetFormatCell(spreadsheet, leftMediumBorderNormalText, row+6, column);
     for(row=28;row<=31;row++){
         if(row!=30){
-            spreadsheetFormatCell(spreadsheet, contentStyle, row, column);
+            spreadsheetFormatCell(spreadsheet, contentStyleLeftMediumBorder, row, column);
         }
     }
     rowRanges = [
@@ -664,11 +713,11 @@
     spreadsheetSetCellValue(spreadsheet, "Head Size / Shape", row+5, column);
     for(row=36;row<=40;row++){
         spreadsheetMergeCells(spreadsheet, row, row, column, column+1);
-        spreadsheetFormatCellRange( spreadsheet,normalText, row,column,row,column+1);
+        spreadsheetFormatCellRange( spreadsheet,leftMediumBorderNormalText, row,column,row,column+1);
     }
     spreadsheetMergeCells(spreadsheet, row, row, column, column+1);
     spreadsheetSetCellValue(spreadsheet, "Total Mounting", row, column);
-    spreadsheetFormatCellRange( spreadsheet,contentStyle, row,column,row,column+1);
+    spreadsheetFormatCellRange( spreadsheet,contentStyleLeftMediumBorder, row,column,row,column+1);
     for(row=36;row<=41;row++){
         spreadsheetMergeCells(spreadsheet, row, row, column+3, column+5);
         if(row!=41){
@@ -709,7 +758,7 @@
     cell = sheet.getRow(53).getCell(3);
     cell.setCellFormula("SUM(D41,D44:F50)")
     cell.setCellValue(0)
-    spreadsheetFormatCellRange( spreadsheet,bottomBoldBolder, row+12,column,row+12,column+1);
+    spreadsheetFormatCellRange( spreadsheet,leftMediumBorderRightBoldText, row+12,column,row+12,column+1);
     spreadsheetFormatCell(spreadsheet, mediumBottomBorder, row+12, column+2);
     color5 = wb.createCellStyle();
     color5.setFillForegroundColor(createObject("java", "org.apache.poi.xssf.usermodel.XSSFColor").init(createObject("java", "java.awt.Color").init(217,217,217)));
@@ -719,7 +768,7 @@
     spreadsheetFormatCellRange( spreadsheet,greyBackgroundValue, row+12,column+3,row+12,column+5);
     for(row=44;row<54;row++){
        spreadsheetMergeCells(spreadsheet, row, row, column, column+1);
-       spreadsheetFormatCellRange( spreadsheet,normalText, row,column,row,column+1);
+       spreadsheetFormatCellRange( spreadsheet,leftMediumBorderNormalText, row,column,row,column+1);
        spreadsheetMergeCells(spreadsheet, row, row, column+3, column+5);
        if(row<51){
             spreadsheetFormatCellRange(spreadsheet,bottomRightBoldBorder, row,column+3,row,column+5);
@@ -728,7 +777,7 @@
             spreadsheetFormatCellRange(spreadsheet,rightOnlyBorder, row,column+3,row,column+5);
        }
        else if(row>=52){
-            spreadsheetFormatCellRange( spreadsheet,contentStyle, row,column,row,column+1);
+            spreadsheetFormatCellRange( spreadsheet,contentStyleLeftMediumBorder, row,column,row,column+1);
        }
     }
     //diamond breakdown
@@ -759,7 +808,7 @@
     for(row=58;row<=66;row++){
         if(row==58){
             spreadsheetSetCellValue(spreadsheet, "Center Diamond", row, column);
-            spreadsheetFormatCell(spreadsheet, normalText, row, column)
+            spreadsheetFormatCell(spreadsheet, leftMediumBorderNormalText, row, column)
             spreadsheetFormatCell(spreadsheet, bottomBorderNormalText, row, column+1)
             spreadsheetFormatCell(spreadsheet, bottomBorderNormalText, row, column+3)
             spreadsheetSetCellValue(spreadsheet, 0, row, column+5);
@@ -793,7 +842,7 @@
         }
         else{
             spreadsheetSetCellValue(spreadsheet, "Melee", row, column);
-            spreadsheetFormatCell(spreadsheet, normalText, row, column)
+            spreadsheetFormatCell(spreadsheet, leftMediumBorderNormalText, row, column)
             spreadsheetFormatCell(spreadsheet, bottomBorderNormalText, row, column+1)
             spreadsheetFormatCell(spreadsheet, bottomBorderNormalText, row, column+3)
             spreadsheetSetCellValue(spreadsheet, "", row, column+5);
@@ -849,7 +898,7 @@
 
     for(row=70;row<=74;row++){
         spreadsheetSetCellValue(spreadsheet, "Color", row, column);
-        spreadsheetFormatCell(spreadsheet, normalText, row, column)
+        spreadsheetFormatCell(spreadsheet, leftMediumBorderNormalText, row, column)
     }
     for(column=2;column<=16;column=column+2){
         for(row=70;row<=74;row++){
@@ -876,6 +925,17 @@
         }
         else if(column==16){
             spreadsheetFormatCell(spreadsheet, rightBottomBoldBorder, row, column)
+        }
+    }
+    leftBorderCell=[30,34,42,57,69,75];
+    for (i = 1; i <= arrayLen(leftBorderCell); i++) {
+        column=1;
+        data = leftBorderCell[i];
+        if(data!=75){
+            spreadsheetFormatCell(spreadsheet, mediumLeftBorder, data, column);
+        }
+        else{
+            spreadsheetFormatCell(spreadsheet, mediumLeftBottomBorder, data, column);
         }
     }
     column=8;
@@ -1088,7 +1148,6 @@
     spreadsheetSetCellValue(spreadsheet, "Ship Lead time (In Days):", row+3, column)
     spreadsheetSetCellValue(spreadsheet, "Drop Ship Y/N:", row+5, column)
     spreadsheetSetCellValue(spreadsheet, "Costco Account Y/N:", row+6, column)
-
     for(row=91;row<98;row++){
         if(row==92||row==93||row==95||row==96){
             spreadsheetMergeCells(spreadsheet, row, row, column, column+2)
@@ -1208,6 +1267,7 @@
 	cell.setCellStyle(color1);
     spreadsheetFormatCell(spreadsheet, subHeadingStyle, row, column);
     spreadsheetFormatCellRange( spreadsheet,subHeadingBorder, row,column,row,column+5);
+    sheet.setRowBreak(JavaCast("int", 93));
     spreadsheetSetCellValue(spreadsheet, "Country Where Rough Was Mined:", row+1, column)
     spreadsheetSetCellValue(spreadsheet, "Mining Company Where Purchased:", row+2, column)
     spreadsheetSetCellValue(spreadsheet, "Country Where Diamond Was Cut:", row+3, column)
@@ -1335,6 +1395,10 @@
         row = sheet.getRow(rowIndex);
         row.setZeroHeight(true);  
     }
+  //writeDump(sheet);
+   // abort;/*
+   
+       // printSetup.setPageOrder(org.apache.poi.ss.usermodel.PrintSetup.DOWN_THEN_OVER); // Page order
 </cfscript>
 <cfheader name="Content-Disposition" value="inline; filename=#theFile#">
 <cfcontent type="application/vnd.ms-excel" variable="#SpreadSheetReadBinary(spreadsheet)#">

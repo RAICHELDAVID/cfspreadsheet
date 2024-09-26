@@ -1,3 +1,5 @@
+<cfinclude template="product_action.cfm">   
+<cfinclude template="calculation_quotsheet.cfm">
 <cfscript>
     // imageStyle.width
     itemAgreementStyle = {
@@ -324,7 +326,7 @@
         fontsize="11",
         alignment='center',
         font="Arial",
-        dataformat="$##0.00",
+      //  dataformat="$##0.00",
         bold="true"
     };
     labourCostStyle={
@@ -464,7 +466,6 @@
         bold="true",
         fontSize="12"
     };
- 
     bottomBorderNormalText={
         bottomBorder="thin",
         font="Arial Narrow",
@@ -497,7 +498,7 @@
         rightBorder="thin"
     }
     
-    theFile="FY25 Jewellery Item Agreement Quote Sheet #Dateformat(now(), 'mm-dd-YYYY')#.xlsx";//#DateFormat(rs_product.date_entered,'MMDDYY')#
+   theFile="FY25 Jewellery Item Agreement Quote Sheet #Dateformat(now(), 'mm-dd-YYYY')#.xlsx";//#DateFormat(rs_product.date_entered,'MMDDYY')#
     // Create a new spreadsheet
     //spreadsheet = spreadsheetNew("Gemstones_ Pearl Quote Sheet", true);
     spreadsheet = spreadsheetNew("Vendor Quote Sheet", true);
@@ -509,12 +510,12 @@
     sheet  = wb.getSheet("Vendor Quote Sheet");
     printSetup = sheet.getPrintSetup();
     sheet.setMargin(sheet.RightMargin, 0);
-    sheet.setMargin(sheet.LeftMargin, 0);
+    sheet.setMargin(sheet.LeftMargin, 0.22);
     sheet.setMargin(sheet.TopMargin, 0);
     sheet.setMargin(sheet.BottomMargin, 0);
     sheet.setMargin(sheet.FooterMargin, 0);
     sheet.setMargin(sheet.HeaderMargin, 0);
-    printSetup.setScale(JavaCast("short", 55));
+    printSetup.setScale(JavaCast("short", 54));
     printSetup.setLeftToRight(true);
     printSetup.setFitWidth(1);
     printSetup.setFitHeight(1);
@@ -524,6 +525,44 @@
    // sheet.setAutobreaks(true);
    //sheet.setZoom(100); 
     printSetup.setLandscape(false);
+            qsheet_provider ='';
+        email ='';
+        if (structkeyexists(session.loggeduser,"ISADMIN") AND (session.loggeduser.ISADMIN EQ 1))
+        {
+            qsheet_provider =   session.loggeduser.FirstName &' '& session.loggeduser.LastName; 
+            email =   session.loggeduser.email; 
+        } 
+        if(rs_ring_size.recordcount){
+            ringSize = 'Ring Size '&rs_ring_size.size;
+        }else{
+            ringSize = '';
+        }
+        mountingtotal = replace(FinishedDwt,'$','');
+        if(len(trim(FindingsPrice))){
+            if(len(trim(ChainTypeCost))){
+                findingchain=FindingsPrice&ChainTypeCost;
+            }
+            else{
+                findingchain=FindingsPrice;
+                mountingtotal = mountingtotal + LSParseNumber(ListLast(findingchain,"$"));
+            }
+        }else{
+            findingchain="";
+        }
+        if(len(ChainTypeweight)){
+            purity = ChainCostPurity&MetalTypePurity&ChainTypeLength&ChainTypeType&rs_chain_type_cost.color&rs_chain_type_cost.length&rs_chain_type_cost.type&ChainTypeClasp&ChainTypeweight&FindingName&'g';
+        }else{
+            purity = ChainCostPurity&MetalTypePurity&ChainTypeLength&ChainTypeType&rs_chain_type_cost.color&rs_chain_type_cost.length&rs_chain_type_cost.type&ChainTypeClasp&FindingName;
+        }
+        mountingtotal =LSParseNumber(mountingtotal)+LSParseNumber(casting_cost);
+        mountingtotal =mountingtotal+val(findingchain);
+        // Add an image from the server to the spreadsheet
+        imagePath = "";
+        if(CGI.HTTP_REFERER contains "products_proposal.cfm")
+            imagePath = expandPath("../images/Costco_Logo.png");
+        else{
+            imagePath = expandPath("images/Costco_Logo.png");
+        }
     row=1;
     column=1;
     spreadsheetMergeCells(spreadsheet, row, row, column, column+15);//startRow, endRow, startColumn, endColumn
@@ -550,9 +589,13 @@
     column=1;
     spreadsheetSetCellValue(spreadsheet, "VENDOR ##", row, column);
     spreadsheetSetCellValue(spreadsheet, "VENDOR / COMPANY NAME:", row+1, column);
+    SpreadsheetSetCellValue(spreadsheet,"CH HAKIMI",row+1,column+1);
     spreadsheetSetCellValue(spreadsheet, "ADDRESS:", row+2, column);
+    spreadsheetSetCellValue(spreadsheet, "747 MIDDLE NECK ROAD", row+2, column+1);
     spreadsheetSetCellValue(spreadsheet, "CITY,STATE ZIP:", row+3, column);
+    spreadsheetSetCellValue(spreadsheet, "GREAT NECK, NY 11023", row+3, column+1);
     spreadsheetSetCellValue(spreadsheet, "TELEPHONE ##", row+4, column);
+    spreadsheetSetCellValue(spreadsheet, "516-482-8000", row+4, column+1);
     for (row = 5; row <= 9; row++) {
         spreadsheetMergeCells(spreadsheet, row, row, column+1, column+5);    
         spreadsheetFormatCellRange( spreadsheet,bottomBorderBoldText,row, column+1, row, column+5);
@@ -562,10 +605,13 @@
     row=5;
     column=8;
     spreadsheetSetCellValue(spreadsheet, "QUOTE PROVIDED BY (NAME):", row, column+4);
-    spreadsheetFormatCellRange(spreadsheet, contentStyle, row, column+2, row, column+4)
+    spreadsheetFormatCellRange(spreadsheet, contentStyle, row, column+2, row, column+4);
+    spreadsheetSetCellValue(spreadsheet, qsheet_provider, row, column+5);
     spreadsheetSetCellValue(spreadsheet, "TITLE/POSITION:", row+1, column+4);
     spreadsheetFormatCell(spreadsheet, contentStyle, row+1, column+4);
+    spreadsheetSetCellValue(spreadsheet, "VP", row+1, column+5);
     spreadsheetSetCellValue(spreadsheet, "EMAIL:", row+2, column+4);
+    spreadsheetSetCellValue(spreadsheet, email, row+2, column+5);
     spreadsheetFormatCell(spreadsheet, contentStyle, row+2, column+4);
     spreadsheetSetCellValue(spreadsheet, "QUOTE IS VALID FOR WHICH COUNTRIES:", row+3, column+4);
     spreadsheetFormatCellRange(spreadsheet, contentStyle, row+3, column+2, row+3, column+4)
@@ -607,7 +653,10 @@
     spreadsheetSetCellValue(spreadsheet, "Reorder (Y/N):", row+1, column);
     spreadsheetSetCellValue(spreadsheet, "New Item (Y/N):", row+2, column);
     spreadsheetSetCellValue(spreadsheet, "Item Description:", row+3, column);
+    completedetails = CompleteDetailedDesc1 & CompleteDetailedDesc2 & CompleteDetailedDesc3 & CompleteDetailedDesc4;
+    SpreadsheetSetCellValue(spreadsheet,completedetails,row+3,column+1);
     spreadsheetSetCellValue(spreadsheet, "Vendor Style ##:", row+4, column);
+    SpreadsheetSetCellValue(spreadsheet,rs_product.chh,row+4,column+1);
     spreadsheetSetCellValue(spreadsheet, "Minimum CWT:", row+5, column);
     spreadsheetSetCellValue(spreadsheet, "Minimum Center CWT:", row+6, column);
     spreadsheetFormatCell(spreadsheet, contentStyle, row+6, column);
@@ -712,13 +761,19 @@
     cell = sheet.getRow(26).getCell(0);
 	cell.setCellStyle(color2);
     spreadsheetFormatCellRange( spreadsheet,itemCostStyle, row,column,row,column+5);
+    currdate = dateFormat(now(), 'mm/dd/yyyy');
     spreadsheetSetCellValue(spreadsheet, "QUOTE DATE:", row+1, column);
+    SpreadsheetSetCellValue(spreadsheet, currdate,row+1,column+1);
     spreadsheetSetCellValue(spreadsheet, "USMCA Applicable (Y/N):", row+2, column);
     spreadsheetSetCellValue(spreadsheet, "PRICED AT:", row+4, column);
     spreadsheetSetCellValue(spreadsheet, "Gold:", row+4, column+1);
+    SpreadsheetSetCellValue(spreadsheet, MetallckG,row+4,column+2);
     spreadsheetFormatCell(spreadsheet, leftBottomNormalText, row+4, column+1);
     spreadsheetMergeCells(spreadsheet, row+5, row+5, column, column+1);
     spreadsheetSetCellValue(spreadsheet, "Platinum:", row+5, column);
+    // writeDump(MetallckP)
+    // abort;
+    SpreadsheetSetCellValue(spreadsheet, MetallckP,row+5,column+2); 
     spreadsheetFormatCell(spreadsheet, leftMediumBorderNormalText, row+5, column);
     spreadsheetMergeCells(spreadsheet, row+6, row+6, column, column+1);
     spreadsheetSetCellValue(spreadsheet, "Minimum CWT:", row+6, column);
@@ -756,8 +811,11 @@
     spreadsheetSetCellValue(spreadsheet, "MOUNTING:", row, column);
     spreadsheetFormatCellRange( spreadsheet,leftSectionMainHeading, row,column,row,column+5);
     spreadsheetSetCellValue(spreadsheet, "Finished DWT", row+1, column);
+    SpreadsheetSetCellValue(spreadsheet,FinishedDwt,row+1,column+3);
     spreadsheetSetCellValue(spreadsheet, "Casting Charge", row+2, column);
+    SpreadsheetSetCellValue(spreadsheet,dollarformat(casting_cost),row+2,column+3);
     spreadsheetSetCellValue(spreadsheet, "Finding / Chain", row+3, column);
+    SpreadsheetSetCellValue(spreadsheet,findingchain,row+3,column+3);
     spreadsheetSetCellValue(spreadsheet, "##Pcs on Casting", row+4, column);
     spreadSheetSetRowHeight(spreadsheet,row+5,20)
     spreadsheetSetCellValue(spreadsheet, "Head Size / Shape", row+5, column);
@@ -790,10 +848,14 @@
     spreadsheetSetCellValue(spreadsheet, "Cost to Assemble", row+2, column);
     spreadsheetSetCellValue(spreadsheet, "What Needs to Be Assembled", row+3, column);
     spreadsheetSetCellValue(spreadsheet, "Polish & Finish", row+4, column);
+    SpreadsheetSetCellValue(spreadsheet,PolishnFinish,row+4,column+3);
     spreadsheetSetCellValue(spreadsheet, "Rhodium (If required)", row+5, column);
+    SpreadsheetSetCellValue(spreadsheet,Rhodium,row+5,column+3);
     spreadsheetSetCellValue(spreadsheet, "Misc (Texturing, Etc)", row+6, column);
     spreadsheetSetCellValue(spreadsheet, "Set Center", row+7, column);
+    SpreadsheetSetCellValue(spreadsheet,CenterSettingCharge,row+7,column+3);
     spreadsheetSetCellValue(spreadsheet, "Set Melee", row+8, column);
+    SpreadsheetSetCellValue(spreadsheet,MelleSettingCharge,row+8,column+3);
     spreadsheetSetCellValue(spreadsheet, "IGI / GIA", row+9, column);
     spreadsheetSetCellValue(spreadsheet, "Total Labour", row+10, column);
     spreadsheetSetCellValue(spreadsheet,"", row+10, column+3);
@@ -804,7 +866,8 @@
     spreadsheetMergeCells(spreadsheet, row+12, row+12, column, column+1);
     spreadsheetSetCellValue(spreadsheet, "TOTAL SECTION 1:", row+12, column);
     spreadsheetMergeCells(spreadsheet, row+12, row+12, column+3, column+5);
-    spreadsheetSetCellValue(spreadsheet,"", row+12, column+3);
+    SpreadsheetSetCellValue(spreadsheet,TotalSection,row+12,column+3);
+   // spreadsheetSetCellValue(spreadsheet,"", row+12, column+3);
     cell = sheet.getRow(53).getCell(3);
     cell.setCellFormula("SUM(D41,D44:F50)")
     cell.setCellValue(0)
@@ -1047,9 +1110,9 @@
         }
     }
     row=77;
-    for(column=10;column<=16;column++){
+   /* for(column=10;column<=16;column++){
         spreadsheetFormatCell(spreadsheet, bottomBorder, row, column)
-    }
+    }*/
     column=1;
     //TOTAL SECTIONS 1-3:
     spreadsheetSetCellValue(spreadsheet, "TOTAL SECTIONS 1-3:", row, column+1)
@@ -1194,7 +1257,10 @@
     cell = sheet.getRow(89).getCell(9);
 	cell.setCellStyle(color1);
     spreadsheetFormatCellRange(spreadsheet, leftBottomRightCenterBoldLightYellowBackground, row, column, row, column+6)
-    sheet.setRowBreak(JavaCast("int", 89));
+    sheet.setRowBreak(JavaCast("int", 88));
+    // writeDump(sheet)
+    // abort;
+
     spreadsheetSetCellValue(spreadsheet, "Vendor Shipping Terms COL / PPD:", row+1, column+2)
     spreadsheetSetCellValue(spreadsheet, "Ship Point (City, State & Zip):", row+2, column)
     spreadsheetSetCellValue(spreadsheet, "Ship Lead time (In Days):", row+3, column)

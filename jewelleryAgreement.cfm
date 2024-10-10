@@ -248,7 +248,7 @@
         fontSize="12",
         alignment="left",
         leftBorder="thin",
-        bottomBorder="thin"
+        bottomBorder="thin" 
     }
     dollarSymbolNormalIntegerBottomBorder={
         fontsize="12",
@@ -381,6 +381,13 @@
         fontsize="12",
         font="Arial Narrow"
     };
+    centerBoldBottomBorderText={
+        bold="true",
+        alignment="center",
+        fontsize="12",
+        font="Arial Narrow",
+        bottomBorder="thin" 
+    }
     centerContentNormalText={
         fontsize="12",
         alignment="center",
@@ -402,7 +409,9 @@
     };
     bottomBorder={
         bottomborder='thin',
-        alignment="center" 
+        font="Arial Narrow",
+        fontsize="11",
+       alignment="left" 
     };
     mediumBottomBorder={
         bottomborder='medium' 
@@ -437,7 +446,7 @@
         font="Arial Narrow",
         bold="true",
         fontSize="12",
-        alignment="right"
+        alignment="center"
     };
     leftMediumBorderRightBoldText={
         bottomBorder="medium",
@@ -501,9 +510,9 @@
         rightBorder="thin",
         bottomBorder="thin",
         font="Arial Narrow",
-        bold="true",
-        fontSize="12",
-        alignment="right"
+      //  bold="true",
+        fontSize="11"
+       // alignment="right"
     };
     bottomBorderBoldText={
         bottomBorder="thin",
@@ -557,8 +566,6 @@
     spreadsheet = spreadsheetNew("Vendor Quote Sheet", true);
   //  spreadsheetCreateSheet(spreadsheet, 'Diamond Quote Sheet');
 //    spreadSheetSetActiveSheet(spreadsheet, 'Diamond Quote Sheet');
-   /* imagePath = expandPath("images/Costco_Logo.png"); // Adjust the path to your image
-    spreadsheetAddImage(spreadsheet, imagePath, "1, 1, 3, 2");//startRow,startColumn,endRow,endColumn*/
     wb = spreadsheet.getWorkbook();
     sheet  = wb.getSheet("Vendor Quote Sheet");
     printSetup = sheet.getPrintSetup();
@@ -568,7 +575,9 @@
     sheet.setMargin(sheet.BottomMargin, 0);
     sheet.setMargin(sheet.FooterMargin, 0);
     sheet.setMargin(sheet.HeaderMargin, 0);
-    printSetup.setScale(JavaCast("short", 54));
+    view = sheet.getCTWorksheet().getSheetViews().getSheetViewArray(0);
+    view.setView(view.getView().forString("pageBreakPreview"));
+    printSetup.setScale(JavaCast("short", 53));
     printSetup.setLeftToRight(true);
     printSetup.setFitWidth(1);
     printSetup.setFitHeight(1);
@@ -578,8 +587,8 @@
    // sheet.setAutobreaks(true);
    //sheet.setZoom(100); 
     printSetup.setLandscape(false);
-            qsheet_provider ='';
-        email ='';
+    qsheet_provider ='';
+    email ='';
         if (structkeyexists(session.loggeduser,"ISADMIN") AND (session.loggeduser.ISADMIN EQ 1))
         {
             qsheet_provider =   session.loggeduser.FirstName &' '& session.loggeduser.LastName; 
@@ -616,6 +625,19 @@
         else{
             imagePath = expandPath("images/Costco_Logo.png");
         }
+        imagePath = "";
+        if(CGI.HTTP_REFERER contains "products_proposal.cfm")
+            imagePath = expandPath("../images/Costco_Logo.png");
+        else{
+            imagePath = expandPath("images/Costco_Logo.png");
+        }
+        //imagePath.setHeight(1.64)
+        //imagePath.setWidth(5.10)
+          //      signatureobj = imageRead(imagePath);
+   //  imageResize(signatureobj, 180, 50);
+    // writeDump(signatureobj)
+    //             abort;
+    spreadsheetAddImage(spreadsheet, imagePath, "1, 1, 3, 2");//startRow,startColumn,endRow,endColumn
     row=1;
     column=1;
     spreadsheetMergeCells(spreadsheet, row, row, column, column+15);//startRow, endRow, startColumn, endColumn
@@ -972,10 +994,6 @@
     spreadsheetSetCellValue(spreadsheet, "TOTAL SECTION 1:", row+12, column);
     spreadsheetMergeCells(spreadsheet, row+12, row+12, column+3, column+5);
     SpreadsheetSetCellValue(spreadsheet,TotalSection,row+12,column+3);
-   // spreadsheetSetCellValue(spreadsheet,"", row+12, column+3);
-   /* cell = sheet.getRow(53).getCell(3);
-    cell.setCellFormula("SUM(D41,D44:F50)")
-    cell.setCellValue(0)*/
     spreadsheetFormatCellRange( spreadsheet,leftMediumBorderRightBoldText, row+12,column,row+12,column+1);
     spreadsheetFormatCell(spreadsheet, mediumBottomBorder, row+12, column+2);
     color5 = wb.createCellStyle();
@@ -998,8 +1016,6 @@
             spreadsheetFormatCellRange( spreadsheet,contentStyleLeftMediumBorder, row,column,row,column+1);
        }
     }
-    // writeDump(row)
-    // abort;
     //diamond breakdown
     row=row+2;//row=56;
     spreadsheetSetCellValue(spreadsheet, "DIAMOND BREAKDOWN:", row, 1);
@@ -1183,8 +1199,6 @@
         spreadsheetMergeCells(spreadsheet, row, row, 11, 13);
         spreadsheetSetCellValue(spreadsheet, "DIAMOND TOTAL SECTION 2:", row, 11);
         SpreadsheetFormatCell(spreadsheet,diaTotalSectionValueStyle,row,11);
-//         writeDump(sheet.getRow(row-1).getLastCellNum())
-//         abort;
         spreadsheetMergeCells(spreadsheet, row, row, 15, 16)
         spreadsheetSetCellValue(spreadsheet, dollar_Diamond_Ext_Price, row, 15);
         totalSectionValueFont = wb.createFont();
@@ -1215,36 +1229,151 @@
     spreadsheetSetCellValue(spreadsheet, "SHAPE", row+1, column+5);
     spreadsheetSetCellValue(spreadsheet, "MM SIZES", row+1, column+7);
     spreadsheetSetCellValue(spreadsheet, "$ PER CT", row+1, column+9);
+    spreadsheetMergeCells(spreadsheet, row+1, row+1, column+11, column+12)
     spreadsheetSetCellValue(spreadsheet, "EXT PRICE", row+1, column+11);
     spreadsheetSetCellValue(spreadsheet, "COLOR", row+1, column+15);
     for(column=2;column<=12;column=column+2){
         spreadsheetFormatCell(spreadsheet, centerBoldText, row+1, column);
     }
     spreadsheetFormatCell(spreadsheet, centerBoldContentsf, row+1, column+2);
-    column=1;
+    //
+    row=70
+    total_stone_price1 = 0;
+    variables.ext_price = 0;
+    for (i = 1; i <= rs_product_stone_information.recordCount; i++) {
+        stone_type = obj_gemstone_type.getByAttributes(argumentcollection={gemstone_type_id: rs_product_stone_information.stone_type_id[i]});
+        stone_shape = obj_gemstone_shape.getByAttributes(argumentcollection={gemstone_shape_id: rs_product_stone_information.gemstone_shape_id[i]});
+        stone_cut = obj_gemstone_cut.getByAttributes(argumentcollection={gemstone_cut_id: rs_product_stone_information.gemstone_cut_id[i]});
+        rs_gemstone_size = obj_gemstone_size.getByAttributes(argumentcollection={gemstone_type_id: rs_product_stone_information.stone_type_id[i], gemstone_shape_id: rs_product_stone_information.gemstone_shape_id[i]});
+        countryoforigin = listAppend(country_of_origin, stone_type.country_of_origin);
 
+        short_gemstone_types = queryExecute(
+            "SELECT * FROM gemstone_types WHERE :stone LIKE name + '%'",
+            { stone: stone_type.gemstone },
+            { dbtype: "query" }
+        );
+
+        short_gemstone_shapes = queryExecute(
+            "SELECT * FROM gemstone_shapes WHERE :shape LIKE name + '%'",
+            { shape: stone_shape.shape },
+            { dbtype: "query" }
+        );
+
+        if (len(rs_product_stone_information.quantity[i])) {
+            quatityStone = val(rs_product_stone_information.quantity[i]);
+        } else {
+            quatityStone = 0;
+        }
+
+        ind_ct_wt = 0;
+        if (len(rs_product_stone_information.individual_ct_weight[i])) {
+            ind_ct_wt = rs_product_stone_information.individual_ct_weight[i];
+        }
+
+        if (len(trim(rs_product_stone_information.size[i]))) {
+            rs_gemstone_weight = obj_gemstone_weight.getByAttributes(argumentcollection={gemstone_size_id: rs_product_stone_information.size[i]});
+        } else {
+            rs_gemstone_weight = obj_gemstone_weight.getByAttributes(argumentcollection={gemstone_size_id: 0});
+        }
+
+        rs_setting_size = obj_setting_size.getByAttributes(val(rs_product_stone_information.size[i]));
+        rs_gemstone_cost = obj_gemstone_cost.getByAttributes(argumentcollection={gemstone_type_id: rs_product_stone_information.stone_type_id[i], gemstone_shape_id: rs_product_stone_information.gemstone_shape_id[i], size_id: val(rs_product_stone_information.size[i])});
+
+        variables.ind_ct_wt = ind_ct_wt;
+
+        if (len(trim(rs_product_stone_information.size[i]))) {
+            rs_gemstone_size = obj_gemstone_size.getByAttributes(argumentcollection={gemstone_size_id: rs_product_stone_information.size[i]});
+        } else {
+            rs_gemstone_size = obj_gemstone_size.getByAttributes(argumentcollection={gemstone_size_id: 0});
+        }
+
+        if (ind_ct_wt > 0) {
+            indctwt = numberFormat(variables.ind_ct_wt, "__.___");
+        } else {
+            indctwt = '-';
+        }
+
+        if (len(short_gemstone_shapes.name)) {
+            shapeName = short_gemstone_shapes.name;
+        } else if (len(stone_shape.shape)) {
+            shapeName = stone_shape.shape;
+        } else {
+            shapeName = '-';
+        }
+
+        if (rs_gemstone_size.recordcount && len(rs_gemstone_size.size)) {
+            gemSize = rs_gemstone_size.size;
+        } else {
+            gemSize = '-';
+        }
+
+        variables.price_per_ct = 0;
+
+        if (len(trim(rs_product_stone_information.price_per_caret[i]))) {
+            PPCT = dollarFormat(val(rs_product_stone_information.price_per_caret[i]));
+            variables.price_per_ct = rs_product_stone_information.price_per_caret[i];
+        } else {
+            PPCT = '-';
+        }
+
+        if (len(trim(rs_product_stone_information.ext_price[i]))) {
+            extprice = dollarFormat(rs_product_stone_information.ext_price[i]);
+            variables.ext_prices = rs_product_stone_information.ext_price[i];
+        } else {
+            extprice = dollarFormat(0.00);
+            variables.ext_price = 0;
+        }
+
+        if (len(rs_product_stone_information.ext_price[i])) {
+            total_stone_price1 += variables.ext_prices;
+            total_stone_price_Dollar = dollarFormat(numberFormat(total_stone_price1, "__.___"));
+        }
+
+        if (len(stone_type.gemstone)) {
+            stonetype = stone_type.gemstone;
+        } else {
+            stonetype = '-';
+        }
+
+        SpreadsheetSetCellValue(spreadsheet,"Color",row,1);
+        SpreadsheetFormatCell(spreadsheet,goldStyle,row,1);
+        SpreadsheetSetCellValue(spreadsheet,quatityStone,row,2);
+        SpreadsheetSetCellValue(spreadsheet,indctwt,row,4);
+        SpreadsheetSetCellValue(spreadsheet,shapeName,row,6);
+        SpreadsheetSetCellValue(spreadsheet,gemSize,row,8);
+        SpreadsheetSetCellValue(spreadsheet,PPCT,row,10);
+        SpreadsheetSetCellValue(spreadsheet,extprice,row,12);
+        spreadsheetMergeCells(spreadsheet, row, row, 12, 13);
+        SpreadsheetSetCellValue(spreadsheet,stonetype,row,15);
+        for(col=2; col<=15; col++){
+            if((col Mod 2 == 0 OR col==15 OR col==13) AND col!=14 ){
+                SpreadsheetFormatCell(spreadsheet,borderbottomCenterStyle,row,col);
+            }
+        }
+        row = row+1;
+    }
+    //
+    column=1;
     for(row=70;row<=74;row++){
         spreadsheetSetCellValue(spreadsheet, "Color", row, column);
         spreadsheetFormatCell(spreadsheet, leftMediumBorderNormalText, row, column)
+        spreadsheetMergeCells(spreadsheet, row, row, 15, 16)
+        if(row!=70){
+            spreadsheetMergeCells(spreadsheet, row, row, 12, 13)
+        }
     }
     for(column=2;column<=16;column=column+2){
         for(row=70;row<=74;row++){
             if(column>=2&&column<12){
-                spreadsheetFormatCell(spreadsheet, bottomBorder, row, column)
+                spreadsheetFormatCell(spreadsheet, centerBoldBottomBorderText, row, column)
             }
             else if(column==12){
-                spreadsheetSetCellValue(spreadsheet, 0, row, column)
-                spreadsheetFormatCell(spreadsheet, dollarSymbolNormalIntegerBottomBorder, row, column)
+                spreadsheetFormatCellRange(spreadsheet, dollarSymbolNormalIntegerBottomBorder, row, column,row,column+1)
             }
             else if(column==16){
-                spreadsheetFormatCell(spreadsheet, bottomRightBoldBorder, row, column)
+                spreadsheetFormatCellRange(spreadsheet, bottomRightBoldBorder, row, 15, row, 16)
             }
         }
-    }
-    for (i = 69; i <= 73; i++) {
-        cell = sheet.getRow(JavaCast("int", i)).getCell(11);
-        cell.setCellFormula("J" & (i + 1) & "*D" & (i + 1));
-        cell.setCellValue(0);
     }
     for(column=1;column<=16;column++){
         if(column>=1&&column<=7||column==11||column>=13&&column<=15){
@@ -1266,229 +1395,18 @@
         }
     }
     column=8;
+    row=75;
     spreadsheetSetCellValue(spreadsheet, "COLOUR TOTAL SECTION 3:", row, column+2)
     spreadsheetFormatCellRange(spreadsheet, rightText, row, column, row, column+2)
-    spreadsheetSetCellValue(spreadsheet, 0, row, column+4);
+    spreadsheetMergeCells(spreadsheet, row, row, column+4, column+5)
+    spreadsheetSetCellValue(spreadsheet, extprice, row, column+4);
     //color3
     color3 = wb.createCellStyle();
     color3.setFillForegroundColor(createObject("java", "org.apache.poi.xssf.usermodel.XSSFColor").init(createObject("java", "java.awt.Color").init(207,226,243)));
     color3.setFillPattern(createObject("java", "org.apache.poi.ss.usermodel.FillPatternType").SOLID_FOREGROUND);
     cell = sheet.getRow(74).getCell(11);
 	cell.setCellStyle(color3);
-    cell.setCellFormula("SUM(L70:L74)")
-    cell.setCellValue(0)
-    spreadsheetFormatCell(spreadsheet, paleBlueBackgroundCenterBoldInteger, row, column+4)
-    /*row=row+2;//row=68;
-    total_stone_price1 = 0;
-        if(arguments.sheetType NEQ 'Diamond Quote Sheet'){
-            spreadsheetSetCellValue(spreadsheet, "COLOR BREAKDOWN:", row, 1);
-         //   SpreadsheetFormatCell(spreadsheet,HeadingUnderlineStyle,row,1);
-            cell = sheet.getRow(row-1).getCell(0);
-            cell.setCellStyle(color2);
-            spreadsheetSetCellValue(spreadsheet, "", row, column+1);//DIAMOND BREAKDOWN
-            cell = sheet.getRow(row-1).getCell(1);
-            cell.setCellStyle(color2);
-            spreadsheetFormatCell(spreadsheet, leftSectionRightAlignedHeading, row, column);
-            spreadsheetMergeCells(spreadsheet, row, row, column+1, column+15);
-            spreadsheetFormatCellRange(spreadsheet, topRightBottomBoldBorder, row, column+1, row, column+15);
-            row=row+1; //row=69;
-            SpreadsheetSetCellValue(spreadsheet,"QTY",row,2);
-            SpreadsheetSetCellValue(spreadsheet,"WT EA",row,4);
-            SpreadsheetSetCellValue(spreadsheet,"SHAPE",row,6);
-            SpreadsheetSetCellValue(spreadsheet,"MM SIZES",row,8);
-            SpreadsheetSetCellValue(spreadsheet,"$ PER CT",row,10);
-            spreadsheetMergeCells(spreadsheet, row, row, 12, 13);
-            SpreadsheetSetCellValue(spreadsheet,"EXT PRICE",row,12);
-            SpreadsheetSetCellValue(spreadsheet,"COLOR",row,15);
-           // spreadsheetFormatCellRange(spreadsheet, diamondBreakdownSubHeadingStyle, row, 2, row, 15);
-               for(column=2;column<=10;column=column+2){
-        spreadsheetFormatCell(spreadsheet, centerBoldText, row, column);
-    }
-    spreadsheetFormatCellRange(spreadsheet, centerBoldContent, row, column+3, row, column+4);
-            row=row+1;
-            variables.ext_price = 0;
-            for (i = 1; i <= rs_product_stone_information.recordCount; i++) {
-                stone_type = obj_gemstone_type.getByAttributes(argumentcollection={gemstone_type_id: rs_product_stone_information.stone_type_id[i]});
-                stone_shape = obj_gemstone_shape.getByAttributes(argumentcollection={gemstone_shape_id: rs_product_stone_information.gemstone_shape_id[i]});
-                stone_cut = obj_gemstone_cut.getByAttributes(argumentcollection={gemstone_cut_id: rs_product_stone_information.gemstone_cut_id[i]});
-                rs_gemstone_size = obj_gemstone_size.getByAttributes(argumentcollection={gemstone_type_id: rs_product_stone_information.stone_type_id[i], gemstone_shape_id: rs_product_stone_information.gemstone_shape_id[i]});
-                countryoforigin = listAppend(country_of_origin, stone_type.country_of_origin);
-
-                short_gemstone_types = queryExecute(
-                    "SELECT * FROM gemstone_types WHERE :stone LIKE name + '%'",
-                    { stone: stone_type.gemstone },
-                    { dbtype: "query" }
-                );
-
-                short_gemstone_shapes = queryExecute(
-                    "SELECT * FROM gemstone_shapes WHERE :shape LIKE name + '%'",
-                    { shape: stone_shape.shape },
-                    { dbtype: "query" }
-                );
-
-                if (len(rs_product_stone_information.quantity[i])) {
-                    quatityStone = val(rs_product_stone_information.quantity[i]);
-                } else {
-                    quatityStone = 0;
-                }
-
-                ind_ct_wt = 0;
-                if (len(rs_product_stone_information.individual_ct_weight[i])) {
-                    ind_ct_wt = rs_product_stone_information.individual_ct_weight[i];
-                }
-
-                if (len(trim(rs_product_stone_information.size[i]))) {
-                    rs_gemstone_weight = obj_gemstone_weight.getByAttributes(argumentcollection={gemstone_size_id: rs_product_stone_information.size[i]});
-                } else {
-                    rs_gemstone_weight = obj_gemstone_weight.getByAttributes(argumentcollection={gemstone_size_id: 0});
-                }
-
-                rs_setting_size = obj_setting_size.getByAttributes(val(rs_product_stone_information.size[i]));
-                rs_gemstone_cost = obj_gemstone_cost.getByAttributes(argumentcollection={gemstone_type_id: rs_product_stone_information.stone_type_id[i], gemstone_shape_id: rs_product_stone_information.gemstone_shape_id[i], size_id: val(rs_product_stone_information.size[i])});
-
-                variables.ind_ct_wt = ind_ct_wt;
-
-                if (len(trim(rs_product_stone_information.size[i]))) {
-                    rs_gemstone_size = obj_gemstone_size.getByAttributes(argumentcollection={gemstone_size_id: rs_product_stone_information.size[i]});
-                } else {
-                    rs_gemstone_size = obj_gemstone_size.getByAttributes(argumentcollection={gemstone_size_id: 0});
-                }
-
-                if (ind_ct_wt > 0) {
-                    indctwt = numberFormat(variables.ind_ct_wt, "__.___");
-                } else {
-                    indctwt = '-';
-                }
-
-                if (len(short_gemstone_shapes.name)) {
-                    shapeName = short_gemstone_shapes.name;
-                } else if (len(stone_shape.shape)) {
-                    shapeName = stone_shape.shape;
-                } else {
-                    shapeName = '-';
-                }
-
-                if (rs_gemstone_size.recordcount && len(rs_gemstone_size.size)) {
-                    gemSize = rs_gemstone_size.size;
-                } else {
-                    gemSize = '-';
-                }
-
-                variables.price_per_ct = 0;
-
-                if (len(trim(rs_product_stone_information.price_per_caret[i]))) {
-                    PPCT = dollarFormat(val(rs_product_stone_information.price_per_caret[i]));
-                    variables.price_per_ct = rs_product_stone_information.price_per_caret[i];
-                } else {
-                    PPCT = '-';
-                }
-
-                if (len(trim(rs_product_stone_information.ext_price[i]))) {
-                    extprice = dollarFormat(rs_product_stone_information.ext_price[i]);
-                    variables.ext_prices = rs_product_stone_information.ext_price[i];
-                } else {
-                    extprice = dollarFormat(0.00);
-                    variables.ext_price = 0;
-                }
-
-                if (len(rs_product_stone_information.ext_price[i])) {
-                    total_stone_price1 += variables.ext_prices;
-                    total_stone_price_Dollar = dollarFormat(numberFormat(total_stone_price1, "__.___"));
-                }
-
-                if (len(stone_type.gemstone)) {
-                    stonetype = stone_type.gemstone;
-                } else {
-                    stonetype = '-';
-                }
-                SpreadsheetSetCellValue(spreadsheet,"Color",row,1);
-                SpreadsheetFormatCell(spreadsheet,goldStyle,row,1);
-                SpreadsheetSetCellValue(spreadsheet,quatityStone,row,2);
-                SpreadsheetSetCellValue(spreadsheet,indctwt,row,4);
-                SpreadsheetSetCellValue(spreadsheet,shapeName,row,6);
-                SpreadsheetSetCellValue(spreadsheet,gemSize,row,8);
-                SpreadsheetSetCellValue(spreadsheet,PPCT,row,10);
-                SpreadsheetSetCellValue(spreadsheet,extprice,row,12);
-                spreadsheetMergeCells(spreadsheet, row, row, 12, 13);
-                SpreadsheetSetCellValue(spreadsheet,stonetype,row,15);
-                for(col=2; col<=15; col++){
-                    if((col Mod 2 == 0 OR col==15 OR col==13) AND col!=14 ){
-                        SpreadsheetFormatCell(spreadsheet,borderbottomCenterStyle,row,col);
-                    }
-                }
-                row = row+1;
-            }//end loop
-            totalStonerows = 5;
-            remainingStonerows = totalStonerows - rs_product_stone_information.recordcount;
-            if(remainingStonerows > 0){
-                for (i = 1; i <= remainingStonerows; i++) {
-                    SpreadsheetSetCellValue(spreadsheet,"Color",row,1);
-                    SpreadsheetFormatCell(spreadsheet,goldStyle,row,1);
-                    spreadsheetMergeCells(spreadsheet, row, row, 12, 13);
-                    for(col=2; col<=15; col++){
-                        if((col Mod 2 == 0 OR col==15 OR col==13) AND col!=14 ){
-                            SpreadsheetFormatCell(spreadsheet,borderbottomCenterStyle,row,col);
-                        }
-                    }
-                    row=row+1;
-                }
-            }
-            spreadsheetMergeCells(spreadsheet, row, row, 12, 13);
-            spreadsheetSetCellValue(spreadsheet, total_stone_price_Dollar, row, 12);
-            colorBreakExtTotalColor = wb.createCellStyle();
-            colorBreakExtTotalColor.setFillForegroundColor(createObject("java", "org.apache.poi.xssf.usermodel.XSSFColor").init(createObject("java", "java.awt.Color").init(207,226,243)));
-            colorBreakExtTotalColor.setFillPattern(createObject("java", "org.apache.poi.ss.usermodel.FillPatternType").SOLID_FOREGROUND);
-            cell = sheet.getRow(row-1).getCell(11);
-            cell.setCellStyle(colorBreakExtTotalColor);
-            SpreadsheetFormatCellRange(spreadsheet,colorBreakExtTotalStyle,row,12,row,13);
-           // spreadsheetSetCellValue(spreadsheet, total_stone_price_Dollar, row, 12);
-        }
-        Total = 0;
-        yenTotal = 0;
-        yenTotalAllSection = 0;
-        totalsection = 0;
-        VATAllowanceYen = 0;
-        specialCostForFrance = 0;
-        mktpercentage = 0;
-
-        grandTotal = totalSection1 + Diamond_Ext_Price + total_stone_price1;
-        totalsection = grandTotal;
-        Grand_Total = DollarFormat(grandTotal);
-
-        vallowance = grandTotal * (val(allowance) / 100);
-        grandTotal += vallowance;
-
-        if (rs_product.isMarketingCost == 1 || (structKeyExists(cookie, 'ckClientmarketing_cost') && val(cookie.ckClientmarketing_cost))) {
-            mktpercentage = numberFormat(totalsection * (val(marketingPercentge) / 100), '9999.99');
-            grandTotal += mktpercentage;
-        }
-
-        GgrandTotal = DollarFormat(grandTotal);
-
-        if (StructKeyExists(cookie, "ckClientId") && cookie.ckClientId == 87 && StructKeyExists(cookie, "conversionRate")) {
-            yenTotalAllSection = totalsection * val(cookie.conversionRate);
-            yenTotal = lsParseCurrency(DollarFormat(grandTotal)) * val(cookie.conversionRate);
-
-            labelfor1 = 'VAT %:';
-            labelfor2 = 'VAT $:';
-            VATAllowanceYen = lsParseCurrency(DollarFormat(vallowance)) * val(cookie.conversionRate);
-        }
-
-        labelforDfiPercentage = 'DFI %:';
-        labelforDfiDollar = 'DFI $:';
-        DfiSpoilage = val(spoilage);
-        FinalCost = grandTotal;
-        DfiDollar = 0;
-
-        if (DfiSpoilage != 0) {
-            DfiDollar = grandTotal / ((1 / (DfiSpoilage / 100)) - 1);
-            FinalCost += DfiDollar;
-        }
-
-        if (StructKeyExists(cookie, "ckClientId") && cookie.ckClientId == 49) {
-            labelfor1 = 'SPECIAL COST:';
-            labelfor2 = 'Spoilage Allowance:';
-        }*/
+    spreadsheetFormatCellRange(spreadsheet, paleBlueBackgroundCenterBoldInteger, row, column+4, row, column+5)
     row=37;
     column=10;
     spreadsheetMergeCells(spreadsheet, row, row, column, column+2);
@@ -1545,8 +1463,6 @@
 
     totalsection = grandTotal;
     Grand_Total = DollarFormat(grandTotal);
-    // writeDump(Grand_Total)
-    // abort;
     vallowance = grandTotal * (val(allowance) / 100);
     grandTotal += vallowance;
 
@@ -1612,12 +1528,11 @@
         spreadsheetFormatCellRange(spreadsheet, normalText, row, column, row, column+1)
     }
     column=4;
-    for(row=77;row<83;row++){
+    for(row=77;row<82;row++){
         spreadsheetMergeCells(spreadsheet, row, row, column, column+1);
-        if(row==82){
-            spreadsheetFormatCellRange(spreadsheet, bottomBorder, row, column, row, column+1)
-        }
+        spreadsheetFormatCellRange(spreadsheet, centerBoldBottomBorderText, row, column, row, column+1)
     }
+    spreadsheetFormatCellRange(spreadsheet, bottomBorder, row, column, row, column+1)
     row=83;
     column=4;
     spreadsheetMergeCells(spreadsheet, row, row, column, column+1);
@@ -1669,7 +1584,7 @@
         else{
             spreadsheetSetCellValue(spreadsheet, "Finished DWT XXX:", row, column+1)
         }
-        spreadsheetFormatCellRange(spreadsheet, normalText, row, column, row, column+1)
+       spreadsheetFormatCellRange(spreadsheet, normalText, row, column, row, column+1)
     }
     spreadsheetMergeCells(spreadsheet, row, row, column, column+1)
     spreadsheetSetCellValue(spreadsheet, "Socialized Cost All Sizes:", row, column)
@@ -1714,10 +1629,9 @@
     cell = sheet.getRow(89).getCell(9);
 	cell.setCellStyle(color1);
     spreadsheetFormatCellRange(spreadsheet, leftBottomRightCenterBoldLightYellowBackground, row, column, row, column+6)
-    sheet.setRowBreak(JavaCast("int", 88));
+    sheet.setRowBreak(JavaCast("int", 91));
     // writeDump(sheet)
     // abort;
-
     spreadsheetSetCellValue(spreadsheet, "Vendor Shipping Terms COL / PPD:", row+1, column+2)
     spreadsheetSetCellValue(spreadsheet, "Ship Point (City, State & Zip):", row+2, column)
     spreadsheetSetCellValue(spreadsheet, "Ship Lead time (In Days):", row+3, column)
@@ -1834,6 +1748,7 @@
         spreadsheetFormatCell(spreadsheet, bottomBorder, row+4, column)
     }
     spreadsheetFormatCell(spreadsheet, rightBottomBorder, row+4, column)
+    gemstone_origin = (rs_product_diamond_information.recordCount && rs_product_stone_information.recordCount == 0) ? 'N/A' : 'THAILAND';
     row=94;
     column=1
     spreadsheetMergeCells(spreadsheet, row, row, column, column+5);
@@ -1844,10 +1759,15 @@
     spreadsheetFormatCellRange( spreadsheet,subHeadingBorder, row,column,row,column+5);
     spreadsheetSetCellValue(spreadsheet, "Country Where Rough Was Mined:", row+1, column)
     spreadsheetSetCellValue(spreadsheet, "Mining Company Where Purchased:", row+2, column)
+    SpreadsheetSetCellValue(spreadsheet,"DTC",row+2,column+1);
     spreadsheetSetCellValue(spreadsheet, "Country Where Diamond Was Cut:", row+3, column)
+    SpreadsheetSetCellValue(spreadsheet,"INDIA",row+3,column+1);
     spreadsheetSetCellValue(spreadsheet, "Country of Origin:", row+4, column)
+    SpreadsheetSetCellValue(spreadsheet,gemstone_origin,row+4,column+1);
     spreadsheetSetCellValue(spreadsheet, "Country of Manufacture:", row+5, column)
+    SpreadsheetSetCellValue(spreadsheet,CountryManufacture,row+5,column+1);
     spreadsheetSetCellValue(spreadsheet, "Metal Source / Certificate Type:", row+6, column)
+    SpreadsheetSetCellValue(spreadsheet,"HERAEUS LTD + LBMA",row+6,column+1);
     for(row=95;row<=100;row++){
         spreadsheetFormatCell(spreadsheet, normalText, row, column)
         spreadsheetMergeCells(spreadsheet, row, row, column+1, column+5)
@@ -1876,6 +1796,7 @@
         if(row!=105){
             spreadsheetFormatCell(spreadsheet, normalText, row, column)
         }
+        spreadsheetMergeCells(spreadsheet, row, row, column+1, column+5)
     }
     for(row=103;row<=111;row++){
         if(row==109||row==110){
@@ -1948,7 +1869,7 @@
     spreadsheetSetCellValue(spreadsheet, "Rev 7/11/24", row, column);
     spreadsheetFormatCell(spreadsheet, dateStyle, row, column)
     //set row height
-    spreadsheetSetRowHeight(spreadsheet, 1, 23.25);
+    spreadsheetSetRowHeight(spreadsheet, 1, 23);
     spreadsheetSetRowHeight(spreadsheet, 2, 24);
     spreadsheetSetRowHeight(spreadsheet, 9, 15.75);
     spreadsheetSetRowHeight(spreadsheet, 12, 15.75);
@@ -1964,7 +1885,7 @@
     spreadsheetSetRowHeight(spreadsheet, 121, 38.25);
     spreadsheetSetRowHeight(spreadsheet, 122, 38.25);
     //set column width
-    spreadSheetSetColumnWidth(spreadsheet, 1, 31.29);
+    spreadSheetSetColumnWidth(spreadsheet, 1, 31);
     spreadSheetSetColumnWidth(spreadsheet, 2, 13);
     spreadSheetSetColumnWidth(spreadsheet, 3, 3);
     spreadSheetSetColumnWidth(spreadsheet, 4, 14.14);
@@ -1977,7 +1898,7 @@
     spreadSheetSetColumnWidth(spreadsheet, 11, 2.26);
     spreadSheetSetColumnWidth(spreadsheet, 12, 20.71);
     spreadSheetSetColumnWidth(spreadsheet, 13, 11.29);
-    spreadSheetSetColumnWidth(spreadsheet, 14, 10.14);
+    spreadSheetSetColumnWidth(spreadsheet, 14, 3.29);
     spreadSheetSetColumnWidth(spreadsheet, 15, 3.71);
     spreadSheetSetColumnWidth(spreadsheet, 16, 24);
     //hide rows

@@ -560,7 +560,7 @@
         rightBorder="thin"
     }
     
-   theFile="FY25 Jewellery Item Agreement Quote Sheet #Dateformat(now(), 'mm-dd-YYYY')#.xlsx";//#DateFormat(rs_product.date_entered,'MMDDYY')#
+    theFile="FY25 Jewellery Item Agreement Quote Sheet #Dateformat(now(), 'mm-dd-YYYY')#.xlsx";//#DateFormat(rs_product.date_entered,'MMDDYY')#
     // Create a new spreadsheet
     //spreadsheet = spreadsheetNew("Gemstones_ Pearl Quote Sheet", true);
     spreadsheet = spreadsheetNew("Vendor Quote Sheet", true);
@@ -577,7 +577,7 @@
     sheet.setMargin(sheet.HeaderMargin, 0);
     view = sheet.getCTWorksheet().getSheetViews().getSheetViewArray(0);
     view.setView(view.getView().forString("pageBreakPreview"));
-    printSetup.setScale(JavaCast("short", 53));
+    printSetup.setScale(JavaCast("short", 52));
     printSetup.setLeftToRight(true);
     printSetup.setFitWidth(1);
     printSetup.setFitHeight(1);
@@ -589,48 +589,48 @@
     printSetup.setLandscape(false);
     qsheet_provider ='';
     email ='';
-        if (structkeyexists(session.loggeduser,"ISADMIN") AND (session.loggeduser.ISADMIN EQ 1))
-        {
-            qsheet_provider =   session.loggeduser.FirstName &' '& session.loggeduser.LastName; 
-            email =   session.loggeduser.email; 
-        } 
-        if(rs_ring_size.recordcount){
-            ringSize = 'Ring Size '&rs_ring_size.size;
-        }else{
-            ringSize = '';
+    if (structkeyexists(session.loggeduser,"ISADMIN") AND (session.loggeduser.ISADMIN EQ 1))
+    {
+        qsheet_provider =   session.loggeduser.FirstName &' '& session.loggeduser.LastName; 
+        email =   session.loggeduser.email; 
+    } 
+    if(rs_ring_size.recordcount){
+        ringSize = 'Ring Size '&rs_ring_size.size;
+    }else{
+        ringSize = '';
+    }
+    mountingtotal = replace(FinishedDwt,'$','');
+    if(len(trim(FindingsPrice))){
+        if(len(trim(ChainTypeCost))){
+            findingchain=FindingsPrice&ChainTypeCost;
         }
-        mountingtotal = replace(FinishedDwt,'$','');
-        if(len(trim(FindingsPrice))){
-            if(len(trim(ChainTypeCost))){
-                findingchain=FindingsPrice&ChainTypeCost;
-            }
-            else{
-                findingchain=FindingsPrice;
-                mountingtotal = mountingtotal + LSParseNumber(ListLast(findingchain,"$"));
-            }
-        }else{
-            findingchain="";
-        }
-        if(len(ChainTypeweight)){
-            purity = ChainCostPurity&MetalTypePurity&ChainTypeLength&ChainTypeType&rs_chain_type_cost.color&rs_chain_type_cost.length&rs_chain_type_cost.type&ChainTypeClasp&ChainTypeweight&FindingName&'g';
-        }else{
-            purity = ChainCostPurity&MetalTypePurity&ChainTypeLength&ChainTypeType&rs_chain_type_cost.color&rs_chain_type_cost.length&rs_chain_type_cost.type&ChainTypeClasp&FindingName;
-        }
-        mountingtotal =LSParseNumber(mountingtotal)+LSParseNumber(casting_cost);
-        mountingtotal =mountingtotal+val(findingchain);
-        // Add an image from the server to the spreadsheet
-        imagePath = "";
-        if(CGI.HTTP_REFERER contains "products_proposal.cfm")
-            imagePath = expandPath("../images/Costco_Logo.png");
         else{
-            imagePath = expandPath("images/Costco_Logo.png");
+            findingchain=FindingsPrice;
+            mountingtotal = mountingtotal + LSParseNumber(ListLast(findingchain,"$"));
         }
-        imagePath = "";
-        if(CGI.HTTP_REFERER contains "products_proposal.cfm")
-            imagePath = expandPath("../images/Costco_Logo.png");
-        else{
-            imagePath = expandPath("images/Costco_Logo.png");
-        }
+    }else{
+        findingchain="";
+    }
+    if(len(ChainTypeweight)){
+        purity = ChainCostPurity&MetalTypePurity&ChainTypeLength&ChainTypeType&rs_chain_type_cost.color&rs_chain_type_cost.length&rs_chain_type_cost.type&ChainTypeClasp&ChainTypeweight&FindingName&'g';
+    }else{
+        purity = ChainCostPurity&MetalTypePurity&ChainTypeLength&ChainTypeType&rs_chain_type_cost.color&rs_chain_type_cost.length&rs_chain_type_cost.type&ChainTypeClasp&FindingName;
+    }
+    mountingtotal =LSParseNumber(mountingtotal)+LSParseNumber(casting_cost);
+    mountingtotal =mountingtotal+val(findingchain);
+    // Add an image from the server to the spreadsheet
+    imagePath = "";
+    if(CGI.HTTP_REFERER contains "products_proposal.cfm")
+        imagePath = expandPath("../images/Costco_Logo.png");
+    else{
+        imagePath = expandPath("images/Costco_Logo.png");
+    }
+    imagePath = "";
+    if(CGI.HTTP_REFERER contains "products_proposal.cfm")
+        imagePath = expandPath("../images/Costco_Logo.png");
+    else{
+        imagePath = expandPath("images/Costco_Logo.png");
+    }
         //imagePath.setHeight(1.64)
         //imagePath.setWidth(5.10)
           //      signatureobj = imageRead(imagePath);
@@ -825,51 +825,51 @@
     spreadsheetSetCellValue(spreadsheet, "##6", row+2, column+3)
     spreadsheetFormatCell(spreadsheet, coscoBottomBorderStyle, row+2, column+3)
     spreadsheetFormatCell(spreadsheet, rightBottomBorder, row+2, column+4)
-     absimgpath = "";
-        variables.fileabspath = "";
-        minimunDwt = 0;
+    absimgpath = "";
+    variables.fileabspath = "";
+    minimunDwt = 0;
 
-        if (CGI.HTTP_REFERER contains "products_proposal.cfm") {
-            absimgpath = "assets/product_images";
+    if (CGI.HTTP_REFERER contains "products_proposal.cfm") {
+        absimgpath = "assets/product_images";
+    } else {
+        absimgpath = "admin/assets/product_images";
+    }
+
+    for (i = 1; i <= rs_product_images.recordcount; i++) {
+        if (fileExists(expandPath(absimgpath & "/" & reReplace(rs_product_images.image_id[i], "[a-z,A-Z]", "", "ALL") & ".jpeg"))) {
+            imgPathproposal = "admin/assets/product_images/" & reReplace(rs_product_images.image_id[i], "[a-z,A-Z]", "", "ALL") & ".jpeg";
+            break;
+        } else if (rs_product_images.image_name[i] NEQ "" AND fileExists(expandPath(absimgpath & "/" & rs_product_images.product_id[i] & "/" & rs_product_images.image_name[i]))) {
+            imgPathproposal = "admin/assets/product_images/" & rs_product_images.product_id[i] & "/" & rs_product_images.image_name[i];
+            break;
         } else {
-            absimgpath = "admin/assets/product_images";
+            imgPathproposal = "admin/assets/product_images/noimage.jpg";
         }
+    }
 
-        for (i = 1; i <= rs_product_images.recordcount; i++) {
-            if (fileExists(expandPath(absimgpath & "/" & reReplace(rs_product_images.image_id[i], "[a-z,A-Z]", "", "ALL") & ".jpeg"))) {
-                imgPathproposal = "admin/assets/product_images/" & reReplace(rs_product_images.image_id[i], "[a-z,A-Z]", "", "ALL") & ".jpeg";
-                break;
-            } else if (rs_product_images.image_name[i] NEQ "" AND fileExists(expandPath(absimgpath & "/" & rs_product_images.product_id[i] & "/" & rs_product_images.image_name[i]))) {
-                imgPathproposal = "admin/assets/product_images/" & rs_product_images.product_id[i] & "/" & rs_product_images.image_name[i];
-                break;
-            } else {
-                imgPathproposal = "admin/assets/product_images/noimage.jpg";
-            }
-        }
+    if (structKeyExists(URL, "attachmail") AND URL.attachmail EQ "yes") {
+        variables.imgpath = imgPathproposal;
+    } else if (structKeyExists(URL, "attachmailpdf")) {
+        variables.imgpath = imgPathproposal;
+    } else {
+        variables.imgpath = imgPath;
+    }
 
-        if (structKeyExists(URL, "attachmail") AND URL.attachmail EQ "yes") {
-            variables.imgpath = imgPathproposal;
-        } else if (structKeyExists(URL, "attachmailpdf")) {
-            variables.imgpath = imgPathproposal;
-        } else {
-            variables.imgpath = imgPath;
-        }
+    if (CGI.HTTP_REFERER contains "products_proposal.cfm") {
+        variables.fileabspath = replace(variables.imgpath, "admin/", "", "one");
+    } else {
+        variables.fileabspath = variables.imgpath;
+    }
 
-        if (CGI.HTTP_REFERER contains "products_proposal.cfm") {
-            variables.fileabspath = replace(variables.imgpath, "admin/", "", "one");
-        } else {
-            variables.fileabspath = variables.imgpath;
-        }
+    if (NOT fileExists(expandPath(variables.fileabspath))) {
+        variables.imgpath = "admin/assets/product_images/noimage.jpeg";
+    }
 
-        if (NOT fileExists(expandPath(variables.fileabspath))) {
-            variables.imgpath = "admin/assets/product_images/noimage.jpeg";
-        }
-
-        str = replace(variables.imgpath, "/", "\", "all");
-        str = expandPath(str); 
-        if(rs_product.finished_metal_weight GT 0){
-            minimunDwt = rs_product.finished_metal_weight;
-        }
+    str = replace(variables.imgpath, "/", "\", "all");
+    str = expandPath(str); 
+    if(rs_product.finished_metal_weight GT 0){
+        minimunDwt = rs_product.finished_metal_weight;
+    }
     //ITEM COST DETAILS row=27
     row=27;
     column=1;
@@ -931,7 +931,7 @@
         myImage = newFunction(variables.imgpath);
     }
     ImageWrite(myImage,"#GetTempDirectory()##ListLast(imgPath, '/')#");
-    SpreadsheetAddImage(spreadsheet,"#GetTempDirectory()##ListLast(imgPath, '/')#","#row+2#,13,#row+9#,16");
+    SpreadsheetAddImage(spreadsheet,"#GetTempDirectory()##ListLast(imgPath, '/')#","#row+2#,13,#row+10#,16");
     spreadsheetFormatCellRange( spreadsheet,fullBoxBorder, row+1,column,row+9,column+4);
     //mounting
     row=35;
@@ -1041,179 +1041,179 @@
     }
     spreadsheetFormatCellRange(spreadsheet, centerBoldContent, row, column+3, row, column+4);
     row=row+1;//row=58;
-        counter = 1;
-        number_Diamond_Twt = 0;
-        dollar_Diamond_Ext_Price = DollarFormat(0);
-        Diamond_Qty = 0;
-        Diamond_Twt = 0;
-        Diamond_Ext_Price = 0;
-        rs_size_cost= clientDiamondsizeCost= diamond_type= diamond_shape= setting_type= Qty= WTEA= Twt= Twtdisplay= shapename= size= diaQuality=0; 
-        variables.ext_price = 0;
-        for (i = 1; i <= rs_product_diamond_information.recordCount; i++) {
-            diamond_type = obj_diamond_type.getByAttributes(rs_product_diamond_information.stone_type_id[i]);
-            diamond_shape = obj_diamond_shape.getByAttributes(val(rs_product_diamond_information.diamond_shape_id[i]));
-            setting_type = obj_setting_type.getByAttributes(rs_product_diamond_information.diamond_setting_charge_id[i]);
+    counter = 1;
+    number_Diamond_Twt = 0;
+    dollar_Diamond_Ext_Price = DollarFormat(0);
+    Diamond_Qty = 0;
+    Diamond_Twt = 0;
+    Diamond_Ext_Price = 0;
+    rs_size_cost= clientDiamondsizeCost= diamond_type= diamond_shape= setting_type= Qty= WTEA= Twt= Twtdisplay= shapename= size= diaQuality=0; 
+    variables.ext_price = 0;
+    for (i = 1; i <= rs_product_diamond_information.recordCount; i++) {
+        diamond_type = obj_diamond_type.getByAttributes(rs_product_diamond_information.stone_type_id[i]);
+        diamond_shape = obj_diamond_shape.getByAttributes(val(rs_product_diamond_information.diamond_shape_id[i]));
+        setting_type = obj_setting_type.getByAttributes(rs_product_diamond_information.diamond_setting_charge_id[i]);
 
-            rs_size_cost = queryNew('quality,size');
+        rs_size_cost = queryNew('quality,size');
 
+        if (val(rs_product_diamond_information.quantity[i]) != '0.0' && rs_product_diamond_information.quantity[i] != "" && rs_product_diamond_information.quantity[i] != 0) {
+            rs_size_cost = obj_diamond_size_cost.getByAttributes(argumentcollection={
+                diamond_shape_id: val(rs_product_diamond_information.diamond_shape_id[i]),
+                weight: val(rs_product_diamond_information.total_ct_weight[i]) / val(rs_product_diamond_information.quantity[i])
+            });
+        }
+
+        if (StructKeyExists(cookie, "ckClientId") && ((cookie.ckClientId == 87 && StructKeyExists(cookie, "conversionRate")) || cookie.ckClientId == 1)) {
             if (val(rs_product_diamond_information.quantity[i]) != '0.0' && rs_product_diamond_information.quantity[i] != "" && rs_product_diamond_information.quantity[i] != 0) {
-                rs_size_cost = obj_diamond_size_cost.getByAttributes(argumentcollection={
-                    diamond_shape_id: val(rs_product_diamond_information.diamond_shape_id[i]),
-                    weight: val(rs_product_diamond_information.total_ct_weight[i]) / val(rs_product_diamond_information.quantity[i])
+                clientDiamondsizeCost = obj_diamond_size_cost.getByAttributes(argumentcollection={
+                    diamond_shape_id: rs_product_diamond_information.diamond_shape_id[i],
+                    weight: rs_product_diamond_information.total_ct_weight[i] / rs_product_diamond_information.quantity[i],
+                    isClientcost: 1
                 });
             }
+        }
 
-            if (StructKeyExists(cookie, "ckClientId") && ((cookie.ckClientId == 87 && StructKeyExists(cookie, "conversionRate")) || cookie.ckClientId == 1)) {
-                if (val(rs_product_diamond_information.quantity[i]) != '0.0' && rs_product_diamond_information.quantity[i] != "" && rs_product_diamond_information.quantity[i] != 0) {
-                    clientDiamondsizeCost = obj_diamond_size_cost.getByAttributes(argumentcollection={
-                        diamond_shape_id: rs_product_diamond_information.diamond_shape_id[i],
-                        weight: rs_product_diamond_information.total_ct_weight[i] / rs_product_diamond_information.quantity[i],
-                        isClientcost: 1
-                    });
-                }
+        if (len(rs_product_diamond_information.quantity[i])) {
+            Qty = val(rs_product_diamond_information.quantity[i]);
+            Diamond_Qty += Qty;
+        } else {
+            Qty = '-';
+        }
+
+        if (len(trim(rs_product_diamond_information.quantity[i])) && rs_product_diamond_information.quantity[i] != 0 && len(rs_product_diamond_information.total_ct_weight[i])) {
+            WTEA = NumberFormat(rs_product_diamond_information.total_ct_weight[i] / rs_product_diamond_information.quantity[i], '__.___');
+        } else {
+            WTEA = '-';
+        }
+
+        if (len(rs_product_diamond_information.total_ct_weight[i])) {
+            if (val(rs_product_diamond_information.quantity[i]) != '0.0' && rs_product_diamond_information.quantity[i] != "" && rs_product_diamond_information.quantity[i] != 0) {
+                Twt = rs_product_diamond_information.total_ct_weight[i] / rs_product_diamond_information.quantity[i];
             }
+            Diamond_Twt += rs_product_diamond_information.total_ct_weight[i];
+            Twt = rs_product_diamond_information.total_ct_weight[i];
+            Twtdisplay = NumberFormat(Twt, '__.__') & 'ctw';
+        } else {
+            Twtdisplay = '-';
+            Diamond_Twt = 0;
+        }
 
-            if (len(rs_product_diamond_information.quantity[i])) {
-                Qty = val(rs_product_diamond_information.quantity[i]);
-                Diamond_Qty += Qty;
-            } else {
-                Qty = '-';
-            }
+        if (len(rs_product_diamond_information.price_per_ct_discount[i]) && rs_product_diamond_information.price_per_ct_discount[i] == 1) {
+            variables.price_per_caret = val(rs_product_diamond_information.discount_price_per_ct[i]);
+        } else if (len(rs_product_diamond_information.price_per_ct_override[i]) && rs_product_diamond_information.price_per_ct_override[i] == 1) {
+            variables.price_per_caret = val(rs_product_diamond_information.price_per_caret[i]);
+        } else if (StructKeyExists(cookie, "ckClientId") && cookie.ckClientId == 87 && StructKeyExists(cookie, "conversionRate") && clientDiamondsizeCost.recordCount) {
+            variables.price_per_caret = val(clientDiamondsizeCost.quality);
+        } else {
+            variables.price_per_caret = val(rs_product_diamond_information.price_per_caret[i]);
+        }
 
-            if (len(trim(rs_product_diamond_information.quantity[i])) && rs_product_diamond_information.quantity[i] != 0 && len(rs_product_diamond_information.total_ct_weight[i])) {
-                WTEA = NumberFormat(rs_product_diamond_information.total_ct_weight[i] / rs_product_diamond_information.quantity[i], '__.___');
-            } else {
-                WTEA = '-';
-            }
+        if (variables.price_per_caret > 0) {
+            variables.displayPrice_per_caret = DollarFormat(val(variables.price_per_caret));
+        } else {
+            variables.displayPrice_per_caret = '-';
+        }
 
-            if (len(rs_product_diamond_information.total_ct_weight[i])) {
-                if (val(rs_product_diamond_information.quantity[i]) != '0.0' && rs_product_diamond_information.quantity[i] != "" && rs_product_diamond_information.quantity[i] != 0) {
-                    Twt = rs_product_diamond_information.total_ct_weight[i] / rs_product_diamond_information.quantity[i];
-                }
-                Diamond_Twt += rs_product_diamond_information.total_ct_weight[i];
-                Twt = rs_product_diamond_information.total_ct_weight[i];
-                Twtdisplay = NumberFormat(Twt, '__.__') & 'ctw';
-            } else {
-                Twtdisplay = '-';
-                Diamond_Twt = 0;
-            }
+        short_diamond_shape = queryExecute("select * from gemstone_shapes where :diamond_shape like name + '%'", { diamond_shape: { value: diamond_shape.shape, cfsqltype: "cf_sql_varchar" } }, { dbtype: "query" });
 
-            if (len(rs_product_diamond_information.price_per_ct_discount[i]) && rs_product_diamond_information.price_per_ct_discount[i] == 1) {
-                variables.price_per_caret = val(rs_product_diamond_information.discount_price_per_ct[i]);
-            } else if (len(rs_product_diamond_information.price_per_ct_override[i]) && rs_product_diamond_information.price_per_ct_override[i] == 1) {
-                variables.price_per_caret = val(rs_product_diamond_information.price_per_caret[i]);
-            } else if (StructKeyExists(cookie, "ckClientId") && cookie.ckClientId == 87 && StructKeyExists(cookie, "conversionRate") && clientDiamondsizeCost.recordCount) {
-                variables.price_per_caret = val(clientDiamondsizeCost.quality);
-            } else {
-                variables.price_per_caret = val(rs_product_diamond_information.price_per_caret[i]);
-            }
+        if (short_diamond_shape.recordCount) {
+            shapename = short_diamond_shape.name;
+        } else if (len(diamond_shape.shape)) {
+            shapename = diamond_shape.shape;
+        } else {
+            shapename = '-';
+        }
 
-            if (variables.price_per_caret > 0) {
-                variables.displayPrice_per_caret = DollarFormat(val(variables.price_per_caret));
-            } else {
-                variables.displayPrice_per_caret = '-';
-            }
+        if (len(trim(rs_product_diamond_information.size[i]))) {
+            size = rs_product_diamond_information.size[i] & 'mm';
+        } else {
+            size = '-';
+        }
 
-            short_diamond_shape = queryExecute("select * from gemstone_shapes where :diamond_shape like name + '%'", { diamond_shape: { value: diamond_shape.shape, cfsqltype: "cf_sql_varchar" } }, { dbtype: "query" });
-
-            if (short_diamond_shape.recordCount) {
-                shapename = short_diamond_shape.name;
-            } else if (len(diamond_shape.shape)) {
-                shapename = diamond_shape.shape;
-            } else {
-                shapename = '-';
-            }
-
-            if (len(trim(rs_product_diamond_information.size[i]))) {
-                size = rs_product_diamond_information.size[i] & 'mm';
-            } else {
-                size = '-';
-            }
-
-            if (StructKeyExists(cookie, "ckClientId") && (cookie.ckClientId == 87 && clientDiamondsizeCost.recordCount)) {
-                if (len(rs_product_diamond_information.quality[i]) && rs_product_diamond_information.qly_override[i] == 1) {
-                    diaQuality = rs_product_diamond_information.quality[i];
-                } else {
-                    diaQuality = clientDiamondsizeCost.clarityDiamond;
-                }
-            } else if (len(rs_product_diamond_information.quality[i])) {
+        if (StructKeyExists(cookie, "ckClientId") && (cookie.ckClientId == 87 && clientDiamondsizeCost.recordCount)) {
+            if (len(rs_product_diamond_information.quality[i]) && rs_product_diamond_information.qly_override[i] == 1) {
                 diaQuality = rs_product_diamond_information.quality[i];
             } else {
-                diaQuality = '-';
+                diaQuality = clientDiamondsizeCost.clarityDiamond;
             }
+        } else if (len(rs_product_diamond_information.quality[i])) {
+            diaQuality = rs_product_diamond_information.quality[i];
+        } else {
+            diaQuality = '-';
+        }
 
-            if (StructKeyExists(cookie, "ckClientId") && cookie.ckClientId == 87 && StructKeyExists(cookie, "conversionRate") && clientDiamondsizeCost.recordCount) {
-                variables.Ext_Price = val(Twt) * val(variables.price_per_caret);
-            } else if (len(trim(rs_product_diamond_information.ext_price[i]))) {
-                variables.Ext_Price = rs_product_diamond_information.ext_price[i];
-            } else {
-                variables.Ext_Price = 0;
-            }
+        if (StructKeyExists(cookie, "ckClientId") && cookie.ckClientId == 87 && StructKeyExists(cookie, "conversionRate") && clientDiamondsizeCost.recordCount) {
+            variables.Ext_Price = val(Twt) * val(variables.price_per_caret);
+        } else if (len(trim(rs_product_diamond_information.ext_price[i]))) {
+            variables.Ext_Price = rs_product_diamond_information.ext_price[i];
+        } else {
+            variables.Ext_Price = 0;
+        }
 
-            if (variables.Ext_Price > 0) {
-                extprice = DollarFormat(variables.Ext_Price);
-            } else {
-                extprice = '-';
+        if (variables.Ext_Price > 0) {
+            extprice = DollarFormat(variables.Ext_Price);
+        } else {
+            extprice = '-';
+        }
+        SpreadsheetSetCellValue(spreadsheet,"Center Diamond",row,1);
+        SpreadsheetSetCellValue(spreadsheet,Qty,row,2);
+        SpreadsheetSetCellValue(spreadsheet,WTEA,row,4);
+        SpreadsheetSetCellValue(spreadsheet,Twtdisplay,row,6);
+        SpreadsheetSetCellValue(spreadsheet,variables.displayPrice_per_caret,row,8);
+        SpreadsheetSetCellValue(spreadsheet,shapename,row,10);
+        SpreadsheetSetCellValue(spreadsheet,size,row,11);
+        spreadsheetMergeCells(spreadsheet, row, row, 15, 16);
+        SpreadsheetSetCellValue(spreadsheet,extprice,row,15);
+        spreadsheetMergeCells(spreadsheet, row, row, 10, 13);
+        SpreadsheetFormatCell(spreadsheet,goldStyle,row,1);
+        for(col=2; col<=16; col++){
+            if((col Mod 2 == 0 AND col!=14) OR listFind('10,11,12,13,15,16', col) ){
+                SpreadsheetFormatCell(spreadsheet,borderbottomCenterStyle,row,col);
             }
-            SpreadsheetSetCellValue(spreadsheet,"Center Diamond",row,1);
-            SpreadsheetSetCellValue(spreadsheet,Qty,row,2);
-            SpreadsheetSetCellValue(spreadsheet,WTEA,row,4);
-            SpreadsheetSetCellValue(spreadsheet,Twtdisplay,row,6);
-            SpreadsheetSetCellValue(spreadsheet,variables.displayPrice_per_caret,row,8);
-            SpreadsheetSetCellValue(spreadsheet,shapename,row,10);
-            SpreadsheetSetCellValue(spreadsheet,size,row,11);
-            spreadsheetMergeCells(spreadsheet, row, row, 15, 16);
-            SpreadsheetSetCellValue(spreadsheet,extprice,row,15);
-            spreadsheetMergeCells(spreadsheet, row, row, 10, 13);
+        }
+        row=row+1;
+        counter++;
+        Diamond_Ext_Price = Diamond_Ext_Price + variables.Ext_Price;
+        number_Diamond_Twt = NumberFormat(Diamond_Twt,'__.__') & 'ctw';
+    }
+    if(remainingDiamondrows >0){
+        for (i = 1; i <= remainingDiamondrows; i++) {
+            SpreadsheetSetCellValue(spreadsheet,"MELEE",row,1);
             SpreadsheetFormatCell(spreadsheet,goldStyle,row,1);
             for(col=2; col<=16; col++){
                 if((col Mod 2 == 0 AND col!=14) OR listFind('10,11,12,13,15,16', col) ){
-                   SpreadsheetFormatCell(spreadsheet,borderbottomCenterStyle,row,col);
+                    SpreadsheetFormatCell(spreadsheet,borderbottomCenterStyle,row,col);
                 }
             }
+            spreadsheetMergeCells(spreadsheet, row, row, 15, 16)
             row=row+1;
-            counter++;
-            Diamond_Ext_Price = Diamond_Ext_Price + variables.Ext_Price;
-            number_Diamond_Twt = NumberFormat(Diamond_Twt,'__.__') & 'ctw';
         }
-        if(remainingDiamondrows >0){
-            for (i = 1; i <= remainingDiamondrows; i++) {
-                SpreadsheetSetCellValue(spreadsheet,"MELEE",row,1);
-                SpreadsheetFormatCell(spreadsheet,goldStyle,row,1);
-                for(col=2; col<=16; col++){
-                    if((col Mod 2 == 0 AND col!=14) OR listFind('10,11,12,13,15,16', col) ){
-                        SpreadsheetFormatCell(spreadsheet,borderbottomCenterStyle,row,col);
-                    }
-                }
-                spreadsheetMergeCells(spreadsheet, row, row, 15, 16)
-                row=row+1;
-            }
-        }
-        dollar_Diamond_Ext_Price = DollarFormat(Diamond_Ext_Price);
-        SpreadsheetSetCellValue(spreadsheet,"QTY",row,1);
-        SpreadsheetFormatCell(spreadsheet,goldStyle,row,1);
-        spreadsheetSetCellValue(spreadsheet, Diamond_Qty, row, 2);
-        SpreadsheetFormatCell(spreadsheet,diatotalQtyStyle,row,2);
-        SpreadsheetSetCellValue(spreadsheet,number_Diamond_Twt,row,6);
-        SpreadsheetFormatCell(spreadsheet,diatotalQtyStyle,row,6);
-        spreadsheetMergeCells(spreadsheet, row, row, 11, 13);
-        spreadsheetSetCellValue(spreadsheet, "DIAMOND TOTAL SECTION 2:", row, 11);
-        SpreadsheetFormatCell(spreadsheet,diaTotalSectionValueStyle,row,11);
-        spreadsheetMergeCells(spreadsheet, row, row, 15, 16)
-        spreadsheetSetCellValue(spreadsheet, dollar_Diamond_Ext_Price, row, 15);
-        totalSectionValueFont = wb.createFont();
-        totalSectionValueFont.setFontName('Arial Narrow');
-        totalSectionValueFont.setFontHeightInPoints(12);
-        totalSectionValueFont.setBold(true);
-        totalSectionValueColor = wb.createCellStyle();
-        totalSectionValueColor.setFillForegroundColor(createObject("java", "org.apache.poi.xssf.usermodel.XSSFColor").init(createObject("java", "java.awt.Color").init(217,217,217)));
-        totalSectionValueColor.setFillPattern(createObject("java", "org.apache.poi.ss.usermodel.FillPatternType").SOLID_FOREGROUND);
-        totalSectionValueColor.setFont(totalSectionValueFont);           
-        borderStyle = createObject("java", "org.apache.poi.ss.usermodel.BorderStyle");
-        totalSectionValueColor.setBorderBottom(BorderStyle.DOUBLE);
-        cell = sheet.getRow(row-1).getCell(14);
-	    cell.setCellStyle(totalSectionValueColor);
-        spreadsheetFormatCellRange(spreadsheet, totalSectionValue, row, 15, row, 16);
+    }
+    dollar_Diamond_Ext_Price = DollarFormat(Diamond_Ext_Price);
+    SpreadsheetSetCellValue(spreadsheet,"QTY",row,1);
+    SpreadsheetFormatCell(spreadsheet,goldStyle,row,1);
+    spreadsheetSetCellValue(spreadsheet, Diamond_Qty, row, 2);
+    SpreadsheetFormatCell(spreadsheet,diatotalQtyStyle,row,2);
+    SpreadsheetSetCellValue(spreadsheet,number_Diamond_Twt,row,6);
+    SpreadsheetFormatCell(spreadsheet,diatotalQtyStyle,row,6);
+    spreadsheetMergeCells(spreadsheet, row, row, 11, 13);
+    spreadsheetSetCellValue(spreadsheet, "DIAMOND TOTAL SECTION 2:", row, 11);
+    SpreadsheetFormatCell(spreadsheet,diaTotalSectionValueStyle,row,11);
+    spreadsheetMergeCells(spreadsheet, row, row, 15, 16)
+    spreadsheetSetCellValue(spreadsheet, dollar_Diamond_Ext_Price, row, 15);
+    totalSectionValueFont = wb.createFont();
+    totalSectionValueFont.setFontName('Arial Narrow');
+    totalSectionValueFont.setFontHeightInPoints(12);
+    totalSectionValueFont.setBold(true);
+    totalSectionValueColor = wb.createCellStyle();
+    totalSectionValueColor.setFillForegroundColor(createObject("java", "org.apache.poi.xssf.usermodel.XSSFColor").init(createObject("java", "java.awt.Color").init(217,217,217)));
+    totalSectionValueColor.setFillPattern(createObject("java", "org.apache.poi.ss.usermodel.FillPatternType").SOLID_FOREGROUND);
+    totalSectionValueColor.setFont(totalSectionValueFont);           
+    borderStyle = createObject("java", "org.apache.poi.ss.usermodel.BorderStyle");
+    totalSectionValueColor.setBorderBottom(BorderStyle.DOUBLE);
+    cell = sheet.getRow(row-1).getCell(14);
+    cell.setCellStyle(totalSectionValueColor);
+    spreadsheetFormatCellRange(spreadsheet, totalSectionValue, row, 15, row, 16);
    // COLOR BREAKDOWN: row=66 column=1
     row=68;
     column=1;
@@ -1342,7 +1342,7 @@
         SpreadsheetSetCellValue(spreadsheet,shapeName,row,6);
         SpreadsheetSetCellValue(spreadsheet,gemSize,row,8);
         SpreadsheetSetCellValue(spreadsheet,PPCT,row,10);
-        SpreadsheetSetCellValue(spreadsheet,extprice,row,12);
+        SpreadsheetSetCellValue(spreadsheet,total_stone_price1,row,12);
         spreadsheetMergeCells(spreadsheet, row, row, 12, 13);
         SpreadsheetSetCellValue(spreadsheet,stonetype,row,15);
         for(col=2; col<=15; col++){
@@ -1399,7 +1399,7 @@
     spreadsheetSetCellValue(spreadsheet, "COLOUR TOTAL SECTION 3:", row, column+2)
     spreadsheetFormatCellRange(spreadsheet, rightText, row, column, row, column+2)
     spreadsheetMergeCells(spreadsheet, row, row, column+4, column+5)
-    spreadsheetSetCellValue(spreadsheet, extprice, row, column+4);
+    spreadsheetSetCellValue(spreadsheet, total_stone_price1, row, column+4);
     //color3
     color3 = wb.createCellStyle();
     color3.setFillForegroundColor(createObject("java", "org.apache.poi.xssf.usermodel.XSSFColor").init(createObject("java", "java.awt.Color").init(207,226,243)));
@@ -1407,6 +1407,7 @@
     cell = sheet.getRow(74).getCell(11);
 	cell.setCellStyle(color3);
     spreadsheetFormatCellRange(spreadsheet, paleBlueBackgroundCenterBoldInteger, row, column+4, row, column+5)
+    spreadSheetSetColumnWidth(spreadsheet, 14, 7.3);
     row=37;
     column=10;
     spreadsheetMergeCells(spreadsheet, row, row, column, column+2);
@@ -1459,8 +1460,9 @@
     specialCostForFrance = 0;
     mktpercentage = 0;
 
-    grandTotal = 0 + Diamond_Ext_Price + 0;// grandTotal = totalSection1 + Diamond_Ext_Price + total_stone_price1
-
+    //grandTotal = 0 + Diamond_Ext_Price + 0;
+    // grandTotal = totalSection1 + Diamond_Ext_Price + total_stone_price1
+    grandTotal = totalSection1 + Diamond_Ext_Price + total_stone_price1
     totalsection = grandTotal;
     Grand_Total = DollarFormat(grandTotal);
     vallowance = grandTotal * (val(allowance) / 100);
@@ -1630,8 +1632,6 @@
 	cell.setCellStyle(color1);
     spreadsheetFormatCellRange(spreadsheet, leftBottomRightCenterBoldLightYellowBackground, row, column, row, column+6)
     sheet.setRowBreak(JavaCast("int", 91));
-    // writeDump(sheet)
-    // abort;
     spreadsheetSetCellValue(spreadsheet, "Vendor Shipping Terms COL / PPD:", row+1, column+2)
     spreadsheetSetCellValue(spreadsheet, "Ship Point (City, State & Zip):", row+2, column)
     spreadsheetSetCellValue(spreadsheet, "Ship Lead time (In Days):", row+3, column)
@@ -1845,24 +1845,24 @@
         column = 1;
         spreadsheetSetCellValue(spreadsheet, data.name, row, column);
         spreadsheetFormatCell(spreadsheet, rightTextNoBorder, row, column);
-            for (col = 2; col <= 6; col++) {
-                spreadsheetFormatCell(spreadsheet, bottomBorder, row, col);
-            }
-            column = columnSettings.signatureCol;
-            spreadsheetSetCellValue(spreadsheet, data.signature, row, column);
-            spreadsheetFormatCellRange(spreadsheet, centerText, row, column, row, column + 2);
-            column = columnSettings.dateCol;
-            spreadsheetMergeCells(spreadsheet, row, row, column, column + columnSettings.mergedCols);
-            spreadsheetFormatCellRange(spreadsheet, bottomBorder, row, column, row, column + columnSettings.mergedCols);
-            spreadsheetSetCellValue(spreadsheet, data.date, row, column + 4);
-            spreadsheetFormatCell(spreadsheet, rightTextNoBorder, row, column + 4);
-            spreadsheetMergeCells(spreadsheet, row, row, column + 5, column + 6);
-            spreadsheetFormatCellRange(spreadsheet, bottomBorder, row, column + 5, row, column + 6);
+        for (col = 2; col <= 6; col++) {
+            spreadsheetFormatCell(spreadsheet, bottomBorder, row, col);
+        }
+        column = columnSettings.signatureCol;
+        spreadsheetSetCellValue(spreadsheet, data.signature, row, column);
+        spreadsheetFormatCellRange(spreadsheet, centerText, row, column, row, column + 2);
+        column = columnSettings.dateCol;
+        spreadsheetMergeCells(spreadsheet, row, row, column, column + columnSettings.mergedCols);
+        spreadsheetFormatCellRange(spreadsheet, bottomBorder, row, column, row, column + columnSettings.mergedCols);
+        spreadsheetSetCellValue(spreadsheet, data.date, row, column + 4);
+        spreadsheetFormatCell(spreadsheet, rightTextNoBorder, row, column + 4);
+        spreadsheetMergeCells(spreadsheet, row, row, column + 5, column + 6);
+        spreadsheetFormatCellRange(spreadsheet, bottomBorder, row, column + 5, row, column + 6);
     }
     row=121//row=122  
     column=1
     SpreadsheetSetCellValue(spreadsheet,userName,row,column+1);
-    SpreadsheetAddImage(spreadsheet,"#GetTempDirectory()#custom_signature.jpg","#row#,10,#row#,11");
+    SpreadsheetAddImage(spreadsheet,"#GetTempDirectory()#custom_signature.jpg","#row-1#,10,#row#,11");
     SpreadsheetSetCellValue(spreadsheet,currdate,row,column+14);
     column=1;
     row=123;
@@ -1874,6 +1874,14 @@
     spreadsheetSetRowHeight(spreadsheet, 9, 15.75);
     spreadsheetSetRowHeight(spreadsheet, 12, 15.75);
     spreadsheetSetRowHeight(spreadsheet, 13, 15.75);
+    spreadsheetSetRowHeight(spreadsheet, 27, 16.75);
+    spreadsheetSetRowHeight(spreadsheet, 28, 19.50);
+    spreadsheetSetRowHeight(spreadsheet, 29, 20);
+    spreadsheetSetRowHeight(spreadsheet, 30, 20.50);
+    spreadsheetSetRowHeight(spreadsheet, 31, 20.50);
+    spreadsheetSetRowHeight(spreadsheet, 32, 19.50);
+    spreadsheetSetRowHeight(spreadsheet, 33, 19.50);
+    spreadsheetSetRowHeight(spreadsheet, 34, 18.75);
     spreadsheetSetRowHeight(spreadsheet, 39, 17.25);
     spreadsheetSetRowHeight(spreadsheet, 40, 19.5);
     spreadsheetSetRowHeight(spreadsheet, 43, 14.25);
@@ -1897,9 +1905,9 @@
     spreadSheetSetColumnWidth(spreadsheet, 10, 19.29);
     spreadSheetSetColumnWidth(spreadsheet, 11, 2.26);
     spreadSheetSetColumnWidth(spreadsheet, 12, 20.71);
-    spreadSheetSetColumnWidth(spreadsheet, 13, 11.29);
-    spreadSheetSetColumnWidth(spreadsheet, 14, 3.29);
-    spreadSheetSetColumnWidth(spreadsheet, 15, 3.71);
+    spreadSheetSetColumnWidth(spreadsheet, 13, 14.29);
+   // spreadSheetSetColumnWidth(spreadsheet, 14, 3.29);
+    spreadSheetSetColumnWidth(spreadsheet, 15, 6.29);
     spreadSheetSetColumnWidth(spreadsheet, 16, 24);
     //hide rows
     rowsToHide = [11, 12, 118, 119];

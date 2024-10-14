@@ -217,7 +217,6 @@
         bottomBorder="thin"  
     }
     leftTopRightBorderDecimalDollarValue={
-       // dataformat="$##0.00",
         bold="true",
         alignment="center",
         font="Arial Narrow",
@@ -362,7 +361,6 @@
         fontsize="11",
         alignment='center',
         font="Arial",
-      //  dataformat="$##0.00",
         bold="true"
     };
     labourCostStyle={
@@ -500,7 +498,6 @@
     }
     leftBottomBorder={
         leftBorder="thin",
-      //  bottomBorder="thin",
         font="Arial Narrow",
         bold="true",
         fontSize="12",
@@ -510,9 +507,7 @@
         rightBorder="thin",
         bottomBorder="thin",
         font="Arial Narrow",
-      //  bold="true",
         fontSize="11"
-       // alignment="right"
     };
     bottomBorderBoldText={
         bottomBorder="thin",
@@ -561,11 +556,7 @@
     }
     
     theFile="FY25 Jewellery Item Agreement Quote Sheet #Dateformat(now(), 'mm-dd-YYYY')#.xlsx";//#DateFormat(rs_product.date_entered,'MMDDYY')#
-    // Create a new spreadsheet
-    //spreadsheet = spreadsheetNew("Gemstones_ Pearl Quote Sheet", true);
     spreadsheet = spreadsheetNew("Vendor Quote Sheet", true);
-  //  spreadsheetCreateSheet(spreadsheet, 'Diamond Quote Sheet');
-//    spreadSheetSetActiveSheet(spreadsheet, 'Diamond Quote Sheet');
     wb = spreadsheet.getWorkbook();
     sheet  = wb.getSheet("Vendor Quote Sheet");
     printSetup = sheet.getPrintSetup();
@@ -576,16 +567,12 @@
     sheet.setMargin(sheet.FooterMargin, 0);
     sheet.setMargin(sheet.HeaderMargin, 0);
     view = sheet.getCTWorksheet().getSheetViews().getSheetViewArray(0);
-    view.setView(view.getView().forString("pageBreakPreview"));
     printSetup.setScale(JavaCast("short", 52));
     printSetup.setLeftToRight(true);
     printSetup.setFitWidth(1);
-    printSetup.setFitHeight(1);
- 
-   // pageOrder=sheet.getPageOrder();
-   // printSetup.setPageOrder("DOWN_THEN_OVER",true)
-   // sheet.setAutobreaks(true);
-   //sheet.setZoom(100); 
+    printSetup.setFitHeight(0);
+    printSetup.setPaperSize(PrintSetup.LETTER_PAPERSIZE)
+    wb.setPrintArea(0, "$A$1:$P$123");
     printSetup.setLandscape(false);
     qsheet_provider ='';
     email ='';
@@ -631,12 +618,6 @@
     else{
         imagePath = expandPath("images/Costco_Logo.png");
     }
-        //imagePath.setHeight(1.64)
-        //imagePath.setWidth(5.10)
-          //      signatureobj = imageRead(imagePath);
-   //  imageResize(signatureobj, 180, 50);
-    // writeDump(signatureobj)
-    //             abort;
     spreadsheetAddImage(spreadsheet, imagePath, "1, 1, 3, 2");//startRow,startColumn,endRow,endColumn
     row=1;
     column=1;
@@ -650,11 +631,9 @@
     spreadsheetFormatCellRange(spreadsheet, jewelryQuoteFormStyle, row+1, column, row+1, column+15)
     spreadsheetMergeCells(spreadsheet, row+2, row+2, column, column+5);
     spreadsheetSetCellValue(spreadsheet, "SUPPLIER INFORMATION", row+2, column);
-    //wb = spreadsheet.getWorkbook();
     color1 = wb.createCellStyle();
     color1.setFillForegroundColor(createObject("java", "org.apache.poi.xssf.usermodel.XSSFColor").init(createObject("java", "java.awt.Color").init(255,242,204)));
     color1.setFillPattern(createObject("java", "org.apache.poi.ss.usermodel.FillPatternType").SOLID_FOREGROUND);
-   // sheet  = wb.getSheet("Diamond Quote Sheet");
     cell = sheet.getRow(2).getCell(0);
 	cell.setCellStyle(color1);
     spreadsheetFormatCell(spreadsheet, subHeadingStyle, row+2, column);
@@ -692,7 +671,7 @@
     spreadsheetFormatCellRange(spreadsheet, contentStyle, row+3, column+2, row+3, column+4)
     spreadsheetSetCellValue(spreadsheet, "USA", row+3, column+5);
      for (row = 5; row < 9; row++) {
-        spreadsheetMergeCells(spreadsheet, row, row, column+5, column+9);    
+        spreadsheetMergeCells(spreadsheet, row, row, column+5, column+8);    
         spreadsheetFormatCellRange( spreadsheet,bottomBorderBoldLeftText,row, column+5, row, column+8);
     }
     //left side headline 'item information' row=11
@@ -734,7 +713,6 @@
     spreadsheetSetCellValue(spreadsheet, "Vendor Style ##:", row+4, column);
     SpreadsheetSetCellValue(spreadsheet,rs_product.chh,row+4,column+1);
     spreadsheetSetCellValue(spreadsheet, "Minimum CWT:", row+5, column);
-    // SpreadsheetSetCellValue(spreadsheet, minimunDwt,row+5,column+1); 
     spreadsheetSetCellValue(spreadsheet, "Minimum Center CWT:", row+6, column);
     spreadsheetFormatCell(spreadsheet, contentStyle, row+6, column);
     spreadsheetMergeCells(spreadsheet, row+6, row+6, column+1, column+3);
@@ -892,8 +870,6 @@
     spreadsheetFormatCell(spreadsheet, leftBottomNormalText, row+4, column+1);
     spreadsheetMergeCells(spreadsheet, row+5, row+5, column, column+1);
     spreadsheetSetCellValue(spreadsheet, "Platinum:", row+5, column);
-    // writeDump(MetallckP)
-    // abort;
     SpreadsheetSetCellValue(spreadsheet, MetallckP,row+5,column+2); 
     spreadsheetFormatCell(spreadsheet, leftMediumBorderNormalText, row+5, column);
     spreadsheetMergeCells(spreadsheet, row+6, row+6, column, column+1);
@@ -1236,7 +1212,6 @@
         spreadsheetFormatCell(spreadsheet, centerBoldText, row+1, column);
     }
     spreadsheetFormatCell(spreadsheet, centerBoldContentsf, row+1, column+2);
-    //
     row=70
     total_stone_price1 = 0;
     variables.ext_price = 0;
@@ -1352,7 +1327,6 @@
         }
         row = row+1;
     }
-    //
     column=1;
     for(row=70;row<=74;row++){
         spreadsheetSetCellValue(spreadsheet, "Color", row, column);
@@ -1383,7 +1357,7 @@
             spreadsheetFormatCell(spreadsheet, rightBottomBoldBorder, row, column)
         }
     }
-    leftBorderCell=[30,34,42,57,69,75];
+    leftBorderCell=[30,34,42,69,75];
     for (i = 1; i <= arrayLen(leftBorderCell); i++) {
         column=1;
         data = leftBorderCell[i];
@@ -1459,9 +1433,6 @@
     VATAllowanceYen = 0;
     specialCostForFrance = 0;
     mktpercentage = 0;
-
-    //grandTotal = 0 + Diamond_Ext_Price + 0;
-    // grandTotal = totalSection1 + Diamond_Ext_Price + total_stone_price1
     grandTotal = totalSection1 + Diamond_Ext_Price + total_stone_price1
     totalsection = grandTotal;
     Grand_Total = DollarFormat(grandTotal);
@@ -1472,7 +1443,6 @@
         mktpercentage = numberFormat(totalsection * (val(marketingPercentge) / 100), '9999.99');
         grandTotal += mktpercentage;
     }
-
 
     GgrandTotal = DollarFormat(grandTotal);
     if (StructKeyExists(cookie, "ckClientId") && cookie.ckClientId == 87 && StructKeyExists(cookie, "conversionRate")) {
@@ -1595,7 +1565,6 @@
         spreadsheetMergeCells(spreadsheet, row, row, column+3, column+4);
         spreadsheetFormatCellRange(spreadsheet, bottomBorder, row, column+3, row, column+4)
     }
-    // sheet.setRowBreak(JavaCast("int", 90));
     row=81;
     column=10;
     spreadsheetMergeCells(spreadsheet, row, row, column, column+6)
@@ -1906,7 +1875,6 @@
     spreadSheetSetColumnWidth(spreadsheet, 11, 2.26);
     spreadSheetSetColumnWidth(spreadsheet, 12, 20.71);
     spreadSheetSetColumnWidth(spreadsheet, 13, 14.29);
-   // spreadSheetSetColumnWidth(spreadsheet, 14, 3.29);
     spreadSheetSetColumnWidth(spreadsheet, 15, 6.29);
     spreadSheetSetColumnWidth(spreadsheet, 16, 24);
     //hide rows
@@ -1915,10 +1883,7 @@
         row = sheet.getRow(rowIndex);
         row.setZeroHeight(true);  
     }
-  //writeDump(sheet);
-   // abort;/*
-   
-       // printSetup.setPageOrder(org.apache.poi.ss.usermodel.PrintSetup.DOWN_THEN_OVER); // Page order
+    sheet.setColumnHidden(6, true);
 </cfscript>
 <cfheader name="Content-Disposition" value="inline; filename=#theFile#">
 <cfcontent type="application/vnd.ms-excel" variable="#SpreadSheetReadBinary(spreadsheet)#">

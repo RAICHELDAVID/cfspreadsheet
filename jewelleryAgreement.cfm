@@ -217,7 +217,6 @@
         bottomBorder="thin"  
     }
     leftTopRightBorderDecimalDollarValue={
-       // dataformat="$##0.00",
         bold="true",
         alignment="center",
         font="Arial Narrow",
@@ -362,7 +361,6 @@
         fontsize="11",
         alignment='center',
         font="Arial",
-      //  dataformat="$##0.00",
         bold="true"
     };
     labourCostStyle={
@@ -500,7 +498,6 @@
     }
     leftBottomBorder={
         leftBorder="thin",
-      //  bottomBorder="thin",
         font="Arial Narrow",
         bold="true",
         fontSize="12",
@@ -510,9 +507,7 @@
         rightBorder="thin",
         bottomBorder="thin",
         font="Arial Narrow",
-      //  bold="true",
         fontSize="11"
-       // alignment="right"
     };
     bottomBorderBoldText={
         bottomBorder="thin",
@@ -561,11 +556,7 @@
     }
     
     theFile="FY25 Jewellery Item Agreement Quote Sheet #Dateformat(now(), 'mm-dd-YYYY')#.xlsx";//#DateFormat(rs_product.date_entered,'MMDDYY')#
-    // Create a new spreadsheet
-    //spreadsheet = spreadsheetNew("Gemstones_ Pearl Quote Sheet", true);
     spreadsheet = spreadsheetNew("Vendor Quote Sheet", true);
-  //  spreadsheetCreateSheet(spreadsheet, 'Diamond Quote Sheet');
-//    spreadSheetSetActiveSheet(spreadsheet, 'Diamond Quote Sheet');
     wb = spreadsheet.getWorkbook();
     sheet  = wb.getSheet("Vendor Quote Sheet");
     printSetup = sheet.getPrintSetup();
@@ -580,12 +571,9 @@
     printSetup.setScale(JavaCast("short", 52));
     printSetup.setLeftToRight(true);
     printSetup.setFitWidth(1);
-    printSetup.setFitHeight(1);
- 
-   // pageOrder=sheet.getPageOrder();
-   // printSetup.setPageOrder("DOWN_THEN_OVER",true)
-   // sheet.setAutobreaks(true);
-   //sheet.setZoom(100); 
+    printSetup.setFitHeight(0);
+    printSetup.setPaperSize(PrintSetup.LETTER_PAPERSIZE)
+    wb.setPrintArea(0, "$A$1:$P$123");
     printSetup.setLandscape(false);
     qsheet_provider ='';
     email ='';
@@ -631,12 +619,6 @@
     else{
         imagePath = expandPath("images/Costco_Logo.png");
     }
-        //imagePath.setHeight(1.64)
-        //imagePath.setWidth(5.10)
-          //      signatureobj = imageRead(imagePath);
-   //  imageResize(signatureobj, 180, 50);
-    // writeDump(signatureobj)
-    //             abort;
     spreadsheetAddImage(spreadsheet, imagePath, "1, 1, 3, 2");//startRow,startColumn,endRow,endColumn
     row=1;
     column=1;
@@ -650,11 +632,9 @@
     spreadsheetFormatCellRange(spreadsheet, jewelryQuoteFormStyle, row+1, column, row+1, column+15)
     spreadsheetMergeCells(spreadsheet, row+2, row+2, column, column+5);
     spreadsheetSetCellValue(spreadsheet, "SUPPLIER INFORMATION", row+2, column);
-    //wb = spreadsheet.getWorkbook();
     color1 = wb.createCellStyle();
     color1.setFillForegroundColor(createObject("java", "org.apache.poi.xssf.usermodel.XSSFColor").init(createObject("java", "java.awt.Color").init(255,242,204)));
     color1.setFillPattern(createObject("java", "org.apache.poi.ss.usermodel.FillPatternType").SOLID_FOREGROUND);
-   // sheet  = wb.getSheet("Diamond Quote Sheet");
     cell = sheet.getRow(2).getCell(0);
 	cell.setCellStyle(color1);
     spreadsheetFormatCell(spreadsheet, subHeadingStyle, row+2, column);
@@ -692,7 +672,7 @@
     spreadsheetFormatCellRange(spreadsheet, contentStyle, row+3, column+2, row+3, column+4)
     spreadsheetSetCellValue(spreadsheet, "USA", row+3, column+5);
      for (row = 5; row < 9; row++) {
-        spreadsheetMergeCells(spreadsheet, row, row, column+5, column+9);    
+        spreadsheetMergeCells(spreadsheet, row, row, column+5, column+8);    
         spreadsheetFormatCellRange( spreadsheet,bottomBorderBoldLeftText,row, column+5, row, column+8);
     }
     //left side headline 'item information' row=11
@@ -734,7 +714,6 @@
     spreadsheetSetCellValue(spreadsheet, "Vendor Style ##:", row+4, column);
     SpreadsheetSetCellValue(spreadsheet,rs_product.chh,row+4,column+1);
     spreadsheetSetCellValue(spreadsheet, "Minimum CWT:", row+5, column);
-    // SpreadsheetSetCellValue(spreadsheet, minimunDwt,row+5,column+1); 
     spreadsheetSetCellValue(spreadsheet, "Minimum Center CWT:", row+6, column);
     spreadsheetFormatCell(spreadsheet, contentStyle, row+6, column);
     spreadsheetMergeCells(spreadsheet, row+6, row+6, column+1, column+3);
@@ -892,8 +871,6 @@
     spreadsheetFormatCell(spreadsheet, leftBottomNormalText, row+4, column+1);
     spreadsheetMergeCells(spreadsheet, row+5, row+5, column, column+1);
     spreadsheetSetCellValue(spreadsheet, "Platinum:", row+5, column);
-    // writeDump(MetallckP)
-    // abort;
     SpreadsheetSetCellValue(spreadsheet, MetallckP,row+5,column+2); 
     spreadsheetFormatCell(spreadsheet, leftMediumBorderNormalText, row+5, column);
     spreadsheetMergeCells(spreadsheet, row+6, row+6, column, column+1);
@@ -1236,7 +1213,6 @@
         spreadsheetFormatCell(spreadsheet, centerBoldText, row+1, column);
     }
     spreadsheetFormatCell(spreadsheet, centerBoldContentsf, row+1, column+2);
-    //
     row=70
     total_stone_price1 = 0;
     variables.ext_price = 0;
@@ -1352,7 +1328,6 @@
         }
         row = row+1;
     }
-    //
     column=1;
     for(row=70;row<=74;row++){
         spreadsheetSetCellValue(spreadsheet, "Color", row, column);
@@ -1383,7 +1358,7 @@
             spreadsheetFormatCell(spreadsheet, rightBottomBoldBorder, row, column)
         }
     }
-    leftBorderCell=[30,34,42,57,69,75];
+    leftBorderCell=[30,34,42,69,75];
     for (i = 1; i <= arrayLen(leftBorderCell); i++) {
         column=1;
         data = leftBorderCell[i];
@@ -1459,9 +1434,6 @@
     VATAllowanceYen = 0;
     specialCostForFrance = 0;
     mktpercentage = 0;
-
-    //grandTotal = 0 + Diamond_Ext_Price + 0;
-    // grandTotal = totalSection1 + Diamond_Ext_Price + total_stone_price1
     grandTotal = totalSection1 + Diamond_Ext_Price + total_stone_price1
     totalsection = grandTotal;
     Grand_Total = DollarFormat(grandTotal);
@@ -1472,7 +1444,6 @@
         mktpercentage = numberFormat(totalsection * (val(marketingPercentge) / 100), '9999.99');
         grandTotal += mktpercentage;
     }
-
 
     GgrandTotal = DollarFormat(grandTotal);
     if (StructKeyExists(cookie, "ckClientId") && cookie.ckClientId == 87 && StructKeyExists(cookie, "conversionRate")) {
@@ -1595,7 +1566,6 @@
         spreadsheetMergeCells(spreadsheet, row, row, column+3, column+4);
         spreadsheetFormatCellRange(spreadsheet, bottomBorder, row, column+3, row, column+4)
     }
-    // sheet.setRowBreak(JavaCast("int", 90));
     row=81;
     column=10;
     spreadsheetMergeCells(spreadsheet, row, row, column, column+6)
@@ -1874,6 +1844,18 @@
     spreadsheetSetRowHeight(spreadsheet, 9, 15.75);
     spreadsheetSetRowHeight(spreadsheet, 12, 15.75);
     spreadsheetSetRowHeight(spreadsheet, 13, 15.75);
+    spreadsheetSetRowHeight(spreadsheet, 15, 15.25);
+    spreadsheetSetRowHeight(spreadsheet, 16, 15.25);
+    spreadsheetSetRowHeight(spreadsheet, 17, 15.25);
+    spreadsheetSetRowHeight(spreadsheet, 18, 15.25);
+    spreadsheetSetRowHeight(spreadsheet, 19, 15.25);
+    spreadsheetSetRowHeight(spreadsheet, 20, 15.25);
+    spreadsheetSetRowHeight(spreadsheet, 21, 15.25);
+    spreadsheetSetRowHeight(spreadsheet, 22, 15.25);
+    spreadsheetSetRowHeight(spreadsheet, 23, 14.25);
+    spreadsheetSetRowHeight(spreadsheet, 24, 14.25);
+    spreadsheetSetRowHeight(spreadsheet, 25, 14.25);
+    spreadsheetSetRowHeight(spreadsheet, 26, 14.25);
     spreadsheetSetRowHeight(spreadsheet, 27, 16.75);
     spreadsheetSetRowHeight(spreadsheet, 28, 19.50);
     spreadsheetSetRowHeight(spreadsheet, 29, 20);
@@ -1884,10 +1866,41 @@
     spreadsheetSetRowHeight(spreadsheet, 34, 18.75);
     spreadsheetSetRowHeight(spreadsheet, 39, 17.25);
     spreadsheetSetRowHeight(spreadsheet, 40, 19.5);
-    spreadsheetSetRowHeight(spreadsheet, 43, 14.25);
-    spreadsheetSetRowHeight(spreadsheet, 51, 14.25);
-    spreadsheetSetRowHeight(spreadsheet, 52, 14.25);
-    spreadsheetSetRowHeight(spreadsheet, 53, 14.25);
+    spreadsheetSetRowHeight(spreadsheet, 43, 15.25);
+    spreadsheetSetRowHeight(spreadsheet, 44, 15.25);
+    spreadsheetSetRowHeight(spreadsheet, 45, 15.25);
+    spreadsheetSetRowHeight(spreadsheet, 46, 15.25);
+    spreadsheetSetRowHeight(spreadsheet, 47, 15.25);
+    spreadsheetSetRowHeight(spreadsheet, 48, 15.25);
+    spreadsheetSetRowHeight(spreadsheet, 49, 15.25);
+    spreadsheetSetRowHeight(spreadsheet, 51, 15.25);
+    spreadsheetSetRowHeight(spreadsheet, 52, 15.25);
+    spreadsheetSetRowHeight(spreadsheet, 53, 15.25);
+    spreadsheetSetRowHeight(spreadsheet, 55, 13.75);
+    spreadsheetSetRowHeight(spreadsheet, 57, 15.25);
+    spreadsheetSetRowHeight(spreadsheet, 58, 15.25);
+    spreadsheetSetRowHeight(spreadsheet, 59, 15.25);
+    spreadsheetSetRowHeight(spreadsheet, 60, 15.25);
+    spreadsheetSetRowHeight(spreadsheet, 61, 15.25);
+    spreadsheetSetRowHeight(spreadsheet, 62, 15.25);
+    spreadsheetSetRowHeight(spreadsheet, 63, 15.25);
+    spreadsheetSetRowHeight(spreadsheet, 64, 15.25);
+    spreadsheetSetRowHeight(spreadsheet, 65, 15.25);
+    spreadsheetSetRowHeight(spreadsheet, 66, 15.25);
+    spreadsheetSetRowHeight(spreadsheet, 67, 15.25);
+    spreadsheetSetRowHeight(spreadsheet, 70, 15.5);
+    spreadsheetSetRowHeight(spreadsheet, 71, 15.5);
+    spreadsheetSetRowHeight(spreadsheet, 72, 15.5);
+    spreadsheetSetRowHeight(spreadsheet, 73, 15.5);
+    spreadsheetSetRowHeight(spreadsheet, 74, 15.5);
+    spreadsheetSetRowHeight(spreadsheet, 75, 15.25);
+    spreadsheetSetRowHeight(spreadsheet, 86, 15.25);
+    spreadsheetSetRowHeight(spreadsheet, 87, 15.5);
+    spreadsheetSetRowHeight(spreadsheet, 88, 15.5);
+    spreadsheetSetRowHeight(spreadsheet, 89, 15.5);
+    spreadsheetSetRowHeight(spreadsheet, 90, 15.5);
+    spreadsheetSetRowHeight(spreadsheet, 91, 15.5);
+    spreadsheetSetRowHeight(spreadsheet, 92, 15.5);
     spreadsheetSetRowHeight(spreadsheet, 115, 15.75);
     spreadsheetSetRowHeight(spreadsheet, 118, 9);
     spreadsheetSetRowHeight(spreadsheet, 121, 38.25);
@@ -1906,7 +1919,6 @@
     spreadSheetSetColumnWidth(spreadsheet, 11, 2.26);
     spreadSheetSetColumnWidth(spreadsheet, 12, 20.71);
     spreadSheetSetColumnWidth(spreadsheet, 13, 14.29);
-   // spreadSheetSetColumnWidth(spreadsheet, 14, 3.29);
     spreadSheetSetColumnWidth(spreadsheet, 15, 6.29);
     spreadSheetSetColumnWidth(spreadsheet, 16, 24);
     //hide rows
@@ -1915,10 +1927,7 @@
         row = sheet.getRow(rowIndex);
         row.setZeroHeight(true);  
     }
-  //writeDump(sheet);
-   // abort;/*
-   
-       // printSetup.setPageOrder(org.apache.poi.ss.usermodel.PrintSetup.DOWN_THEN_OVER); // Page order
+    sheet.setColumnHidden(6, true);
 </cfscript>
 <cfheader name="Content-Disposition" value="inline; filename=#theFile#">
 <cfcontent type="application/vnd.ms-excel" variable="#SpreadSheetReadBinary(spreadsheet)#">

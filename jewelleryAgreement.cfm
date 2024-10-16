@@ -19,7 +19,11 @@
         fontsize="16",
         verticalalignment="vertical_center",
         textwrap="true"
-    }; 
+    };
+    Font12Style={
+        font="Arial",
+        fontsize="12"
+    };
     coscoLeftBorderStyle={
         leftborder="thin",
         bold="true",
@@ -118,7 +122,7 @@
     diaTotalSectionValueStyle = {
         font = "Arial Narrow",
         alignment = "right",
-        fontsize = "10",
+        fontsize = "11",
         bold = "true"
     };
     totalSectionValue={
@@ -561,11 +565,11 @@
     sheet  = wb.getSheet("Vendor Quote Sheet");
     printSetup = sheet.getPrintSetup();
     sheet.setMargin(sheet.RightMargin, 0);
-    sheet.setMargin(sheet.LeftMargin, 0.22);
-    sheet.setMargin(sheet.TopMargin, 0);
+    sheet.setMargin(sheet.LeftMargin, 0.4);
+    sheet.setMargin(sheet.TopMargin, 0.001);
     sheet.setMargin(sheet.BottomMargin, 0);
-    sheet.setMargin(sheet.FooterMargin, 0);
-    sheet.setMargin(sheet.HeaderMargin, 0);
+    //sheet.setMargin(sheet.FooterMargin, 0);
+    //sheet.setMargin(sheet.HeaderMargin, 0);
     view = sheet.getCTWorksheet().getSheetViews().getSheetViewArray(0);
     view.setView(view.getView().forString("pageBreakPreview"));
     printSetup.setScale(JavaCast("short", 52));
@@ -1460,18 +1464,17 @@
     DfiSpoilage = val(spoilage);
     FinalCost = grandTotal;
     DfiDollar = 0;
-
     if (DfiSpoilage != 0) {
         DfiDollar = grandTotal / ((1 / (DfiSpoilage / 100)) - 1);
         FinalCost += DfiDollar;
     }
-
     if (StructKeyExists(cookie, "ckClientId") && cookie.ckClientId == 49) {
         labelfor1 = 'SPECIAL COST:';
         labelfor2 = 'Spoilage Allowance:';
     }
     row=77;
     column=1;
+
     //TOTAL SECTIONS 1-3:
     spreadsheetSetCellValue(spreadsheet, "TOTAL SECTIONS 1-3:", row, column+1)
     SpreadsheetSetCellValue(spreadsheet,Grand_Total,row,column+3);
@@ -1487,7 +1490,11 @@
     spreadsheetSetCellValue(spreadsheet, "Sub Total:", row+6, column)
     SpreadsheetSetCellValue(spreadsheet,GgrandTotal,row+6,column+3);
     spreadsheetSetCellValue(spreadsheet, "Total DFI % (No Spoils):", row+7, column)
-    SpreadsheetSetCellValue(spreadsheet,Dollarformat(DfiDollar),row+7,column+3);
+   if (DfiDollar!=0) {
+        SpreadsheetSetCellValue(spreadsheet, Dollarformat(DfiDollar), row+7, column+3);//value applicable only for US client
+    } else {
+        SpreadsheetSetCellValue(spreadsheet, 'N/A', row+7, column+3);//value not applicable for canada client
+    }
     spreadsheetSetCellValue(spreadsheet, "Total Net Cost:", row+8, column)
     SpreadsheetSetCellValue(spreadsheet,Dollarformat(FinalCost),row+8,column+3);
     for(row=77;row<=85;row++){
@@ -1510,7 +1517,7 @@
     column=4;
     spreadsheetMergeCells(spreadsheet, row, row, column, column+1);
     leftRightBorderBgColorStyle = wb.createCellStyle();
-    borderStyle = createObject("java", "org.apache.poi.ss.usermodel.BorderStyle");
+   // borderStyle = createObject("java", "org.apache.poi.ss.usermodel.BorderStyle");
     leftRightBorderBgColorStyle.setBorderLeft(borderStyle.THIN);
     leftRightBorderBgColorStyle.setBorderRight(borderStyle.THIN);
     leftRightBorderBgColorStyle.setFillForegroundColor(createObject("java", "org.apache.poi.xssf.usermodel.XSSFColor").init(createObject("java", "java.awt.Color").init(219, 219, 219)));
@@ -1520,7 +1527,7 @@
     spreadsheetFormatCellRange(spreadsheet, leftTopRightBorderDecimalDollarValue, row, column, row, column+1)
     spreadsheetMergeCells(spreadsheet, row+1, row+1, column, column+1);
     fullBorderBgColorStyle = wb.createCellStyle();
-    borderStyle = createObject("java", "org.apache.poi.ss.usermodel.BorderStyle");
+    //borderStyle = createObject("java", "org.apache.poi.ss.usermodel.BorderStyle");
     fullBorderBgColorStyle.setBorderLeft(borderStyle.THIN);
     fullBorderBgColorStyle.setBorderRight(borderStyle.THIN);
     fullBorderBgColorStyle.setBorderLeft(borderStyle.THIN);
@@ -1532,7 +1539,7 @@
     spreadsheetFormatCellRange(spreadsheet, fullBorderCenterBold, row+1, column, row+1, column+1)
     spreadsheetMergeCells(spreadsheet, row+2, row+2, column, column+1);
     doubleBottomBorderBgColorStyle = wb.createCellStyle();
-    borderStyle = createObject("java", "org.apache.poi.ss.usermodel.BorderStyle");
+   // borderStyle = createObject("java", "org.apache.poi.ss.usermodel.BorderStyle");
     doubleBottomBorderBgColorStyle.setBorderBottom(borderStyle.DOUBLE);
     doubleBottomBorderBgColorStyle.setBorderLeft(borderStyle.THIN);
     doubleBottomBorderBgColorStyle.setBorderRight(borderStyle.THIN);
@@ -1559,6 +1566,22 @@
         }
        spreadsheetFormatCellRange(spreadsheet, normalText, row, column, row, column+1)
     }
+</cfscript>
+    <cfset DWTstartcount=88>
+    <cfset costAllSocializedSizes = DollarFormat(0.00)>
+    <cfloop query="rs_socialized_info">
+        <cfset fwtx = "Finished DWT" &NumberFormat(rs_socialized_info.socializedsize,'__.__')&":" >
+        <cfset socialcost = rs_socialized_info.socializedcost >
+        <cfset costAllSocializedSizes = DollarFormat(val(rs_product.costAllSocializedSizes))>
+        <cfscript>
+            SpreadsheetSetCellValue(theSheet,fwtx,DWTstartcount,1);
+            SpreadsheetSetCellValue(theSheet,socialcost,DWTstartcount,4);
+            SpreadsheetFormatCellRange(theSheet,Font12Style,DWTstartcount,4,DWTstartcount,5);
+            SpreadsheetFormatCellRange(theSheet,{bottomborder="thin"},DWTstartcount,4,DWTstartcount,5);
+            DWTstartcount++;
+        </cfscript>
+    </cfloop>
+<cfscript>
     spreadsheetMergeCells(spreadsheet, row, row, column, column+1)
     spreadsheetSetCellValue(spreadsheet, "Socialized Cost All Sizes:", row, column)
     spreadsheetFormatCellRange(spreadsheet, normalText, row, column, row, column+1)
@@ -1839,24 +1862,33 @@
     spreadsheetSetCellValue(spreadsheet, "Rev 7/11/24", row, column);
     spreadsheetFormatCell(spreadsheet, dateStyle, row, column)
     //set row height
-    spreadsheetSetRowHeight(spreadsheet, 1, 23);
+    /*spreadsheetSetRowHeight(spreadsheet, 1, 23);
     spreadsheetSetRowHeight(spreadsheet, 2, 24);
-    spreadsheetSetRowHeight(spreadsheet, 9, 15.75);
-    spreadsheetSetRowHeight(spreadsheet, 12, 15.75);
-    spreadsheetSetRowHeight(spreadsheet, 13, 15.75);
-    spreadsheetSetRowHeight(spreadsheet, 15, 15.25);
-    spreadsheetSetRowHeight(spreadsheet, 16, 15.25);
-    spreadsheetSetRowHeight(spreadsheet, 17, 15.25);
-    spreadsheetSetRowHeight(spreadsheet, 18, 15.25);
-    spreadsheetSetRowHeight(spreadsheet, 19, 15.25);
-    spreadsheetSetRowHeight(spreadsheet, 20, 15.25);
-    spreadsheetSetRowHeight(spreadsheet, 21, 15.25);
-    spreadsheetSetRowHeight(spreadsheet, 22, 15.25);
-    spreadsheetSetRowHeight(spreadsheet, 23, 14.25);
-    spreadsheetSetRowHeight(spreadsheet, 24, 14.25);
-    spreadsheetSetRowHeight(spreadsheet, 25, 14.25);
-    spreadsheetSetRowHeight(spreadsheet, 26, 14.25);
-    spreadsheetSetRowHeight(spreadsheet, 27, 16.75);
+    spreadsheetSetRowHeight(spreadsheet, 3, 15);
+    spreadsheetSetRowHeight(spreadsheet, 4, 15);
+    spreadsheetSetRowHeight(spreadsheet, 5, 15);
+    spreadsheetSetRowHeight(spreadsheet, 6, 15);
+    spreadsheetSetRowHeight(spreadsheet, 7, 15);
+    spreadsheetSetRowHeight(spreadsheet, 8, 15);
+    spreadsheetSetRowHeight(spreadsheet, 9, 15);
+    spreadsheetSetRowHeight(spreadsheet, 10, 15);
+    spreadsheetSetRowHeight(spreadsheet, 11, 15);
+    spreadsheetSetRowHeight(spreadsheet, 12, 15);
+    spreadsheetSetRowHeight(spreadsheet, 13, 15);
+    spreadsheetSetRowHeight(spreadsheet, 14, 15);
+    spreadsheetSetRowHeight(spreadsheet, 15, 15);
+    spreadsheetSetRowHeight(spreadsheet, 16, 15);
+    spreadsheetSetRowHeight(spreadsheet, 17, 15);
+    spreadsheetSetRowHeight(spreadsheet, 18, 15);
+    spreadsheetSetRowHeight(spreadsheet, 19, 15);
+    spreadsheetSetRowHeight(spreadsheet, 20, 15);
+    spreadsheetSetRowHeight(spreadsheet, 21, 15);
+    spreadsheetSetRowHeight(spreadsheet, 22, 15);
+    spreadsheetSetRowHeight(spreadsheet, 23, 14);
+    spreadsheetSetRowHeight(spreadsheet, 24, 14);
+    spreadsheetSetRowHeight(spreadsheet, 25, 14);
+    spreadsheetSetRowHeight(spreadsheet, 26, 14);
+    spreadsheetSetRowHeight(spreadsheet, 27, 15);
     spreadsheetSetRowHeight(spreadsheet, 28, 19.50);
     spreadsheetSetRowHeight(spreadsheet, 29, 20);
     spreadsheetSetRowHeight(spreadsheet, 30, 20.50);
@@ -1864,8 +1896,10 @@
     spreadsheetSetRowHeight(spreadsheet, 32, 19.50);
     spreadsheetSetRowHeight(spreadsheet, 33, 19.50);
     spreadsheetSetRowHeight(spreadsheet, 34, 18.75);
-    spreadsheetSetRowHeight(spreadsheet, 39, 17.25);
-    spreadsheetSetRowHeight(spreadsheet, 40, 19.5);
+    spreadsheetSetRowHeight(spreadsheet, 36, 16);
+    spreadsheetSetRowHeight(spreadsheet, 39, 16);
+    spreadsheetSetRowHeight(spreadsheet, 40, 17);
+    spreadsheetSetRowHeight(spreadsheet, 42, 15);
     spreadsheetSetRowHeight(spreadsheet, 43, 15.25);
     spreadsheetSetRowHeight(spreadsheet, 44, 15.25);
     spreadsheetSetRowHeight(spreadsheet, 45, 15.25);
@@ -1873,35 +1907,49 @@
     spreadsheetSetRowHeight(spreadsheet, 47, 15.25);
     spreadsheetSetRowHeight(spreadsheet, 48, 15.25);
     spreadsheetSetRowHeight(spreadsheet, 49, 15.25);
-    spreadsheetSetRowHeight(spreadsheet, 51, 15.25);
-    spreadsheetSetRowHeight(spreadsheet, 52, 15.25);
-    spreadsheetSetRowHeight(spreadsheet, 53, 15.25);
-    spreadsheetSetRowHeight(spreadsheet, 55, 13.75);
-    spreadsheetSetRowHeight(spreadsheet, 57, 15.25);
-    spreadsheetSetRowHeight(spreadsheet, 58, 15.25);
-    spreadsheetSetRowHeight(spreadsheet, 59, 15.25);
-    spreadsheetSetRowHeight(spreadsheet, 60, 15.25);
-    spreadsheetSetRowHeight(spreadsheet, 61, 15.25);
-    spreadsheetSetRowHeight(spreadsheet, 62, 15.25);
-    spreadsheetSetRowHeight(spreadsheet, 63, 15.25);
-    spreadsheetSetRowHeight(spreadsheet, 64, 15.25);
-    spreadsheetSetRowHeight(spreadsheet, 65, 15.25);
-    spreadsheetSetRowHeight(spreadsheet, 66, 15.25);
-    spreadsheetSetRowHeight(spreadsheet, 67, 15.25);
-    spreadsheetSetRowHeight(spreadsheet, 70, 15.5);
-    spreadsheetSetRowHeight(spreadsheet, 71, 15.5);
-    spreadsheetSetRowHeight(spreadsheet, 72, 15.5);
-    spreadsheetSetRowHeight(spreadsheet, 73, 15.5);
-    spreadsheetSetRowHeight(spreadsheet, 74, 15.5);
-    spreadsheetSetRowHeight(spreadsheet, 75, 15.25);
-    spreadsheetSetRowHeight(spreadsheet, 86, 15.25);
-    spreadsheetSetRowHeight(spreadsheet, 87, 15.5);
-    spreadsheetSetRowHeight(spreadsheet, 88, 15.5);
-    spreadsheetSetRowHeight(spreadsheet, 89, 15.5);
-    spreadsheetSetRowHeight(spreadsheet, 90, 15.5);
-    spreadsheetSetRowHeight(spreadsheet, 91, 15.5);
-    spreadsheetSetRowHeight(spreadsheet, 92, 15.5);
-    spreadsheetSetRowHeight(spreadsheet, 115, 15.75);
+    spreadsheetSetRowHeight(spreadsheet, 50, 15);
+    spreadsheetSetRowHeight(spreadsheet, 51, 15);
+    spreadsheetSetRowHeight(spreadsheet, 52, 15);
+    spreadsheetSetRowHeight(spreadsheet, 53, 15);
+    spreadsheetSetRowHeight(spreadsheet, 54, 15);
+    spreadsheetSetRowHeight(spreadsheet, 55, 13);
+    spreadsheetSetRowHeight(spreadsheet, 56, 15);
+    spreadsheetSetRowHeight(spreadsheet, 57, 15);
+    spreadsheetSetRowHeight(spreadsheet, 58, 15);
+    spreadsheetSetRowHeight(spreadsheet, 59, 15);
+    spreadsheetSetRowHeight(spreadsheet, 60, 15);
+    spreadsheetSetRowHeight(spreadsheet, 61, 15);
+    spreadsheetSetRowHeight(spreadsheet, 62, 15);
+    spreadsheetSetRowHeight(spreadsheet, 63, 15);
+    spreadsheetSetRowHeight(spreadsheet, 64, 15);
+    spreadsheetSetRowHeight(spreadsheet, 65, 15);
+    spreadsheetSetRowHeight(spreadsheet, 66, 15);
+    spreadsheetSetRowHeight(spreadsheet, 67, 15);
+    spreadsheetSetRowHeight(spreadsheet, 68, 15);
+    spreadsheetSetRowHeight(spreadsheet, 69, 15);
+    spreadsheetSetRowHeight(spreadsheet, 70, 15);
+    spreadsheetSetRowHeight(spreadsheet, 71, 15);
+    spreadsheetSetRowHeight(spreadsheet, 72, 15);
+    spreadsheetSetRowHeight(spreadsheet, 73, 15);
+    spreadsheetSetRowHeight(spreadsheet, 74, 15);
+    spreadsheetSetRowHeight(spreadsheet, 75, 15);
+    spreadsheetSetRowHeight(spreadsheet, 77, 15);
+    spreadsheetSetRowHeight(spreadsheet, 78, 15);
+    spreadsheetSetRowHeight(spreadsheet, 79, 15);
+    spreadsheetSetRowHeight(spreadsheet, 80, 15);
+    spreadsheetSetRowHeight(spreadsheet, 81, 15);
+    spreadsheetSetRowHeight(spreadsheet, 82, 15);
+    spreadsheetSetRowHeight(spreadsheet, 83, 15);
+    spreadsheetSetRowHeight(spreadsheet, 84, 15);
+    spreadsheetSetRowHeight(spreadsheet, 85, 15);
+    spreadsheetSetRowHeight(spreadsheet, 86, 15);
+    spreadsheetSetRowHeight(spreadsheet, 87, 15);
+    spreadsheetSetRowHeight(spreadsheet, 88, 15);
+    spreadsheetSetRowHeight(spreadsheet, 89, 15);
+    spreadsheetSetRowHeight(spreadsheet, 90, 15);
+    spreadsheetSetRowHeight(spreadsheet, 91, 15);
+    spreadsheetSetRowHeight(spreadsheet, 92, 15);
+    spreadsheetSetRowHeight(spreadsheet, 115, 15);*/
     spreadsheetSetRowHeight(spreadsheet, 118, 9);
     spreadsheetSetRowHeight(spreadsheet, 121, 38.25);
     spreadsheetSetRowHeight(spreadsheet, 122, 38.25);

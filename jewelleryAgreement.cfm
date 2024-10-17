@@ -23,17 +23,23 @@
     Font12Style={
         font="Arial",
         fontsize="12"
-    };
+    };/* 
     coscoLeftBorderStyle={
         leftborder="thin",
         bold="true",
         font="Arial Narrow",
         fontsize="12",
         alignment="right",
-        textwrap="true",
-        verticalalignment="vertical_bottom"
-    }
-    
+        textwrap="true"
+        //,verticalalignment="vertical_bottom"
+    } */
+    coscoLeftBorderStyle = {
+        font = "Arial Narrow",
+        fontsize = "12",
+        alignment = "right",
+        bold = "true",
+        leftborder = "thin"
+    };
     goldStyle = {
         fontsize = "12",
         alignment = "right",
